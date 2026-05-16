@@ -260,6 +260,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
       <button class="btn btn-primary" onclick="downloadCard()">📊 Blog Card</button>
       <button class="btn btn-primary" id="btnCombinedCard" onclick="downloadCombinedCard()" style="background:rgba(125,219,163,0.15);border-color:var(--accent);color:var(--accent);">📋 Stats Only Card</button>
       <button class="btn btn-outline" onclick="downloadFull()">🖥 Full Dashboard</button>
+      <button class="btn btn-outline" onclick="downloadMap()">🗺 Contact Map</button>
       <button class="btn btn-outline" style="border-color:transparent" onclick="closeModal()">Cancel</button>
     </div>
     <div class="dl-status" id="dlStatus"></div>
@@ -1326,6 +1327,39 @@ async function downloadFull(){
     link.href=cvs.toDataURL('image/jpeg',0.92); link.click();
     closeModal();
   }catch(e){ st.innerHTML='Error — please try again.'; }
+}
+
+async function downloadMap(){
+  const st = document.getElementById('dlStatus');
+  const mapEl = document.getElementById('activationMap');
+  if (!mapEl) {
+    st.style.display='block';
+    st.innerHTML='No map available — upload an ADIF file first.';
+    return;
+  }
+  st.style.display='block';
+  st.innerHTML='<span class="spinner"></span> Capturing map...';
+  try {
+    mapEl.scrollIntoView({behavior:'instant'});
+    await new Promise(r=>setTimeout(r,500));
+    const mapCard = mapEl.closest('.map-card') || mapEl;
+    const cvs = await html2canvas(mapCard, {
+      backgroundColor:'#2e3834', scale:2, useCORS:true, logging:false, allowTaint:true
+    });
+    const link = document.createElement('a');
+    const parkLabel = (currentData && currentData.parkRef && currentData.parkRef !== '—')
+      ? currentData.parkRef.replace(/[^A-Z0-9]/gi,'_') : 'map';
+    const dateStr = (currentData && currentData.date)
+      ? currentData.date.replace(/\//g,'-') : Date.now().toString();
+    link.download = 'TavaScope_Map_' + parkLabel + '_' + dateStr + '.jpg';
+    link.href = cvs.toDataURL('image/jpeg', 0.95);
+    link.click();
+    closeModal();
+  } catch(e) {
+    st.style.display='block';
+    st.innerHTML='Error capturing map — try Full Dashboard instead.';
+    console.error('Map download error:', e);
+  }
 }
 
 // ── FILE HANDLING ──────────────────────────────────────────────────────────
