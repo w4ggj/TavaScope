@@ -301,9 +301,9 @@ const uid = () => Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 
 // ── PARK REF EXTRACTION ────────────────────────────────────────────────────
 function extractParkRef(filename) {
-  // Match US-XXXX pattern anywhere in filename
+  // Match US-XXXX pattern anywhere in filename — preserve leading zeros
   const m = filename.toUpperCase().match(/\bUS-?(\d{4,5})\b/);
-  if (m) return `US-${m[1].replace(/^0+/,'')}`.replace('US-','US-') || `US-${m[1]}`;
+  if (m) return `US-${m[1]}`;
   // Also try without dash
   const m2 = filename.toUpperCase().match(/US(\d{4,5})/);
   if (m2) return `US-${m2[1]}`;
