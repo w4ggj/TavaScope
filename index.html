@@ -314,15 +314,27 @@ function extractParkRef(filename) {
 async function fetchParkName(parkRef) {
   if (!parkRef || !parkRef.startsWith('US-')) return null;
   try {
-    // Use a manual timeout compatible with all browsers
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 5000);
     const res = await fetch(`https://api.pota.app/park/${parkRef}`, {signal: controller.signal});
     clearTimeout(timer);
     if (!res.ok) return null;
     const data = await res.json();
-    return data.name || data.parkName || null;
-  } catch(e) { return null; } // Silently fail — park name is optional
+    // POTA API splits name across multiple fields
+    // Try to build the most complete name possible
+    const name        = data.name        || '';
+    const descriptor  = data.parktypeDesc|| data.descriptor || '';
+    const longName    = data.longName    || data.parkName   || '';
+    const locName     = data.locationName|| '';
+    // If longName exists and is longer use it
+    if (longName && longName.length > name.length) return longName;
+    // If descriptor adds meaningful info append it
+    if (name && descriptor && !name.toLowerCase().includes(descriptor.toLowerCase())) {
+      return (name + ' ' + descriptor).trim();
+    }
+    // Fallback to whatever we have
+    return longName || name || locName || null;
+  } catch(e) { return null; }
 }
 
 // ── MAIDENHEAD GRID → LAT/LON ──────────────────────────────────────────────
