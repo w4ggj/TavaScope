@@ -189,7 +189,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
   <div class="sidebar-header">
     <div style="display:flex;align-items:flex-start;justify-content:space-between;">
       <div class="logo">TAVA<span>SCOPE</span></div>
-      <div style="font-size:0.58rem;font-family:var(--mono);color:var(--text-dim);margin-top:3px;background:var(--bg3);padding:2px 6px;border-radius:4px;border:1px solid var(--border);">v1.5</div>
+      <div style="font-size:0.58rem;font-family:var(--mono);color:var(--text-dim);margin-top:3px;background:var(--bg3);padding:2px 6px;border-radius:4px;border:1px solid var(--border);">v1.7</div>
     </div>
     <div class="logo-sub">W4GGJ · POTA Analyzer · tavaone.com</div>
   </div>
@@ -1340,12 +1340,33 @@ async function downloadMap(){
   st.style.display='block';
   st.innerHTML='<span class="spinner"></span> Capturing map...';
   try {
-    mapEl.scrollIntoView({behavior:'instant'});
-    await new Promise(r=>setTimeout(r,500));
+    // Scroll map card into view and wait for tiles + markers to settle
     const mapCard = mapEl.closest('.map-card') || mapEl;
-    const cvs = await html2canvas(mapCard, {
-      backgroundColor:'#2e3834', scale:2, useCORS:true, logging:false, allowTaint:true
+    mapCard.scrollIntoView({behavior:'instant', block:'start'});
+    await new Promise(r=>setTimeout(r,800));
+
+    // Capture document.body at the map card's exact screen position
+    // This correctly resolves Leaflet's CSS transform-based marker positioning
+    const rect = mapCard.getBoundingClientRect();
+    const scrollY = window.scrollY || window.pageYOffset;
+    const scrollX = window.scrollX || window.pageXOffset;
+
+    const cvs = await html2canvas(document.body, {
+      x: rect.left + scrollX,
+      y: rect.top  + scrollY,
+      width:  rect.width,
+      height: rect.height,
+      backgroundColor: '#2e3834',
+      scale: 2,
+      useCORS: true,
+      logging: false,
+      allowTaint: true,
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth:  document.documentElement.scrollWidth,
+      windowHeight: document.documentElement.scrollHeight,
     });
+
     const link = document.createElement('a');
     const parkLabel = (currentData && currentData.parkRef && currentData.parkRef !== '—')
       ? currentData.parkRef.replace(/[^A-Z0-9]/gi,'_') : 'map';
