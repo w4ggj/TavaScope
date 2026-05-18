@@ -173,4 +173,4 @@ He writes about amateur radio at [tavaone.com](https://tavaone.com) and is the a
 
 MIT License — see [LICENSE](LICENSE) for full text.
 
-Copyright (c) 2025 Joe Leone (W4GGJ)
+Copyright (c) 2026 Joe Leone (W4GGJ)
