@@ -2,7 +2,7 @@
 
 **A free, open-source, privacy-first activation log analyzer for Parks on the Air (POTA) operators.**
 
-🌐 **Live App:** [w4ggj.github.io/TavaScope](https://w4ggj.github.io/TavaScope)  
+🌐 **Live App:** [tavascope.com](https://tavascope.com)  
 📻 **By:** Joe Leone, W4GGJ — [tavaone.com](https://tavaone.com)  
 📄 **License:** MIT  
 🔖 **Version:** v1.8
@@ -87,7 +87,7 @@ All activations saved locally in your browser with sort options:
 1. **Activate a park** and log your contacts in your preferred software
 2. **Export your log** as an ADIF file
 3. **Rename the file to your park ID** — for example, `us-6700.adi`
-4. **Go to [w4ggj.github.io/TavaScope](https://w4ggj.github.io/TavaScope)**
+4. **Go to [tavascope.com](https://tavascope.com)**
 5. **Upload your ADIF** — park name and number are detected automatically
 6. **Explore your stats**, view your contact map, and download your images
 
