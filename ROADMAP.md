@@ -6,9 +6,9 @@ All features on this roadmap will be released under the MIT License and remain f
 
 ---
 
-## Current State — v1.7
+## Current State — v1.8
 
-TavaScope is a working, deployed web application with an active user base in the POTA community. Core capabilities include:
+TavaScope is a working, deployed web application at [w4ggj.github.io/TavaScope](https://w4ggj.github.io/TavaScope) with an active user base in the POTA community. Core capabilities include:
 
 - ADIF file import — confirmed working with QRZ.com, POTA.app, and DXKeeper
 - Automatic park name and number detection via the POTA API
@@ -16,6 +16,9 @@ TavaScope is a working, deployed web application with an active user base in the
 - Eleven stat blocks across two rows:
   - **Row 1 (Core):** Total QSOs, QSOs/Hour, Bands Used, Primary Mode, Unique Grids, Call Areas
   - **Row 2 (Insight):** Furthest QSO, Best 1-Hour Period, Hottest 15 Minutes, Most Productive Band, Most Active Mode
+- **Rate Detail Explorer** — zoomable rate chart with adjustable window sizes (15m/30m/1h/2h), scrub slider, and jump-to-peak button
+- **UTC / Local timezone toggle** — switch all chart labels and time displays between UTC and local time
+- **Built-in demo activation** — load a sample activation instantly with no file upload required
 - Interactive contact map (Leaflet.js) with grid square and DXCC prefix fallback
 - Four download formats: Blog Card, Stats Only Card, Full Dashboard, Contact Map
 - Sort and filter across saved activations (newest, oldest, most QSOs, best rate, A→Z)
@@ -28,14 +31,14 @@ TavaScope is a working, deployed web application with an active user base in the
 
 **Goal:** Formally validate TavaScope against the full range of logging software used by the POTA community and harden the parser for real-world edge cases.
 
-TavaScope already works with standard ADIF exports from QRZ.com, POTA.app, and DXKeeper. Because ADIF is a standardized format, most compliant software should work without modification. However, real-world ADIF files vary in how they handle optional fields, encoding, line endings, and POTA-specific extensions such as `MY_SIG` and `MY_SIG_INFO`.
+TavaScope already works with standard ADIF exports from QRZ.com, POTA.app, and DXKeeper. Because ADIF is a standardized format, most compliant software should work without modification. However, real-world ADIF files vary significantly in how they handle optional fields, encoding, line endings, and POTA-specific extensions such as `MY_SIG` and `MY_SIG_INFO`.
 
 Planned work:
 - Formal test suite using real ADIF samples from N1MM+, WSJT-X, Ham Radio Deluxe, Log4OM, and MacLoggerDX
 - Graceful error handling and clear user feedback for malformed or unrecognized fields
 - ADIF field normalization to handle version and dialect variations across software
 - Community ADIF sample library — operators contribute anonymized test files across software versions
-- Documentation of confirmed-compatible software with version numbers
+- Published documentation of confirmed-compatible software with version numbers
 
 This phase moves TavaScope from "works in practice" to "verified compatible" — a meaningful distinction for operators who need to trust their data.
 
@@ -77,7 +80,7 @@ Planned work:
 
 **Goal:** Make TavaScope accessible to the global ham radio community in their own languages.
 
-POTA is active in dozens of countries across six continents. The current English-only UI is a barrier for the large international community of operators in Japan, Germany, Brazil, Spain, France, and beyond.
+POTA is active in over 100 countries across six continents. The current English-only UI is a barrier for the large international community of operators in Japan, Germany, Brazil, Spain, France, and beyond.
 
 Planned work:
 - Internationalization (i18n) framework for all UI strings
@@ -119,7 +122,7 @@ Planned work:
 
 TavaScope's long-term goal is to become the standard open-source portable operations analyzer for the global amateur radio community — a neutral, privacy-respecting, community-maintained tool that any operator can use, any club can recommend, and any developer can contribute to.
 
-Amateur radio portable operations programs are growing rapidly worldwide. TavaScope aims to grow with them, remaining free, open, and operator-first.
+Amateur radio portable operations programs are growing rapidly worldwide. POTA alone has issued over 500,000 activation certificates since 2017 and has an active global community of more than 50,000 operators. TavaScope aims to grow with them, remaining free, open, and operator-first.
 
 ---
 
@@ -135,5 +138,6 @@ See [README.md](README.md) for setup instructions.
 
 | Version | Notes |
 |---------|-------|
-| v1.7 | Current release — ADIF import, POTA API park detection, contact map, 11 stat blocks, three analysis views, four download formats, browser localStorage |
+| v1.8 | Rate Detail Explorer with adjustable window and scrub slider; UTC/Local timezone toggle; built-in demo activation; persistent welcome panel as default view |
+| v1.7 | ADIF import, POTA API park detection, contact map, 11 stat blocks, three analysis views, four download formats, browser localStorage |
 | v1.0–v1.6 | Initial development and iteration |
