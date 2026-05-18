@@ -69,6 +69,51 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .drop-icon{font-size:2.5rem;margin-bottom:14px;display:block;}
 .drop-title{font-size:1rem;font-weight:700;color:var(--text-lt);margin-bottom:6px;}
 .drop-sub{font-size:0.76rem;color:var(--text-dim);font-family:var(--mono);line-height:1.6;}
+
+/* ── WELCOME PANEL ─────────────────────────────────────── */
+.welcome-panel{max-width:720px;margin:0 auto;padding:8px 0 40px;}
+.welcome-header{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:22px 26px;margin-bottom:18px;display:flex;align-items:center;gap:16px;}
+.welcome-icon{font-size:2rem;flex-shrink:0;}
+.welcome-header-text h2{font-size:1rem;font-weight:700;color:var(--text-lt);margin-bottom:3px;}
+.welcome-header-text p{font-size:0.76rem;color:var(--text-dim);font-family:var(--mono);}
+/* Filename requirement box */
+.filename-box{background:rgba(74,158,106,0.08);border:1px solid var(--green);border-radius:12px;padding:20px 24px;margin-bottom:18px;}
+.filename-box-title{font-size:0.62rem;font-family:var(--mono);font-weight:600;color:var(--green-lt);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+.filename-box-desc{font-size:0.78rem;color:var(--text);margin-bottom:14px;line-height:1.6;}
+.filename-examples{display:flex;flex-direction:column;gap:6px;}
+.filename-eg{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:0.76rem;}
+.filename-eg .badge{font-size:0.72rem;font-weight:700;width:20px;text-align:center;flex-shrink:0;}
+.filename-eg .badge.ok{color:var(--accent);}
+.filename-eg .badge.no{color:var(--red);}
+.filename-eg .fn{color:var(--text-lt);font-weight:600;}
+.filename-eg .arrow{color:var(--text-dim);}
+.filename-eg .result{color:var(--text-dim);}
+.filename-eg.bad .fn{color:var(--text-dim);}
+.filename-eg.bad .result{color:var(--red);}
+/* Two-column layout */
+.welcome-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}
+@media(max-width:600px){.welcome-cols{grid-template-columns:1fr;}}
+.welcome-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;}
+.welcome-card-title{font-size:0.6rem;font-family:var(--mono);font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:12px;display:flex;align-items:center;gap:7px;}
+.welcome-card-title .dot{width:7px;height:7px;background:var(--green-lt);border-radius:50%;flex-shrink:0;display:inline-block;}
+/* Steps */
+.step-list{display:flex;flex-direction:column;gap:10px;}
+.step-item{display:flex;align-items:flex-start;gap:10px;}
+.step-num{width:22px;height:22px;background:var(--green-dk);border:1px solid var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.62rem;font-weight:700;color:var(--accent);flex-shrink:0;font-family:var(--mono);}
+.step-text{font-size:0.76rem;color:var(--text);line-height:1.5;padding-top:2px;}
+.step-text strong{color:var(--accent);}
+/* Mode tips */
+.mode-tip-list{display:flex;flex-direction:column;gap:8px;}
+.mode-tip{padding:9px 12px;background:var(--bg3);border-radius:7px;border-left:3px solid var(--green-dk);}
+.mode-tip-name{font-size:0.62rem;font-family:var(--mono);font-weight:600;color:var(--green-lt);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px;}
+.mode-tip-desc{font-size:0.74rem;color:var(--text-dim);}
+/* Compat strip */
+.compat-strip{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.compat-label{font-size:0.6rem;font-family:var(--mono);color:var(--text-dim);text-transform:uppercase;letter-spacing:0.1em;white-space:nowrap;}
+.compat-tags{display:flex;flex-wrap:wrap;gap:7px;}
+.compat-tag{font-size:0.68rem;font-family:var(--mono);color:var(--text);background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:3px 9px;}
+.compat-tag.confirmed{border-color:var(--green-dk);color:var(--accent);}
+
 /* INFO BAR */
 .info-bar{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:18px;display:flex;flex-wrap:wrap;gap:18px;}
 .info-item{display:flex;flex-direction:column;gap:2px;}
@@ -113,7 +158,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .insight-value{font-size:1.4rem;font-weight:800;color:var(--text-lt);line-height:1.1;font-family:var(--sans);margin-bottom:4px;word-break:break-all;}
 .insight-sub{font-size:0.65rem;color:var(--text-dim);font-family:var(--mono);line-height:1.5;}
 .insight-sub .hl{color:var(--accent);}
-
 /* MAP */
 .map-card{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:14px;}
 .map-header{padding:14px 16px 10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
@@ -175,7 +219,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-track{background:var(--bg2);}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
-/* Leaflet dark override */
 .leaflet-tile-pane{filter:brightness(0.65) saturate(0.5);}
 .leaflet-popup-content-wrapper{background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:8px;font-family:var(--mono);font-size:0.72rem;}
 .leaflet-popup-tip{background:var(--card);}
@@ -184,6 +227,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 </head>
 <body>
 <div class="app">
+
 <!-- ── SIDEBAR ── -->
 <div class="sidebar">
   <div class="sidebar-header">
@@ -230,16 +274,138 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
   <div class="topbar">
     <div>
       <div class="topbar-title" id="topbarTitle">TavaScope</div>
-      <div class="topbar-sub" id="topbarSub">Upload an ADIF file to get started</div>
+      <div class="topbar-sub" id="topbarSub">POTA Activation Analyzer · W4GGJ · tavaone.com</div>
     </div>
     <div class="topbar-btns" id="topbarBtns"></div>
   </div>
   <div class="content">
+
+    <!-- Empty state: no files at all -->
     <div class="drop-zone" id="dropZone">
       <span class="drop-icon">📡</span>
       <div class="drop-title">Drop an ADIF file here or click to browse</div>
-      <div class="drop-sub">Files saved in your browser · No upload · No account<br>DXKeeper ADIF 1.0 · Park name and number auto-detected</div>
+      <div class="drop-sub">
+        Files saved in your browser · No upload · No account<br>
+        Filename must be your park ID (eg. us-6700) · QRZ.com · POTA.app · DXKeeper
+      </div>
     </div>
+
+    <!-- Welcome panel: files loaded but none selected -->
+    <div id="welcomePanel" style="display:none">
+      <div class="welcome-panel">
+
+        <!-- Header prompt -->
+        <div class="welcome-header">
+          <div class="welcome-icon">📡</div>
+          <div class="welcome-header-text">
+            <h2>Select an activation from the sidebar to view your stats</h2>
+            <p>Or upload another ADIF file using the button in the sidebar</p>
+          </div>
+        </div>
+
+        <!-- Filename requirement — prominent -->
+        <div class="filename-box">
+          <div class="filename-box-title">
+            <span>⚠</span> Filename Must Match Your Park ID
+          </div>
+          <div class="filename-box-desc">
+            TavaScope reads the park ID from your filename and looks it up in the POTA database to fill in the park name automatically. Rename your ADIF export before uploading.
+          </div>
+          <div class="filename-examples">
+            <div class="filename-eg">
+              <span class="badge ok">✓</span>
+              <span class="fn">us-6700.adi</span>
+              <span class="arrow">→</span>
+              <span class="result" style="color:var(--accent)">Sawgrass Lake Park</span>
+            </div>
+            <div class="filename-eg">
+              <span class="badge ok">✓</span>
+              <span class="fn">k-4860.adi</span>
+              <span class="arrow">→</span>
+              <span class="result" style="color:var(--accent)">Park name fetched from POTA API</span>
+            </div>
+            <div class="filename-eg bad">
+              <span class="badge no">✗</span>
+              <span class="fn">log_export.adi</span>
+              <span class="arrow">→</span>
+              <span class="result">Park not detected · no name lookup</span>
+            </div>
+            <div class="filename-eg bad">
+              <span class="badge no">✗</span>
+              <span class="fn">2026-05-17.adi</span>
+              <span class="arrow">→</span>
+              <span class="result">Park not detected · no name lookup</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Two columns: steps + mode tips -->
+        <div class="welcome-cols">
+
+          <div class="welcome-card">
+            <div class="welcome-card-title"><span class="dot"></span>How to Get Started</div>
+            <div class="step-list">
+              <div class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-text">Activate a park and log your contacts in your logging software</div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-text">Export your log as an ADIF file</div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">3</div>
+                <div class="step-text"><strong>Rename the file to your park ID</strong> — for example <strong>us-6700.adi</strong></div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">4</div>
+                <div class="step-text">Click <strong>Upload ADIF File</strong> in the sidebar or drag and drop</div>
+              </div>
+              <div class="step-item">
+                <div class="step-num">5</div>
+                <div class="step-text">Click the activation in the sidebar to view your full stats dashboard</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="welcome-card">
+            <div class="welcome-card-title"><span class="dot"></span>Analysis Modes</div>
+            <div class="mode-tip-list">
+              <div class="mode-tip">
+                <div class="mode-tip-name">Single</div>
+                <div class="mode-tip-desc">Full dashboard for one activation — stats, charts, contact map, and download images</div>
+              </div>
+              <div class="mode-tip">
+                <div class="mode-tip-name">Combined</div>
+                <div class="mode-tip-desc">Select two or more activations to merge all QSOs into a single unified stats view</div>
+              </div>
+              <div class="mode-tip">
+                <div class="mode-tip-name">Compare</div>
+                <div class="mode-tip-desc">Select up to six activations and see them side by side with overlapping rate charts</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Compatible software strip -->
+        <div class="compat-strip">
+          <div class="compat-label">Works with</div>
+          <div class="compat-tags">
+            <span class="compat-tag confirmed">QRZ.com ✓</span>
+            <span class="compat-tag confirmed">POTA.app ✓</span>
+            <span class="compat-tag confirmed">DXKeeper ✓</span>
+            <span class="compat-tag">N1MM+</span>
+            <span class="compat-tag">WSJT-X</span>
+            <span class="compat-tag">Ham Radio Deluxe</span>
+            <span class="compat-tag">Log4OM</span>
+            <span class="compat-tag">+ more</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <div id="statsView" style="display:none"></div>
     <div id="compareView" style="display:none"></div>
   </div>
@@ -268,17 +434,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 </div>
 
 <script>
-// ── CONFIG ─────────────────────────────────────────────────────────────────
-const MY_GRID_FALLBACK = "EL87PT";  // W4GGJ home grid — only used for map display if ADIF has no MY_GRIDSQUARE
+const MY_GRID_FALLBACK = "EL87PT";
 const MY_CALL = "W4GGJ";
 
-// Band colors for map
 const BAND_COLORS = {
   '160M':'#e57373','80M':'#ff8a65','40M':'#ffb74d','30M':'#fff176',
   '20M':'#81c784','17M':'#4dd0e1','15M':'#64b5f6','12M':'#9575cd',
   '10M':'#f06292','6M':'#a5d6a7','2M':'#80cbc4','?':'#7a9485'
 };
-
 const COMPARE_COLORS = ['#5eba7d','#64b5f6','#ffb74d','#f06292','#ba68c8','#4dd0e1'];
 
 Chart.defaults.color = '#7a9485';
@@ -286,7 +449,7 @@ Chart.defaults.borderColor = '#3d4f47';
 Chart.defaults.font.family = "'JetBrains Mono', monospace";
 Chart.defaults.font.size = 11;
 
-const STORAGE_INDEX = "tavascope_index";
+const STORAGE_INDEX  = "tavascope_index";
 const STORAGE_PREFIX = "tavascope_file_";
 
 let charts   = [];
@@ -295,20 +458,39 @@ let mode     = 'single';
 let selected = new Set();
 let currentData = null;
 
-// ── STORAGE ────────────────────────────────────────────────────────────────
-const getIndex = () => { try{ return JSON.parse(localStorage.getItem(STORAGE_INDEX)||'[]'); }catch(e){ return []; } };
-const saveIndex = idx => localStorage.setItem(STORAGE_INDEX, JSON.stringify(idx));
-const saveFile  = (id,t) => localStorage.setItem(STORAGE_PREFIX+id, t);
-const loadFile  = id => localStorage.getItem(STORAGE_PREFIX+id)||'';
+const getIndex   = () => { try{ return JSON.parse(localStorage.getItem(STORAGE_INDEX)||'[]'); }catch(e){ return []; } };
+const saveIndex  = idx => localStorage.setItem(STORAGE_INDEX, JSON.stringify(idx));
+const saveFile   = (id,t) => localStorage.setItem(STORAGE_PREFIX+id, t);
+const loadFile   = id => localStorage.getItem(STORAGE_PREFIX+id)||'';
 const deleteFile = id => { localStorage.removeItem(STORAGE_PREFIX+id); saveIndex(getIndex().filter(f=>f.id!==id)); };
 const uid = () => Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 
+// ── PANEL VISIBILITY ───────────────────────────────────────────────────────
+function showWelcome() {
+  document.getElementById('dropZone').style.display    = 'none';
+  document.getElementById('welcomePanel').style.display = 'block';
+  document.getElementById('statsView').style.display   = 'none';
+  document.getElementById('compareView').style.display  = 'none';
+  document.getElementById('topbarTitle').textContent   = 'TavaScope';
+  document.getElementById('topbarSub').textContent     = 'POTA Activation Analyzer · W4GGJ · tavaone.com';
+  document.getElementById('topbarBtns').innerHTML      = '';
+}
+
+function hideWelcome() {
+  document.getElementById('welcomePanel').style.display = 'none';
+}
+
+function showDrop() {
+  document.getElementById('dropZone').style.display    = 'block';
+  document.getElementById('welcomePanel').style.display = 'none';
+  document.getElementById('statsView').style.display   = 'none';
+  document.getElementById('compareView').style.display  = 'none';
+}
+
 // ── PARK REF EXTRACTION ────────────────────────────────────────────────────
 function extractParkRef(filename) {
-  // Match US-XXXX pattern anywhere in filename — preserve leading zeros
   const m = filename.toUpperCase().match(/\bUS-?(\d{4,5})\b/);
   if (m) return `US-${m[1]}`;
-  // Also try without dash
   const m2 = filename.toUpperCase().match(/US(\d{4,5})/);
   if (m2) return `US-${m2[1]}`;
   return null;
@@ -324,19 +506,14 @@ async function fetchParkName(parkRef) {
     clearTimeout(timer);
     if (!res.ok) return null;
     const data = await res.json();
-    // POTA API splits name across multiple fields
-    // Try to build the most complete name possible
-    const name        = data.name        || '';
-    const descriptor  = data.parktypeDesc|| data.descriptor || '';
-    const longName    = data.longName    || data.parkName   || '';
-    const locName     = data.locationName|| '';
-    // If longName exists and is longer use it
+    const name       = data.name        || '';
+    const descriptor = data.parktypeDesc|| data.descriptor || '';
+    const longName   = data.longName    || data.parkName   || '';
+    const locName    = data.locationName|| '';
     if (longName && longName.length > name.length) return longName;
-    // If descriptor adds meaningful info append it
     if (name && descriptor && !name.toLowerCase().includes(descriptor.toLowerCase())) {
       return (name + ' ' + descriptor).trim();
     }
-    // Fallback to whatever we have
     return longName || name || locName || null;
   } catch(e) { return null; }
 }
@@ -358,52 +535,41 @@ function gridToLatLon(grid) {
   return { lat: lat + 0.5, lon: lon + 1 };
 }
 
-// ── DXCC PREFIX → APPROXIMATE LAT/LON ─────────────────────────────────────
+// ── DXCC PREFIX → LAT/LON ─────────────────────────────────────────────────
 const DXCC_PREFIXES = {
-  // North America
-  'W':  {lat:38,lon:-97,name:'USA'}, 'K':  {lat:38,lon:-97,name:'USA'}, 'N':  {lat:38,lon:-97,name:'USA'},
-  'AA': {lat:38,lon:-97,name:'USA'}, 'VE': {lat:56,lon:-96,name:'Canada'}, 'XE': {lat:23,lon:-102,name:'Mexico'},
-  'KL': {lat:64,lon:-153,name:'Alaska'}, 'KH': {lat:21,lon:-157,name:'Hawaii'},
-  // Europe
-  'G': {lat:52,lon:-1,name:'England'}, 'GM': {lat:57,lon:-4,name:'Scotland'},
-  'GW': {lat:52,lon:-3.5,name:'Wales'}, 'GI': {lat:54.5,lon:-6.5,name:'N.Ireland'},
-  'F': {lat:47,lon:2,name:'France'}, 'DL': {lat:51,lon:10,name:'Germany'},
-  'ON': {lat:50.5,lon:4,name:'Belgium'}, 'PA': {lat:52,lon:5,name:'Netherlands'},
-  'OZ': {lat:56,lon:10,name:'Denmark'}, 'SM': {lat:60,lon:15,name:'Sweden'},
-  'OH': {lat:62,lon:26,name:'Finland'}, 'LA': {lat:62,lon:10,name:'Norway'},
-  'TF': {lat:65,lon:-18,name:'Iceland'}, 'EI': {lat:53,lon:-8,name:'Ireland'},
-  'SP': {lat:52,lon:20,name:'Poland'}, 'OK': {lat:50,lon:15,name:'Czech Rep'},
-  'OM': {lat:48.5,lon:19,name:'Slovakia'}, 'HA': {lat:47,lon:19,name:'Hungary'},
-  'OE': {lat:47.5,lon:14,name:'Austria'}, 'HB': {lat:47,lon:8,name:'Switzerland'},
-  'I':  {lat:42,lon:12,name:'Italy'}, 'EA': {lat:40,lon:-4,name:'Spain'},
-  'CT': {lat:39,lon:-8,name:'Portugal'}, 'SV': {lat:38,lon:23,name:'Greece'},
-  'YO': {lat:45,lon:25,name:'Romania'}, 'LZ': {lat:42.5,lon:25,name:'Bulgaria'},
-  'UA': {lat:60,lon:50,name:'Russia'}, 'UR': {lat:49,lon:32,name:'Ukraine'},
-  // South America
-  'PY': {lat:-10,lon:-53,name:'Brazil'}, 'LU': {lat:-34,lon:-64,name:'Argentina'},
-  'CE': {lat:-30,lon:-71,name:'Chile'}, 'OA': {lat:-9.5,lon:-76,name:'Peru'},
-  'HC': {lat:-1.5,lon:-78,name:'Ecuador'}, 'YV': {lat:8,lon:-66,name:'Venezuela'},
-  // Asia/Pacific
-  'JA': {lat:36,lon:138,name:'Japan'}, 'HL': {lat:36,lon:128,name:'South Korea'},
-  'BY': {lat:35,lon:103,name:'China'}, 'VK': {lat:-27,lon:133,name:'Australia'},
-  'ZL': {lat:-42,lon:172,name:'New Zealand'}, 'DU': {lat:12,lon:122,name:'Philippines'},
-  'YB': {lat:-5,lon:120,name:'Indonesia'}, 'VS6':{lat:22,lon:114,name:'Hong Kong'},
-  '9V': {lat:1.3,lon:103.8,name:'Singapore'},'4X': {lat:31,lon:35,name:'Israel'},
-  'VU': {lat:20,lon:77,name:'India'}, 'A4': {lat:23,lon:58,name:'Oman'},
-  // Africa
-  'ZS': {lat:-29,lon:25,name:'S.Africa'}, 'EA8':{lat:28,lon:-15,name:'Canary Is'},
-  '5B': {lat:35,lon:33,name:'Cyprus'}
+  'W':{lat:38,lon:-97,name:'USA'},'K':{lat:38,lon:-97,name:'USA'},'N':{lat:38,lon:-97,name:'USA'},
+  'AA':{lat:38,lon:-97,name:'USA'},'VE':{lat:56,lon:-96,name:'Canada'},'XE':{lat:23,lon:-102,name:'Mexico'},
+  'KL':{lat:64,lon:-153,name:'Alaska'},'KH':{lat:21,lon:-157,name:'Hawaii'},
+  'G':{lat:52,lon:-1,name:'England'},'GM':{lat:57,lon:-4,name:'Scotland'},
+  'GW':{lat:52,lon:-3.5,name:'Wales'},'GI':{lat:54.5,lon:-6.5,name:'N.Ireland'},
+  'F':{lat:47,lon:2,name:'France'},'DL':{lat:51,lon:10,name:'Germany'},
+  'ON':{lat:50.5,lon:4,name:'Belgium'},'PA':{lat:52,lon:5,name:'Netherlands'},
+  'OZ':{lat:56,lon:10,name:'Denmark'},'SM':{lat:60,lon:15,name:'Sweden'},
+  'OH':{lat:62,lon:26,name:'Finland'},'LA':{lat:62,lon:10,name:'Norway'},
+  'TF':{lat:65,lon:-18,name:'Iceland'},'EI':{lat:53,lon:-8,name:'Ireland'},
+  'SP':{lat:52,lon:20,name:'Poland'},'OK':{lat:50,lon:15,name:'Czech Rep'},
+  'OM':{lat:48.5,lon:19,name:'Slovakia'},'HA':{lat:47,lon:19,name:'Hungary'},
+  'OE':{lat:47.5,lon:14,name:'Austria'},'HB':{lat:47,lon:8,name:'Switzerland'},
+  'I':{lat:42,lon:12,name:'Italy'},'EA':{lat:40,lon:-4,name:'Spain'},
+  'CT':{lat:39,lon:-8,name:'Portugal'},'SV':{lat:38,lon:23,name:'Greece'},
+  'YO':{lat:45,lon:25,name:'Romania'},'LZ':{lat:42.5,lon:25,name:'Bulgaria'},
+  'UA':{lat:60,lon:50,name:'Russia'},'UR':{lat:49,lon:32,name:'Ukraine'},
+  'PY':{lat:-10,lon:-53,name:'Brazil'},'LU':{lat:-34,lon:-64,name:'Argentina'},
+  'CE':{lat:-30,lon:-71,name:'Chile'},'OA':{lat:-9.5,lon:-76,name:'Peru'},
+  'HC':{lat:-1.5,lon:-78,name:'Ecuador'},'YV':{lat:8,lon:-66,name:'Venezuela'},
+  'JA':{lat:36,lon:138,name:'Japan'},'HL':{lat:36,lon:128,name:'South Korea'},
+  'BY':{lat:35,lon:103,name:'China'},'VK':{lat:-27,lon:133,name:'Australia'},
+  'ZL':{lat:-42,lon:172,name:'New Zealand'},'DU':{lat:12,lon:122,name:'Philippines'},
+  'YB':{lat:-5,lon:120,name:'Indonesia'},'VS6':{lat:22,lon:114,name:'Hong Kong'},
+  '9V':{lat:1.3,lon:103.8,name:'Singapore'},'4X':{lat:31,lon:35,name:'Israel'},
+  'VU':{lat:20,lon:77,name:'India'},'A4':{lat:23,lon:58,name:'Oman'},
+  'ZS':{lat:-29,lon:25,name:'S.Africa'},'EA8':{lat:28,lon:-15,name:'Canary Is'},
+  '5B':{lat:35,lon:33,name:'Cyprus'}
 };
-
 function dxccLatLon(call) {
   if (!call) return null;
   const c = call.toUpperCase();
-  // Try longest prefix first (up to 3 chars + digit)
-  for (let len = 4; len >= 1; len--) {
-    const pfx = c.slice(0, len);
-    if (DXCC_PREFIXES[pfx]) return DXCC_PREFIXES[pfx];
-  }
-  // US portable prefix (W0-W9, K0-K9, N0-N9, AA-AL)
+  for (let len=4;len>=1;len--) { const pfx=c.slice(0,len); if(DXCC_PREFIXES[pfx])return DXCC_PREFIXES[pfx]; }
   if (/^[WKNA]/.test(c)) return DXCC_PREFIXES['W'];
   return null;
 }
@@ -413,430 +579,276 @@ function parseADIF(text) {
   if (!text || typeof text !== 'string') return [];
   var body = text;
   var upText = text.toUpperCase();
-  // Strip header — everything before <EOH>
   var eohIdx = upText.indexOf('<EOH>');
   if (eohIdx !== -1) body = text.substring(eohIdx + 5);
   var records = [];
-  // Split on <EOR> case-insensitive
   var chunks = body.split(/<[Ee][Oo][Rr]>/);
-  for (var ci = 0; ci < chunks.length; ci++) {
-    var chunk = chunks[ci];
-    if (!chunk || !chunk.trim()) continue;
-    var rec = {};
-    // Match ADIF fields: <FIELDNAME:LENGTH>VALUE or <FIELDNAME>VALUE
-    // Use a simple state machine approach for reliability
-    var pos = 0;
-    while (pos < chunk.length) {
-      var ltIdx = chunk.indexOf('<', pos);
-      if (ltIdx === -1) break;
-      var gtIdx = chunk.indexOf('>', ltIdx);
-      if (gtIdx === -1) break;
-      var tag = chunk.substring(ltIdx + 1, gtIdx);
-      // Parse tag: FIELDNAME or FIELDNAME:LENGTH or FIELDNAME:LENGTH:TYPE
-      var parts = tag.split(':');
-      var fieldName = parts[0].toUpperCase().trim();
-      if (!fieldName || fieldName === 'EOR' || fieldName === 'EOH') { pos = gtIdx + 1; continue; }
-      var fieldLen = parts.length > 1 ? parseInt(parts[1]) : -1;
-      var startVal = gtIdx + 1;
-      var value = '';
-      if (!isNaN(fieldLen) && fieldLen >= 0) {
-        value = chunk.substring(startVal, startVal + fieldLen);
-        pos = startVal + fieldLen;
-      } else {
-        // No length — read until next < or end
-        var nextLt = chunk.indexOf('<', startVal);
-        value = nextLt === -1 ? chunk.substring(startVal) : chunk.substring(startVal, nextLt);
-        pos = nextLt === -1 ? chunk.length : nextLt;
-      }
-      rec[fieldName] = value.trim();
+  for (var ci=0;ci<chunks.length;ci++) {
+    var chunk=chunks[ci]; if(!chunk||!chunk.trim())continue;
+    var rec={}; var pos=0;
+    while(pos<chunk.length){
+      var ltIdx=chunk.indexOf('<',pos); if(ltIdx===-1)break;
+      var gtIdx=chunk.indexOf('>',ltIdx); if(gtIdx===-1)break;
+      var tag=chunk.substring(ltIdx+1,gtIdx);
+      var parts=tag.split(':'); var fieldName=parts[0].toUpperCase().trim();
+      if(!fieldName||fieldName==='EOR'||fieldName==='EOH'){pos=gtIdx+1;continue;}
+      var fieldLen=parts.length>1?parseInt(parts[1]):-1;
+      var startVal=gtIdx+1; var value='';
+      if(!isNaN(fieldLen)&&fieldLen>=0){value=chunk.substring(startVal,startVal+fieldLen);pos=startVal+fieldLen;}
+      else{var nextLt=chunk.indexOf('<',startVal);value=nextLt===-1?chunk.substring(startVal):chunk.substring(startVal,nextLt);pos=nextLt===-1?chunk.length:nextLt;}
+      rec[fieldName]=value.trim();
     }
-    if (rec['CALL'] && rec['CALL'].length > 0) records.push(rec);
+    if(rec['CALL']&&rec['CALL'].length>0)records.push(rec);
   }
   return records;
 }
 
-const fmtDate = d => (!d||d.length<8)?d||'': `${d.slice(4,6)}/${d.slice(6,8)}/${d.slice(0,4)}`;
-const fmtTime = t => (!t||t.length<4)?t||'': `${t.slice(0,2)}:${t.slice(2,4)}Z`;
-const toMins  = t => t&&t.length>=4 ? parseInt(t.slice(0,2))*60+parseInt(t.slice(2,4)) : null;
-const getHour = t => t&&t.length>=2 ? parseInt(t.slice(0,2)) : null;
+const fmtDate=d=>(!d||d.length<8)?d||'':`${d.slice(4,6)}/${d.slice(6,8)}/${d.slice(0,4)}`;
+const fmtTime=t=>(!t||t.length<4)?t||'':`${t.slice(0,2)}:${t.slice(2,4)}Z`;
+const toMins =t=>t&&t.length>=4?parseInt(t.slice(0,2))*60+parseInt(t.slice(2,4)):null;
+const getHour=t=>t&&t.length>=2?parseInt(t.slice(0,2)):null;
 
-// ── HAVERSINE DISTANCE ────────────────────────────────────────────────────
-function haversineKm(lat1, lon1, lat2, lon2) {
-  const R=6371, dLat=(lat2-lat1)*Math.PI/180, dLon=(lon2-lon1)*Math.PI/180;
+function haversineKm(lat1,lon1,lat2,lon2){
+  const R=6371,dLat=(lat2-lat1)*Math.PI/180,dLon=(lon2-lon1)*Math.PI/180;
   const a=Math.sin(dLat/2)**2+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
   return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
 }
 
 // ── ANALYZE ────────────────────────────────────────────────────────────────
-function analyze(records, name, parkRef, parkName) {
+function analyze(records,name,parkRef,parkName){
   const byBand={},byMode={},byHour={},byArea={},rst={},grids={};
-  const times=[], contacts=[];
-  let fMin=Infinity, lMin=-Infinity;
-
-  records.forEach(r => {
-    const band = (r['BAND']||'?').toUpperCase();
-    byBand[band] = (byBand[band]||0)+1;
-    const mode = (r['MODE']||r['SUBMODE']||'?').toUpperCase();
-    byMode[mode] = (byMode[mode]||0)+1;
-    const hr = getHour(r['TIME_ON']||'');
-    if (hr !== null) byHour[hr] = (byHour[hr]||0)+1;
-    const mn = toMins(r['TIME_ON']||'');
-    if (mn !== null) { times.push(mn); if(mn<fMin)fMin=mn; if(mn>lMin)lMin=mn; }
-    const call = r['CALL']||'';
-    const dm = call.match(/(\d)/)?.[1]||'?';
-    const ak = (/[A-Z]/i.test(call[0])&&/\d/.test(dm)) ? `${call[0].toUpperCase()}${dm}` : call[0]?.toUpperCase()||'?';
-    byArea[ak] = (byArea[ak]||0)+1;
-    const rv = r['RST_SENT']||r['RST']||'?';
-    rst[rv] = (rst[rv]||0)+1;
-    const g = (r['GRIDSQUARE']||r['GRID']||'').toUpperCase().slice(0,6);
-    if (g.length >= 4) grids[g] = (grids[g]||0)+1;
-    // Build contact for map
-    contacts.push({call, band, mode, rst: rv, time: fmtTime(r['TIME_ON']||''), grid: g||null});
+  const times=[],contacts=[];
+  let fMin=Infinity,lMin=-Infinity;
+  records.forEach(r=>{
+    const band=(r['BAND']||'?').toUpperCase(); byBand[band]=(byBand[band]||0)+1;
+    const mode=(r['MODE']||r['SUBMODE']||'?').toUpperCase(); byMode[mode]=(byMode[mode]||0)+1;
+    const hr=getHour(r['TIME_ON']||''); if(hr!==null)byHour[hr]=(byHour[hr]||0)+1;
+    const mn=toMins(r['TIME_ON']||'');
+    if(mn!==null){times.push(mn);if(mn<fMin)fMin=mn;if(mn>lMin)lMin=mn;}
+    const call=r['CALL']||'';
+    const dm=call.match(/(\d)/)?.[1]||'?';
+    const ak=(/[A-Z]/i.test(call[0])&&/\d/.test(dm))?`${call[0].toUpperCase()}${dm}`:call[0]?.toUpperCase()||'?';
+    byArea[ak]=(byArea[ak]||0)+1;
+    const rv=r['RST_SENT']||r['RST']||'?'; rst[rv]=(rst[rv]||0)+1;
+    const g=(r['GRIDSQUARE']||r['GRID']||'').toUpperCase().slice(0,6);
+    if(g.length>=4)grids[g]=(grids[g]||0)+1;
+    contacts.push({call,band,mode,rst:rv,time:fmtTime(r['TIME_ON']||''),grid:g||null});
   });
-
-  const bins=[], BS=10;
-  if (fMin < Infinity) {
-    const s=Math.floor(fMin/BS)*BS, e=Math.ceil(lMin/BS)*BS;
-    for (let m=s; m<=e; m+=BS) {
-      const hh=String(Math.floor(m/60)).padStart(2,'0'), mm=String(m%60).padStart(2,'0');
-      bins.push({label:`${hh}:${mm}`, count:times.filter(t=>t>=m&&t<m+BS).length});
+  const bins=[],BS=10;
+  if(fMin<Infinity){
+    const s=Math.floor(fMin/BS)*BS,e=Math.ceil(lMin/BS)*BS;
+    for(let m=s;m<=e;m+=BS){
+      const hh=String(Math.floor(m/60)).padStart(2,'0'),mm=String(m%60).padStart(2,'0');
+      bins.push({label:`${hh}:${mm}`,count:times.filter(t=>t>=m&&t<m+BS).length});
     }
   }
   const dur=lMin-fMin;
   const sorted=[...records].sort((a,b)=>(a['TIME_ON']||'')<(b['TIME_ON']||'')?-1:1);
-  const detectedPark = records[0]?.['POTA_REF']||records[0]?.['SIG_INFO']||records[0]?.['MY_SIG_INFO']||parkRef||'—';
-
-  // ── Extra insight stats ───────────────────────────────────────────────
-  // QTH for distance: use MY_GRIDSQUARE from ADIF, then MY_LAT/MY_LON, then null (no fallback to home)
-  let myPos2 = null;
-  const adifMyGrid = records[0]?.['MY_GRIDSQUARE']||records[0]?.['MY_GRID']||null;
-  if (adifMyGrid) {
-    myPos2 = gridToLatLon(adifMyGrid);
-  }
-  // Try MY_LAT / MY_LON fields if grid not available
-  if (!myPos2) {
-    const myLat = parseFloat(records[0]?.['MY_LAT']||'');
-    const myLon = parseFloat(records[0]?.['MY_LON']||'');
-    if (!isNaN(myLat) && !isNaN(myLon)) myPos2 = {lat:myLat, lon:myLon};
-  }
-
-  // Furthest QSO — only if we have activation QTH from ADIF
-  let furthestDist = 0, furthestCall = '—', furthestBand = '', furthestMode = '', furthestGrid = '';
-  const noGridMsg = myPos2 ? '' : 'Add MY_GRIDSQUARE to ADIF for distance';
-  if (myPos2) {
-    contacts.forEach(ct => {
-      const pos = ct.grid && ct.grid.length >= 4 ? gridToLatLon(ct.grid) : null;
-      if (!pos) return;
-      const d = haversineKm(myPos2.lat, myPos2.lon, pos.lat, pos.lon);
-      if (d > furthestDist) { furthestDist=d; furthestCall=ct.call; furthestBand=ct.band; furthestMode=ct.mode; furthestGrid=ct.grid; }
-    });
-  }
-
-  // Best 1-hour & hottest 15-min (sliding window over sorted times in minutes)
-  const sortedTimes = times.slice().sort((a,b)=>a-b);
-  let best60=0, best60Start=null, best15=0, best15Start=null;
-  sortedTimes.forEach((t,i) => {
-    const end60 = t+60, end15 = t+15;
-    const c60 = sortedTimes.filter(x=>x>=t&&x<end60).length;
-    const c15 = sortedTimes.filter(x=>x>=t&&x<end15).length;
-    if (c60 > best60) { best60=c60; best60Start=t; }
-    if (c15 > best15) { best15=c15; best15Start=t; }
+  const detectedPark=records[0]?.['POTA_REF']||records[0]?.['SIG_INFO']||records[0]?.['MY_SIG_INFO']||parkRef||'—';
+  let myPos2=null;
+  const adifMyGrid=records[0]?.['MY_GRIDSQUARE']||records[0]?.['MY_GRID']||null;
+  if(adifMyGrid)myPos2=gridToLatLon(adifMyGrid);
+  if(!myPos2){const myLat=parseFloat(records[0]?.['MY_LAT']||''),myLon=parseFloat(records[0]?.['MY_LON']||'');if(!isNaN(myLat)&&!isNaN(myLon))myPos2={lat:myLat,lon:myLon};}
+  let furthestDist=0,furthestCall='—',furthestBand='',furthestMode='',furthestGrid='';
+  if(myPos2){contacts.forEach(ct=>{const pos=ct.grid&&ct.grid.length>=4?gridToLatLon(ct.grid):null;if(!pos)return;const d=haversineKm(myPos2.lat,myPos2.lon,pos.lat,pos.lon);if(d>furthestDist){furthestDist=d;furthestCall=ct.call;furthestBand=ct.band;furthestMode=ct.mode;furthestGrid=ct.grid;}});}
+  const sortedTimes=times.slice().sort((a,b)=>a-b);
+  let best60=0,best60Start=null,best15=0,best15Start=null;
+  sortedTimes.forEach((t)=>{
+    const c60=sortedTimes.filter(x=>x>=t&&x<t+60).length;
+    const c15=sortedTimes.filter(x=>x>=t&&x<t+15).length;
+    if(c60>best60){best60=c60;best60Start=t;}
+    if(c15>best15){best15=c15;best15Start=t;}
   });
-  const fmtMins = m => { if(m===null)return'—'; const h=String(Math.floor(m/60)).padStart(2,'0'),mm=String(m%60).padStart(2,'0'); return `${h}:${mm}Z`; };
-
-  // Most productive band & mode already in byBand/byMode
-  const topBandKey = Object.keys(byBand).sort((a,b)=>byBand[b]-byBand[a])[0]||'—';
-  const topModeKey = Object.keys(byMode).sort((a,b)=>byMode[b]-byMode[a])[0]||'—';
-
-  return {
-    name: name||'Activation', total:records.length, byBand, byMode, byHour, byArea, rst, grids, bins, contacts,
-    durStr: dur>0?`${Math.floor(dur/60)}h ${dur%60}m`:'—',
-    rate: dur>0?((records.length/dur)*60).toFixed(1):'—',
-    parkRef: detectedPark,
-    parkName: parkName||'',
-    date: fmtDate(records[0]?.['QSO_DATE']||''),
-    myCall: records[0]?.['STATION_CALLSIGN']||records[0]?.['OPERATOR']||MY_CALL,  // MY_CALL constant fallback only for display
-    myGrid: records[0]?.['MY_GRIDSQUARE']||records[0]?.['MY_GRID']||null, // null = not in ADIF, do not assume home QTH
-    firstQ: fmtTime(sorted[0]?.['TIME_ON']||''),
-    lastQ:  fmtTime(sorted[sorted.length-1]?.['TIME_ON']||''),
-    records: sorted,
-    // Insight stats
-    furthest: { call:furthestCall, km:Math.round(furthestDist), mi:Math.round(furthestDist*0.621371), band:furthestBand, mode:furthestMode, grid:furthestGrid, noGrid:!myPos2 },
-    best60: { count:best60, startTime:fmtMins(best60Start) },
-    best15: { count:best15, startTime:fmtMins(best15Start), rateEq: best60Start!==null ? Math.round((best15/15)*60) : 0 },
-    topBand: { name:topBandKey, count:byBand[topBandKey]||0 },
-    topMode: { name:topModeKey, count:byMode[topModeKey]||0 },
+  const fmtMins=m=>{if(m===null)return'—';const h=String(Math.floor(m/60)).padStart(2,'0'),mm=String(m%60).padStart(2,'0');return`${h}:${mm}Z`;};
+  const topBandKey=Object.keys(byBand).sort((a,b)=>byBand[b]-byBand[a])[0]||'—';
+  const topModeKey=Object.keys(byMode).sort((a,b)=>byMode[b]-byMode[a])[0]||'—';
+  return{
+    name:name||'Activation',total:records.length,byBand,byMode,byHour,byArea,rst,grids,bins,contacts,
+    durStr:dur>0?`${Math.floor(dur/60)}h ${dur%60}m`:'—',
+    rate:dur>0?((records.length/dur)*60).toFixed(1):'—',
+    parkRef:detectedPark,parkName:parkName||'',
+    date:fmtDate(records[0]?.['QSO_DATE']||''),
+    myCall:records[0]?.['STATION_CALLSIGN']||records[0]?.['OPERATOR']||MY_CALL,
+    myGrid:records[0]?.['MY_GRIDSQUARE']||records[0]?.['MY_GRID']||null,
+    firstQ:fmtTime(sorted[0]?.['TIME_ON']||''),lastQ:fmtTime(sorted[sorted.length-1]?.['TIME_ON']||''),
+    records:sorted,
+    furthest:{call:furthestCall,km:Math.round(furthestDist),mi:Math.round(furthestDist*0.621371),band:furthestBand,mode:furthestMode,grid:furthestGrid,noGrid:!myPos2},
+    best60:{count:best60,startTime:fmtMins(best60Start)},
+    best15:{count:best15,startTime:fmtMins(best15Start),rateEq:best15Start!==null?Math.round((best15/15)*60):0},
+    topBand:{name:topBandKey,count:byBand[topBandKey]||0},
+    topMode:{name:topModeKey,count:byMode[topModeKey]||0},
   };
 }
 
 // ── SIDEBAR ────────────────────────────────────────────────────────────────
-function renderSidebar() {
-  let idx = getIndex();
-  // Update file count badge
-  const countEl  = document.getElementById('sidebarCount');
-  const countNum = document.getElementById('fileCountNum');
-  if (countEl && countNum) {
-    if (idx.length > 0) {
-      countEl.style.display = 'block';
-      countNum.textContent  = idx.length;
-    } else {
-      countEl.style.display = 'none';
-    }
-  }
-  const list = document.getElementById('fileList');
-  if (!idx.length) {
-    list.innerHTML = '<div class="no-files">No files yet.<br>Upload an ADIF to get started.<br><span style="font-size:0.6rem;color:var(--text-dim)">Files are saved in this browser only.<br>Re-upload if you switched browsers.</span></div>';
+function renderSidebar(){
+  let idx=getIndex();
+  const countEl=document.getElementById('sidebarCount');
+  const countNum=document.getElementById('fileCountNum');
+  if(countEl&&countNum){if(idx.length>0){countEl.style.display='block';countNum.textContent=idx.length;}else{countEl.style.display='none';}}
+  const list=document.getElementById('fileList');
+  if(!idx.length){
+    list.innerHTML='<div class="no-files">No files yet.<br>Upload an ADIF to get started.<br><span style="font-size:0.6rem;color:var(--text-dim)">Files are saved in this browser only.<br>Re-upload if you switched browsers.</span></div>';
     return;
   }
-  // Sort
-  const sortVal = document.getElementById('sortSelect')?.value || 'newest';
-  idx = [...idx].sort((a,b) => {
-    if (sortVal === 'newest')    return (b.date||'').localeCompare(a.date||'');
-    if (sortVal === 'oldest')    return (a.date||'').localeCompare(b.date||'');
-    if (sortVal === 'qso_high')  return (b.totalQSOs||0) - (a.totalQSOs||0);
-    if (sortVal === 'qso_low')   return (a.totalQSOs||0) - (b.totalQSOs||0);
-    if (sortVal === 'rate_high') return parseFloat(b.rate||0) - parseFloat(a.rate||0);
-    if (sortVal === 'name_az')   return (a.parkName||a.parkRef||a.name||'').localeCompare(b.parkName||b.parkRef||b.name||'');
+  const sortVal=document.getElementById('sortSelect')?.value||'newest';
+  idx=[...idx].sort((a,b)=>{
+    if(sortVal==='newest')return(b.date||'').localeCompare(a.date||'');
+    if(sortVal==='oldest')return(a.date||'').localeCompare(b.date||'');
+    if(sortVal==='qso_high')return(b.totalQSOs||0)-(a.totalQSOs||0);
+    if(sortVal==='qso_low')return(a.totalQSOs||0)-(b.totalQSOs||0);
+    if(sortVal==='rate_high')return parseFloat(b.rate||0)-parseFloat(a.rate||0);
+    if(sortVal==='name_az')return(a.parkName||a.parkRef||a.name||'').localeCompare(b.parkName||b.parkRef||b.name||'');
     return 0;
   });
-  const inSel = (mode==='combine'||mode==='compare');
-  list.innerHTML = idx.map(f => `
+  const inSel=(mode==='combine'||mode==='compare');
+  list.innerHTML=idx.map(f=>`
     <div class="file-item ${inSel?'select-mode':''} ${selected.has(f.id)?'selected':''}"
          id="fi_${f.id}" onclick="fileClick('${f.id}')">
       ${inSel?`<input type="checkbox" class="file-checkbox" ${selected.has(f.id)?'checked':''} onclick="event.stopPropagation();fileClick('${f.id}')">`:''}
-      ${(f.parkRef&&f.parkRef!=='—')?`<div class="file-park-ref">${f.parkRef}</div>`:((f.name?`<div class="file-park-ref" style="color:var(--text-dim)">${f.name.replace(/\.[^.]+$/,'').substring(0,28)}</div>`:'' ))}
+      ${(f.parkRef&&f.parkRef!=='—')?`<div class="file-park-ref">${f.parkRef}</div>`:((f.name?`<div class="file-park-ref" style="color:var(--text-dim)">${f.name.replace(/\.[^.]+$/,'').substring(0,28)}</div>`:''))}
       <div class="file-park-name">${f.parkName||(f.parkRef&&f.parkRef!=='—'?f.parkRef:'')||f.name?.replace(/\.[^.]+$/,'')||'Unknown Park'}</div>
       <div class="file-meta">${f.date||''} · ${f.durStr||''}</div>
       <div class="file-qsos">${f.totalQSOs} QSOs · ${f.rate}/hr</div>
       <button class="file-del" onclick="event.stopPropagation();confirmDelete('${f.id}','${(f.parkName||f.parkRef||f.name||'').replace(/'/g,"\\'")}')">✕</button>
     </div>`).join('');
-
-  const hint = document.getElementById('modeHint');
-  const btn  = document.getElementById('actionBtn');
-  if (mode==='single') { hint.textContent='Click a file to view its stats'; btn.style.display='none'; }
-  else if (mode==='combine') {
-    hint.textContent=`${selected.size} file(s) selected`;
-    btn.textContent='View Combined Stats';
-    btn.style.display=selected.size>=2?'block':'none';
-  } else {
-    hint.textContent=`${selected.size}/6 selected (need 2+)`;
-    btn.textContent='Compare Selected';
-    btn.style.display=selected.size>=2?'block':'none';
-  }
+  const hint=document.getElementById('modeHint');
+  const btn=document.getElementById('actionBtn');
+  if(mode==='single'){hint.textContent='Click a file to view its stats';btn.style.display='none';}
+  else if(mode==='combine'){hint.textContent=`${selected.size} file(s) selected`;btn.textContent='View Combined Stats';btn.style.display=selected.size>=2?'block':'none';}
+  else{hint.textContent=`${selected.size}/6 selected (need 2+)`;btn.textContent='Compare Selected';btn.style.display=selected.size>=2?'block':'none';}
 }
 
-function fileClick(id) {
-  if (mode==='single') {
-    const text=loadFile(id); if(!text) return;
-    const idx=getIndex(); const meta=idx.find(f=>f.id===id);
+function fileClick(id){
+  if(mode==='single'){
+    const text=loadFile(id);if(!text)return;
+    const idx=getIndex();const meta=idx.find(f=>f.id===id);
     const recs=parseADIF(text);
-    currentData=analyze(recs, meta?.name, meta?.parkRef, meta?.parkName);
+    currentData=analyze(recs,meta?.name,meta?.parkRef,meta?.parkName);
     renderStats(currentData);
     document.querySelectorAll('.file-item').forEach(el=>el.classList.remove('active-view'));
     document.getElementById('fi_'+id)?.classList.add('active-view');
   } else {
-    if (mode==='compare' && selected.size>=6 && !selected.has(id)) return;
-    if (selected.has(id)) selected.delete(id); else selected.add(id);
+    if(mode==='compare'&&selected.size>=6&&!selected.has(id))return;
+    if(selected.has(id))selected.delete(id);else selected.add(id);
     renderSidebar();
   }
 }
 
-function setMode(m) {
-  mode=m; selected.clear();
+function setMode(m){
+  mode=m;selected.clear();
   ['Single','Combine','Compare'].forEach(x=>document.getElementById('btn'+x).classList.remove('active'));
   document.getElementById('btn'+m.charAt(0).toUpperCase()+m.slice(1)).classList.add('active');
   renderSidebar();
   document.getElementById('statsView').style.display='none';
   document.getElementById('compareView').style.display='none';
-  if (!getIndex().length) document.getElementById('dropZone').style.display='block';
+  // Show welcome if files exist, otherwise drop zone
+  if(getIndex().length){showWelcome();}else{showDrop();}
 }
 
-function runAction() {
-  if (mode==='combine') runCombine(); else if (mode==='compare') runCompare();
-}
+function runAction(){if(mode==='combine')runCombine();else if(mode==='compare')runCompare();}
 
 // ── ADD FILE ───────────────────────────────────────────────────────────────
-function showUploadError(msg) {
-  var st = document.getElementById('uploadStatus');
-  if (st) { st.style.display='block'; st.style.color='#e07070'; st.textContent='Error: '+msg; }
-  setTimeout(function(){ var s=document.getElementById('uploadStatus'); if(s)s.style.display='none'; }, 7000);
+function showUploadError(msg){
+  var st=document.getElementById('uploadStatus');
+  if(st){st.style.display='block';st.style.color='#e07070';st.textContent='Error: '+msg;}
+  setTimeout(function(){var s=document.getElementById('uploadStatus');if(s)s.style.display='none';},7000);
 }
 
-async function addFile(text, filename) {
-  var statusEl = document.getElementById('uploadStatus');
-  var uploadBtn = document.querySelector('.upload-btn');
-  if (uploadBtn) uploadBtn.style.opacity = '0.6';
-  if (statusEl) { statusEl.style.display='block'; statusEl.style.color='var(--accent)'; statusEl.textContent='Parsing '+filename+'...'; }
-
-  try {
-    if (!text || text.length === 0) { showUploadError('File is empty: '+filename); return; }
-    const recs = parseADIF(text);
-    if (statusEl) statusEl.textContent = 'Found '+recs.length+' QSOs...';
-    if (!recs.length) {
-      showUploadError('No QSO records in '+filename+'. Must be a valid ADIF from DXKeeper.');
-      return;
-    }
-
-    // Extract park ref from filename first, then ADIF
-    const filenameRef = extractParkRef(filename);
-    const data = analyze(recs, filename.replace(/\.[^.]+$/,''), filenameRef);
-    const parkRef = data.parkRef !== '—' ? data.parkRef : (filenameRef||'—');
-
-    // Fetch park name from POTA API (non-blocking — save file first then update name)
-    const id  = uid();
-    const meta = {id, name:filename, parkRef, parkName:'Loading...', date:data.date,
-      totalQSOs:data.total, rate:data.rate, durStr:data.durStr};
-
-    // Save file to localStorage
-    try {
-      saveFile(id, text);
-    } catch(storageErr) {
-      alert('Browser storage is full. Please delete some old activations before adding new ones.');
-      return;
-    }
-    const idx = getIndex(); idx.unshift(meta); saveIndex(idx);
+async function addFile(text,filename){
+  var statusEl=document.getElementById('uploadStatus');
+  var uploadBtn=document.querySelector('.upload-btn');
+  if(uploadBtn)uploadBtn.style.opacity='0.6';
+  if(statusEl){statusEl.style.display='block';statusEl.style.color='var(--accent)';statusEl.textContent='Parsing '+filename+'...';}
+  try{
+    if(!text||text.length===0){showUploadError('File is empty: '+filename);return;}
+    const recs=parseADIF(text);
+    if(statusEl)statusEl.textContent='Found '+recs.length+' QSOs...';
+    if(!recs.length){showUploadError('No QSO records in '+filename+'. Must be a valid ADIF file.');return;}
+    const filenameRef=extractParkRef(filename);
+    const data=analyze(recs,filename.replace(/\.[^.]+$/,''),filenameRef);
+    const parkRef=data.parkRef!=='—'?data.parkRef:(filenameRef||'—');
+    const id=uid();
+    const meta={id,name:filename,parkRef,parkName:'Loading...',date:data.date,totalQSOs:data.total,rate:data.rate,durStr:data.durStr};
+    try{saveFile(id,text);}catch(storageErr){alert('Browser storage is full. Please delete some old activations before adding new ones.');return;}
+    const idx=getIndex();idx.unshift(meta);saveIndex(idx);
     renderSidebar();
-    if (statusEl) { statusEl.style.color='var(--accent)'; statusEl.textContent='✓ '+recs.length+' contacts loaded'; }
-
-    // Show stats immediately without waiting for park name
-    if (mode==='single') {
-      currentData = analyze(recs, filename.replace(/\.[^.]+$/,''), parkRef, '');
+    if(statusEl){statusEl.style.color='var(--accent)';statusEl.textContent='✓ '+recs.length+' contacts loaded';}
+    if(mode==='single'){
+      currentData=analyze(recs,filename.replace(/\.[^.]+$/,''),parkRef,'');
       renderStats(currentData);
       document.querySelectorAll('.file-item').forEach(el=>el.classList.remove('active-view'));
       document.getElementById('fi_'+id)?.classList.add('active-view');
     }
-
-    // Fetch park name in background and update
-    fetchParkName(parkRef).then(parkName => {
-      const idx2 = getIndex();
-      const f = idx2.find(x=>x.id===id);
-      if (f) {
-        f.parkName = parkName||'—';
-        saveIndex(idx2);
-        renderSidebar();
-        // Update topbar if this is still the active file
-        if (currentData && parkName) {
-          currentData.parkName = parkName;
-          const tb = document.getElementById('topbarTitle');
-          if (tb && tb.textContent === (currentData.parkRef||currentData.name)) tb.textContent = parkName;
-        }
-      }
+    fetchParkName(parkRef).then(parkName=>{
+      const idx2=getIndex();const f=idx2.find(x=>x.id===id);
+      if(f){f.parkName=parkName||'—';saveIndex(idx2);renderSidebar();
+        if(currentData&&parkName){currentData.parkName=parkName;const tb=document.getElementById('topbarTitle');if(tb&&tb.textContent===(currentData.parkRef||currentData.name))tb.textContent=parkName;}}
     });
-
-  } catch(err) {
-    showUploadError('Error: ' + err.message);
-    console.error('addFile error:', err);
-  } finally {
-    if (uploadBtn) uploadBtn.style.opacity = '1';
-    // Hide status after 3 seconds on success
-    setTimeout(function() {
-      var st = document.getElementById('uploadStatus');
-      if (st && st.textContent.startsWith('✓')) st.style.display = 'none';
-    }, 3000);
+  }catch(err){showUploadError('Error: '+err.message);console.error('addFile error:',err);}
+  finally{
+    if(uploadBtn)uploadBtn.style.opacity='1';
+    setTimeout(function(){var st=document.getElementById('uploadStatus');if(st&&st.textContent.startsWith('✓'))st.style.display='none';},3000);
   }
 }
 
-function confirmDelete(id, name) {
-  if (confirm(`Delete "${name}" from your library?`)) {
-    deleteFile(id); selected.delete(id); renderSidebar();
-    if (mode==='single') {
-      destroyAll();
-      document.getElementById('statsView').style.display='none';
-      document.getElementById('dropZone').style.display=getIndex().length?'none':'block';
-    }
+function confirmDelete(id,name){
+  if(confirm(`Delete "${name}" from your library?`)){
+    deleteFile(id);selected.delete(id);renderSidebar();
+    destroyAll();
+    document.getElementById('statsView').style.display='none';
+    document.getElementById('compareView').style.display='none';
+    // Show welcome if files remain, drop zone if empty
+    if(getIndex().length){showWelcome();}else{showDrop();}
   }
 }
 
 // ── MAP ────────────────────────────────────────────────────────────────────
-function destroyMap() { if (mapObj) { mapObj.remove(); mapObj=null; } }
+function destroyMap(){if(mapObj){mapObj.remove();mapObj=null;}}
 
-function renderMap(data, containerId) {
-  const myPos = gridToLatLon(data.myGrid) || gridToLatLon(MY_GRID_FALLBACK) || {lat:27.74, lon:-82.63};
-  const mapEl  = document.getElementById(containerId);
-  if (!mapEl) return;
-
-  // Init Leaflet
-  const map = L.map(containerId, {zoomControl:true, attributionControl:false});
-  if (containerId==='activationMap') mapObj=map;
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution:'© OpenStreetMap contributors', maxZoom:18
-  }).addTo(map);
-
-  // My QTH marker
-  const myIcon = L.divIcon({html:`<div style="width:14px;height:14px;background:#7ddba3;border:2px solid #fff;border-radius:50%;box-shadow:0 0 8px #7ddba3"></div>`,iconSize:[14,14],iconAnchor:[7,7]});
-  L.marker([myPos.lat, myPos.lon], {icon:myIcon})
-   .bindPopup(`<strong>${data.myCall}</strong><br>My QTH · ${data.myGrid}`)
-   .addTo(map);
-
-  const bounds = [[myPos.lat, myPos.lon]];
-  const bandSet = new Set();
-  let plotted = 0;
-
-  data.contacts.forEach(ct => {
-    let pos = null;
-    // 1. Try grid square
-    if (ct.grid && ct.grid.length >= 4) pos = gridToLatLon(ct.grid);
-    // 2. Try DXCC prefix
-    if (!pos) pos = dxccLatLon(ct.call);
-    if (!pos) return;
-
-    const band   = (ct.band||'?').toUpperCase();
-    const color  = BAND_COLORS[band] || BAND_COLORS['?'];
-    bandSet.add(band);
-
-    // Line from QTH to contact
-    L.polyline([[myPos.lat, myPos.lon],[pos.lat, pos.lon]], {
-      color, weight:1.2, opacity:0.55
-    }).addTo(map);
-
-    // Contact dot
-    const dotIcon = L.divIcon({
-      html:`<div style="width:7px;height:7px;background:${color};border:1px solid rgba(255,255,255,0.6);border-radius:50%;"></div>`,
-      iconSize:[7,7], iconAnchor:[3.5,3.5]
-    });
-    L.marker([pos.lat, pos.lon], {icon:dotIcon})
-     .bindPopup(`<strong>${ct.call}</strong><br>${ct.band} · ${ct.mode}<br>RST ${ct.rst} · ${ct.time}${ct.grid?`<br>Grid: ${ct.grid}`:''}`)
-     .addTo(map);
-
-    bounds.push([pos.lat, pos.lon]);
-    plotted++;
+function renderMap(data,containerId){
+  const myPos=gridToLatLon(data.myGrid)||gridToLatLon(MY_GRID_FALLBACK)||{lat:27.74,lon:-82.63};
+  const mapEl=document.getElementById(containerId);if(!mapEl)return;
+  const map=L.map(containerId,{zoomControl:true,attributionControl:false});
+  if(containerId==='activationMap')mapObj=map;
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors',maxZoom:18}).addTo(map);
+  const myIcon=L.divIcon({html:`<div style="width:14px;height:14px;background:#7ddba3;border:2px solid #fff;border-radius:50%;box-shadow:0 0 8px #7ddba3"></div>`,iconSize:[14,14],iconAnchor:[7,7]});
+  L.marker([myPos.lat,myPos.lon],{icon:myIcon}).bindPopup(`<strong>${data.myCall}</strong><br>My QTH · ${data.myGrid}`).addTo(map);
+  const bounds=[[myPos.lat,myPos.lon]];const bandSet=new Set();let plotted=0;
+  data.contacts.forEach(ct=>{
+    let pos=null;
+    if(ct.grid&&ct.grid.length>=4)pos=gridToLatLon(ct.grid);
+    if(!pos)pos=dxccLatLon(ct.call);if(!pos)return;
+    const band=(ct.band||'?').toUpperCase();const color=BAND_COLORS[band]||BAND_COLORS['?'];bandSet.add(band);
+    L.polyline([[myPos.lat,myPos.lon],[pos.lat,pos.lon]],{color,weight:1.2,opacity:0.55}).addTo(map);
+    const dotIcon=L.divIcon({html:`<div style="width:7px;height:7px;background:${color};border:1px solid rgba(255,255,255,0.6);border-radius:50%;"></div>`,iconSize:[7,7],iconAnchor:[3.5,3.5]});
+    L.marker([pos.lat,pos.lon],{icon:dotIcon}).bindPopup(`<strong>${ct.call}</strong><br>${ct.band} · ${ct.mode}<br>RST ${ct.rst} · ${ct.time}${ct.grid?`<br>Grid: ${ct.grid}`:''}`).addTo(map);
+    bounds.push([pos.lat,pos.lon]);plotted++;
   });
-
-  if (bounds.length > 1) map.fitBounds(bounds, {padding:[30,30]});
-  else map.setView([myPos.lat, myPos.lon], 4);
-
-  // Legend
-  const legendBands = [...bandSet].sort();
-  const legendHtml = legendBands.map(b=>
-    `<div class="map-legend-item"><span class="map-legend-dot" style="background:${BAND_COLORS[b]||BAND_COLORS['?']};width:8px;height:8px;border-radius:50%;display:inline-block"></span>${b}</div>`
-  ).join('');
-
-  return {plotted, legendHtml};
+  if(bounds.length>1)map.fitBounds(bounds,{padding:[30,30]});else map.setView([myPos.lat,myPos.lon],4);
+  const legendBands=[...bandSet].sort();
+  const legendHtml=legendBands.map(b=>`<div class="map-legend-item"><span class="map-legend-dot" style="background:${BAND_COLORS[b]||BAND_COLORS['?']};width:8px;height:8px;border-radius:50%;display:inline-block"></span>${b}</div>`).join('');
+  return{plotted,legendHtml};
 }
 
 // ── RENDER STATS ───────────────────────────────────────────────────────────
-function destroyCharts() { charts.forEach(c=>c.destroy()); charts=[]; }
-function destroyAll() { destroyCharts(); destroyMap(); }
+function destroyCharts(){charts.forEach(c=>c.destroy());charts=[];}
+function destroyAll(){destroyCharts();destroyMap();}
 
-function renderStats(data) {
+function renderStats(data){
   destroyAll();
+  hideWelcome();
   document.getElementById('dropZone').style.display='none';
   document.getElementById('compareView').style.display='none';
-  const view = document.getElementById('statsView');
-  view.style.display='block';
-
-  const parkLabel = [data.parkRef!=='—'?data.parkRef:'', data.parkName].filter(Boolean).join(' · ') || data.name;
-  document.getElementById('topbarTitle').textContent = data.parkName||data.parkRef||data.name;
-  document.getElementById('topbarSub').textContent   = `${data.parkRef!=='—'?data.parkRef+' · ':''} ${data.date} · ${data.myCall} · ${data.total} QSOs · ${data.durStr}`;
-  document.getElementById('topbarBtns').innerHTML    = `<button class="btn btn-primary" onclick="showModal()">⬇ Download Image</button>`;
-
-  const bands = Object.keys(data.byBand).sort((a,b)=>data.byBand[b]-data.byBand[a]);
-  const modes = Object.keys(data.byMode).sort((a,b)=>data.byMode[b]-data.byMode[a]);
-  const q = data.total >= 10;
-  const BLUES = ['#81c784','#4a9e6a','#2d6644','#7ddba3','#64b5f6','#aed6f1','#a5d6a7','#c8e6c9'];
-
-  view.innerHTML = `
+  const view=document.getElementById('statsView');view.style.display='block';
+  document.getElementById('topbarTitle').textContent=data.parkName||data.parkRef||data.name;
+  document.getElementById('topbarSub').textContent=`${data.parkRef!=='—'?data.parkRef+' · ':''}${data.date} · ${data.myCall} · ${data.total} QSOs · ${data.durStr}`;
+  document.getElementById('topbarBtns').innerHTML=`<button class="btn btn-primary" onclick="showModal()">⬇ Download Image</button>`;
+  const bands=Object.keys(data.byBand).sort((a,b)=>data.byBand[b]-data.byBand[a]);
+  const modes=Object.keys(data.byMode).sort((a,b)=>data.byMode[b]-data.byMode[a]);
+  const q=data.total>=10;
+  const BLUES=['#81c784','#4a9e6a','#2d6644','#7ddba3','#64b5f6','#aed6f1','#a5d6a7','#c8e6c9'];
+  view.innerHTML=`
     <div class="info-bar">
       ${data.parkRef!=='—'?`<div class="info-item"><span class="info-label">Park Ref</span><span class="info-value">${data.parkRef}</span></div>`:''}
       ${data.parkName?`<div class="info-item"><span class="info-label">Park Name</span><span class="info-value" style="font-size:0.78rem">${data.parkName}</span></div>`:''}
@@ -857,60 +869,31 @@ function renderStats(data) {
       <div class="stat-card"><div class="stat-label">Duration</div><div class="stat-value" style="font-size:1rem">${data.durStr}</div><div class="stat-sub">${data.firstQ}→${data.lastQ}</div></div>
       <div class="stat-card"><div class="stat-label">QSOs/Hour</div><div class="stat-value">${data.rate}</div><div class="stat-sub">Average rate</div></div>
     </div>
-
     <div class="insights-grid">
       <div class="insight-card">
         <div class="insight-label">Furthest QSO</div>
         <div class="insight-value" style="font-size:${data.furthest.noGrid?'0.85rem':'1.4rem'}">${data.furthest.noGrid?'—':data.furthest.call}</div>
-        <div class="insight-sub">${data.furthest.noGrid?'<span style="color:var(--text-dim)">Add MY_GRIDSQUARE to ADIF<br>for distance calculation</span>':(`${data.furthest.km>0?`<span class="hl">${data.furthest.km.toLocaleString()} km</span> · ${data.furthest.mi.toLocaleString()} mi`:'No contact grids'} ${data.furthest.band?`· ${data.furthest.band}`:''} ${data.furthest.mode?`· ${data.furthest.mode}`:''} ${data.furthest.grid?`<br>Grid: ${data.furthest.grid}`:''}`)}</div>
+        <div class="insight-sub">${data.furthest.noGrid?'<span style="color:var(--text-dim)">Add MY_GRIDSQUARE to ADIF<br>for distance calculation</span>':`${data.furthest.km>0?`<span class="hl">${data.furthest.km.toLocaleString()} km</span> · ${data.furthest.mi.toLocaleString()} mi`:'No contact grids'} ${data.furthest.band?`· ${data.furthest.band}`:''} ${data.furthest.mode?`· ${data.furthest.mode}`:''} ${data.furthest.grid?`<br>Grid: ${data.furthest.grid}`:''}`}</div>
       </div>
-      <div class="insight-card">
-        <div class="insight-label">Best 1-Hour Period</div>
-        <div class="insight-value">${data.best60.count} QSOs</div>
-        <div class="insight-sub">Starting around <span class="hl">${data.best60.startTime}</span></div>
-      </div>
-      <div class="insight-card">
-        <div class="insight-label">Hottest 15 Minutes</div>
-        <div class="insight-value">${data.best15.count} QSOs</div>
-        <div class="insight-sub"><span class="hl">${data.best15.rateEq} Q/hr</span> equivalent · around ${data.best15.startTime}</div>
-      </div>
-      <div class="insight-card">
-        <div class="insight-label">Most Productive Band</div>
-        <div class="insight-value">${data.topBand.name}</div>
-        <div class="insight-sub"><span class="hl">${data.topBand.count}</span> QSOs on this band</div>
-      </div>
-      <div class="insight-card">
-        <div class="insight-label">Most Active Mode</div>
-        <div class="insight-value">${data.topMode.name}</div>
-        <div class="insight-sub"><span class="hl">${data.topMode.count}</span> QSOs in this mode</div>
-      </div>
+      <div class="insight-card"><div class="insight-label">Best 1-Hour Period</div><div class="insight-value">${data.best60.count} QSOs</div><div class="insight-sub">Starting around <span class="hl">${data.best60.startTime}</span></div></div>
+      <div class="insight-card"><div class="insight-label">Hottest 15 Minutes</div><div class="insight-value">${data.best15.count} QSOs</div><div class="insight-sub"><span class="hl">${data.best15.rateEq} Q/hr</span> equivalent · around ${data.best15.startTime}</div></div>
+      <div class="insight-card"><div class="insight-label">Most Productive Band</div><div class="insight-value">${data.topBand.name}</div><div class="insight-sub"><span class="hl">${data.topBand.count}</span> QSOs on this band</div></div>
+      <div class="insight-card"><div class="insight-label">Most Active Mode</div><div class="insight-value">${data.topMode.name}</div><div class="insight-sub"><span class="hl">${data.topMode.count}</span> QSOs in this mode</div></div>
     </div>
-
-    <div class="chart-card" style="margin-bottom:13px">
-      <div class="chart-title"><span class="dot"></span>QSO Rate Over Time (10-min intervals)</div>
-      <div class="chart-wrap"><canvas id="rateChart"></canvas></div>
-    </div>
-
+    <div class="chart-card" style="margin-bottom:13px"><div class="chart-title"><span class="dot"></span>QSO Rate Over Time (10-min intervals)</div><div class="chart-wrap"><canvas id="rateChart"></canvas></div></div>
     <div class="charts-grid">
       <div class="chart-card"><div class="chart-title"><span class="dot"></span>QSOs by Band</div><div class="chart-wrap"><canvas id="bandChart"></canvas></div></div>
       <div class="chart-card"><div class="chart-title"><span class="dot"></span>QSOs by Mode</div><div class="chart-wrap"><canvas id="modeChart"></canvas></div></div>
     </div>
-
     <div class="tables-grid">
       <div class="table-card"><div class="table-title"><span class="dot"></span>RST Sent</div><div id="rstBars"></div></div>
       <div class="table-card"><div class="table-title"><span class="dot"></span>Call Areas</div><table class="data-table" id="areaTable"></table></div>
       <div class="table-card"><div class="table-title"><span class="dot"></span>Hour-by-Hour</div><table class="data-table" id="hourTable"></table></div>
     </div>
-
     <div class="tables-grid">
-      <div class="table-card" style="grid-column:span 2">
-        <div class="table-title"><span class="dot"></span>Full Contact Log</div>
-        <div style="max-height:260px;overflow-y:auto"><table class="data-table" id="logTable"></table></div>
-      </div>
+      <div class="table-card" style="grid-column:span 2"><div class="table-title"><span class="dot"></span>Full Contact Log</div><div style="max-height:260px;overflow-y:auto"><table class="data-table" id="logTable"></table></div></div>
       <div class="table-card"><div class="table-title"><span class="dot"></span>Grids Worked</div><table class="data-table" id="gridTable"></table></div>
     </div>
-
-    <!-- CONTACT MAP -->
     <div class="map-card">
       <div class="map-header">
         <div class="chart-title" style="margin-bottom:0"><span class="dot"></span>Contact Map — ${data.parkName||data.parkRef||'Activation'}</div>
@@ -920,77 +903,44 @@ function renderStats(data) {
       <div class="map-stats" id="mapStats"></div>
     </div>`;
 
-  // Charts
-  const rCtx = document.getElementById('rateChart').getContext('2d');
-  charts.push(new Chart(rCtx,{type:'bar',data:{labels:data.bins.map(b=>b.label),
-    datasets:[{label:'QSOs',data:data.bins.map(b=>b.count),backgroundColor:'rgba(90,186,125,0.5)',borderColor:'#5eba7d',borderWidth:1,borderRadius:2}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-      scales:{x:{grid:{color:'#3d4f47'},ticks:{font:{size:9}}},y:{grid:{color:'#3d4f47'},beginAtZero:true,ticks:{stepSize:1}}}}}));
+  const rCtx=document.getElementById('rateChart').getContext('2d');
+  charts.push(new Chart(rCtx,{type:'bar',data:{labels:data.bins.map(b=>b.label),datasets:[{label:'QSOs',data:data.bins.map(b=>b.count),backgroundColor:'rgba(90,186,125,0.5)',borderColor:'#5eba7d',borderWidth:1,borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'#3d4f47'},ticks:{font:{size:9}}},y:{grid:{color:'#3d4f47'},beginAtZero:true,ticks:{stepSize:1}}}}}));
+  const bCtx=document.getElementById('bandChart').getContext('2d');
+  charts.push(new Chart(bCtx,{type:'doughnut',data:{labels:bands,datasets:[{data:bands.map(k=>data.byBand[k]),backgroundColor:BLUES,borderColor:'#2e3834',borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{boxWidth:10,padding:10}}}}}));
+  const mCtx=document.getElementById('modeChart').getContext('2d');
+  charts.push(new Chart(mCtx,{type:'doughnut',data:{labels:modes,datasets:[{data:modes.map(k=>data.byMode[k]),backgroundColor:BLUES,borderColor:'#2e3834',borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{boxWidth:10,padding:10}}}}}));
 
-  const bCtx = document.getElementById('bandChart').getContext('2d');
-  charts.push(new Chart(bCtx,{type:'doughnut',data:{labels:bands,datasets:[{data:bands.map(k=>data.byBand[k]),backgroundColor:BLUES,borderColor:'#2e3834',borderWidth:3}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{boxWidth:10,padding:10}}}}}));
-
-  const mCtx = document.getElementById('modeChart').getContext('2d');
-  charts.push(new Chart(mCtx,{type:'doughnut',data:{labels:modes,datasets:[{data:modes.map(k=>data.byMode[k]),backgroundColor:BLUES,borderColor:'#2e3834',borderWidth:3}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{boxWidth:10,padding:10}}}}}));
-
-  // RST
   const rK=Object.keys(data.rst).sort((a,b)=>data.rst[b]-data.rst[a]);
   const mxR=Math.max(...Object.values(data.rst));
-  document.getElementById('rstBars').innerHTML=rK.slice(0,10).map(k=>`
-    <div class="rst-bar"><span class="rst-label">${k}</span>
-    <div class="rst-track"><div class="rst-fill" style="width:${(data.rst[k]/mxR*100).toFixed(0)}%"></div></div>
-    <span class="rst-count">${data.rst[k]}</span></div>`).join('')||'<div class="no-data">No RST data</div>';
-
-  // Areas
+  document.getElementById('rstBars').innerHTML=rK.slice(0,10).map(k=>`<div class="rst-bar"><span class="rst-label">${k}</span><div class="rst-track"><div class="rst-fill" style="width:${(data.rst[k]/mxR*100).toFixed(0)}%"></div></div><span class="rst-count">${data.rst[k]}</span></div>`).join('')||'<div class="no-data">No RST data</div>';
   const aK=Object.keys(data.byArea).sort((a,b)=>data.byArea[b]-data.byArea[a]);
-  document.getElementById('areaTable').innerHTML=`<thead><tr><th>Area</th><th>QSOs</th><th>%</th></tr></thead><tbody>
-    ${aK.map(k=>`<tr><td class="hl">${k}</td><td>${data.byArea[k]}</td><td class="dm">${((data.byArea[k]/data.total)*100).toFixed(0)}%</td></tr>`).join('')}</tbody>`;
-
-  // Hours
+  document.getElementById('areaTable').innerHTML=`<thead><tr><th>Area</th><th>QSOs</th><th>%</th></tr></thead><tbody>${aK.map(k=>`<tr><td class="hl">${k}</td><td>${data.byArea[k]}</td><td class="dm">${((data.byArea[k]/data.total)*100).toFixed(0)}%</td></tr>`).join('')}</tbody>`;
   const hK=Object.keys(data.byHour).map(Number).sort((a,b)=>a-b);
-  document.getElementById('hourTable').innerHTML=`<thead><tr><th>UTC Hour</th><th>QSOs</th></tr></thead><tbody>
-    ${hK.map(h=>`<tr><td class="hl">${String(h).padStart(2,'0')}:00Z</td><td>${data.byHour[h]}</td></tr>`).join('')}</tbody>`;
-
-  // Grids
+  document.getElementById('hourTable').innerHTML=`<thead><tr><th>UTC Hour</th><th>QSOs</th></tr></thead><tbody>${hK.map(h=>`<tr><td class="hl">${String(h).padStart(2,'0')}:00Z</td><td>${data.byHour[h]}</td></tr>`).join('')}</tbody>`;
   const gK=Object.keys(data.grids).sort((a,b)=>data.grids[b]-data.grids[a]);
-  document.getElementById('gridTable').innerHTML=gK.length?`<thead><tr><th>Grid</th><th>QSOs</th></tr></thead><tbody>
-    ${gK.slice(0,20).map(k=>`<tr><td class="hl">${k}</td><td>${data.grids[k]}</td></tr>`).join('')}</tbody>`:
-    '<tr><td class="no-data">No grid data</td></tr>';
+  document.getElementById('gridTable').innerHTML=gK.length?`<thead><tr><th>Grid</th><th>QSOs</th></tr></thead><tbody>${gK.slice(0,20).map(k=>`<tr><td class="hl">${k}</td><td>${data.grids[k]}</td></tr>`).join('')}</tbody>`:'<tr><td class="no-data">No grid data</td></tr>';
+  document.getElementById('logTable').innerHTML=`<thead><tr><th>#</th><th>Call</th><th>UTC</th><th>Band</th><th>Mode</th><th>RST</th><th>Grid</th></tr></thead><tbody>${data.records.map((r,i)=>`<tr><td class="dm">${i+1}</td><td class="hl">${r['CALL']||'?'}</td><td>${fmtTime(r['TIME_ON']||'')}</td><td>${(r['BAND']||'').toUpperCase()}</td><td>${(r['MODE']||'?').toUpperCase()}</td><td>${r['RST_SENT']||'?'}</td><td class="dm">${(r['GRIDSQUARE']||'—').toUpperCase().slice(0,6)}</td></tr>`).join('')}</tbody>`;
 
-  // Log
-  document.getElementById('logTable').innerHTML=`<thead><tr><th>#</th><th>Call</th><th>UTC</th><th>Band</th><th>Mode</th><th>RST</th><th>Grid</th></tr></thead><tbody>
-    ${data.records.map((r,i)=>`<tr><td class="dm">${i+1}</td><td class="hl">${r['CALL']||'?'}</td><td>${fmtTime(r['TIME_ON']||'')}</td><td>${(r['BAND']||'').toUpperCase()}</td><td>${(r['MODE']||'?').toUpperCase()}</td><td>${r['RST_SENT']||'?'}</td><td class="dm">${(r['GRIDSQUARE']||'—').toUpperCase().slice(0,6)}</td></tr>`).join('')}</tbody>`;
-
-  // Map (after DOM settles)
-  setTimeout(() => {
-    const result = renderMap(data, 'activationMap');
-    if (result) {
-      document.getElementById('mapLegend').innerHTML = result.legendHtml;
-      document.getElementById('mapStats').innerHTML =
-        `<div class="map-stat">Contacts plotted: <span>${result.plotted}</span></div>` +
-        (data.myGrid?`<div class="map-stat">Activation QTH: <span>${data.myGrid}</span></div>`:'<div class="map-stat" style="color:var(--text-dim)">No MY_GRIDSQUARE in ADIF</div>') +
-        `<div class="map-stat">Grid squares: <span>${Object.keys(data.grids).length}</span></div>` +
+  setTimeout(()=>{
+    const result=renderMap(data,'activationMap');
+    if(result){
+      document.getElementById('mapLegend').innerHTML=result.legendHtml;
+      document.getElementById('mapStats').innerHTML=
+        `<div class="map-stat">Contacts plotted: <span>${result.plotted}</span></div>`+
+        (data.myGrid?`<div class="map-stat">Activation QTH: <span>${data.myGrid}</span></div>`:'<div class="map-stat" style="color:var(--text-dim)">No MY_GRIDSQUARE in ADIF</div>')+
+        `<div class="map-stat">Grid squares: <span>${Object.keys(data.grids).length}</span></div>`+
         (data.parkName?`<div class="map-stat">Park: <span>${data.parkName} (${data.parkRef})</span></div>`:'');
     }
-  }, 100);
+  },100);
 }
 
 // ── COMBINED ───────────────────────────────────────────────────────────────
-function runCombine() {
-  const ids=[...selected];
-  const allRecs=[];
-  const names=[], parkRefs=[];
-  ids.forEach(id=>{
-    const text=loadFile(id); if(text) allRecs.push(...parseADIF(text));
-    const meta=getIndex().find(f=>f.id===id);
-    if(meta){ names.push(meta.parkName||meta.parkRef||meta.name); parkRefs.push(meta.parkRef||''); }
-  });
+function runCombine(){
+  const ids=[...selected];const allRecs=[];const names=[],parkRefs=[];
+  ids.forEach(id=>{const text=loadFile(id);if(text)allRecs.push(...parseADIF(text));const meta=getIndex().find(f=>f.id===id);if(meta){names.push(meta.parkName||meta.parkRef||meta.name);parkRefs.push(meta.parkRef||'');}});
   if(!allRecs.length){alert('No records found');return;}
-  const data=analyze(allRecs, names.join(' + '), parkRefs.join(' + '), names.join(' + '));
-  currentData=data;
-  renderStats(data);
+  const data=analyze(allRecs,names.join(' + '),parkRefs.join(' + '),names.join(' + '));
+  currentData=data;renderStats(data);
   const notice=document.createElement('div');
   notice.style.cssText='background:var(--bg2);border:1px solid var(--green-dk);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:0.76rem;font-family:var(--mono);color:var(--text);';
   notice.innerHTML=`<span style="color:var(--green-lt)">●</span> Combined stats for ${ids.length} activations: ${names.join(' · ')}`;
@@ -998,100 +948,31 @@ function runCombine() {
 }
 
 // ── COMPARE ────────────────────────────────────────────────────────────────
-function runCompare() {
+function runCompare(){
   destroyAll();
   const ids=[...selected].slice(0,6);
-  const datasets=ids.map((id,i)=>{
-    const text=loadFile(id); if(!text)return null;
-    const meta=getIndex().find(f=>f.id===id);
-    const recs=parseADIF(text);
-    return {data:analyze(recs,meta?.name,meta?.parkRef,meta?.parkName), color:COMPARE_COLORS[i], meta};
-  }).filter(Boolean);
+  const datasets=ids.map((id,i)=>{const text=loadFile(id);if(!text)return null;const meta=getIndex().find(f=>f.id===id);const recs=parseADIF(text);return{data:analyze(recs,meta?.name,meta?.parkRef,meta?.parkName),color:COMPARE_COLORS[i],meta};}).filter(Boolean);
   if(datasets.length<2){alert('Select at least 2 files to compare');return;}
-
+  hideWelcome();
   document.getElementById('dropZone').style.display='none';
   document.getElementById('statsView').style.display='none';
-  const view=document.getElementById('compareView');
-  view.style.display='block';
-
+  const view=document.getElementById('compareView');view.style.display='block';
   document.getElementById('topbarTitle').textContent='Activation Comparison';
   document.getElementById('topbarSub').textContent=datasets.map(d=>d.data.parkRef!=='—'?d.data.parkRef:d.data.name).join(' vs. ');
   document.getElementById('topbarBtns').innerHTML='';
-
-  const allBins=new Set();
-  datasets.forEach(d=>d.data.bins.forEach(b=>allBins.add(b.label)));
-  const sortedBins=[...allBins].sort();
-
+  const allBins=new Set();datasets.forEach(d=>d.data.bins.forEach(b=>allBins.add(b.label)));const sortedBins=[...allBins].sort();
   view.innerHTML=`
-    <div class="chart-card" style="margin-bottom:14px">
-      <div class="chart-title"><span class="dot"></span>QSO Rate Comparison (10-min bins)</div>
-      <div class="chart-wrap" style="height:220px"><canvas id="compareRateChart"></canvas></div>
-    </div>
+    <div class="chart-card" style="margin-bottom:14px"><div class="chart-title"><span class="dot"></span>QSO Rate Comparison (10-min bins)</div><div class="chart-wrap" style="height:220px"><canvas id="compareRateChart"></canvas></div></div>
     <div class="compare-grid" style="grid-template-columns:repeat(${Math.min(datasets.length,3)},1fr)">
-      ${datasets.map((d,i)=>{
-        const dd=d.data;
-        const bands=Object.keys(dd.byBand).sort((a,b)=>dd.byBand[b]-dd.byBand[a]);
-        const modes=Object.keys(dd.byMode).sort((a,b)=>dd.byMode[b]-dd.byMode[a]);
-        const q=dd.total>=10;
-        return `<div class="compare-col">
-          <div class="compare-header">
-            <div class="compare-dot" style="background:${d.color}"></div>
-            <div>
-              ${dd.parkRef&&dd.parkRef!=='—'?`<div class="compare-park-ref">${dd.parkRef}</div>`:''}
-              <div class="compare-park-name">${dd.parkName||dd.parkRef||dd.name}</div>
-              <div class="compare-date">${dd.date} · ${dd.myCall}</div>
-            </div>
-            ${q?'<span class="winner-badge">Qualified</span>':''}
-          </div>
-          <div class="compare-stats">
-            <div class="cstat"><div class="cstat-val" style="color:${d.color}">${dd.total}</div><div class="cstat-lbl">Total QSOs</div></div>
-            <div class="cstat"><div class="cstat-val" style="color:${d.color}">${dd.rate}</div><div class="cstat-lbl">QSOs/hr</div></div>
-            <div class="cstat"><div class="cstat-val" style="color:${d.color};font-size:0.9rem">${dd.durStr}</div><div class="cstat-lbl">Duration</div></div>
-            <div class="cstat"><div class="cstat-val" style="color:${d.color};font-size:0.9rem">${modes[0]||'—'}</div><div class="cstat-lbl">Mode</div></div>
-          </div>
-          <div class="chart-card" style="padding:11px;margin-bottom:9px">
-            <div class="chart-title" style="margin-bottom:7px"><span class="dot" style="background:${d.color}"></span>By Band</div>
-            <div class="compare-chart-wrap"><canvas id="compareBand${i}"></canvas></div>
-          </div>
-          <table class="data-table">
-            <thead><tr><th>Band</th><th>QSOs</th><th>%</th></tr></thead>
-            <tbody>${bands.map(b=>`<tr><td class="hl">${b}</td><td>${dd.byBand[b]}</td><td class="dm">${((dd.byBand[b]/dd.total)*100).toFixed(0)}%</td></tr>`).join('')}</tbody>
-          </table>
-          <br>
-          <table class="data-table">
-            <thead><tr><th>UTC Hour</th><th>QSOs</th></tr></thead>
-            <tbody>${Object.keys(dd.byHour).map(Number).sort((a,b)=>a-b).map(h=>`<tr><td class="hl">${String(h).padStart(2,'0')}:00Z</td><td>${dd.byHour[h]}</td></tr>`).join('')}</tbody>
-          </table>
-        </div>`;
-      }).join('')}
+      ${datasets.map((d,i)=>{const dd=d.data;const bands=Object.keys(dd.byBand).sort((a,b)=>dd.byBand[b]-dd.byBand[a]);const modes=Object.keys(dd.byMode).sort((a,b)=>dd.byMode[b]-dd.byMode[a]);const q=dd.total>=10;return`<div class="compare-col"><div class="compare-header"><div class="compare-dot" style="background:${d.color}"></div><div>${dd.parkRef&&dd.parkRef!=='—'?`<div class="compare-park-ref">${dd.parkRef}</div>`:''}<div class="compare-park-name">${dd.parkName||dd.parkRef||dd.name}</div><div class="compare-date">${dd.date} · ${dd.myCall}</div></div>${q?'<span class="winner-badge">Qualified</span>':''}</div><div class="compare-stats"><div class="cstat"><div class="cstat-val" style="color:${d.color}">${dd.total}</div><div class="cstat-lbl">Total QSOs</div></div><div class="cstat"><div class="cstat-val" style="color:${d.color}">${dd.rate}</div><div class="cstat-lbl">QSOs/hr</div></div><div class="cstat"><div class="cstat-val" style="color:${d.color};font-size:0.9rem">${dd.durStr}</div><div class="cstat-lbl">Duration</div></div><div class="cstat"><div class="cstat-val" style="color:${d.color};font-size:0.9rem">${modes[0]||'—'}</div><div class="cstat-lbl">Mode</div></div></div><div class="chart-card" style="padding:11px;margin-bottom:9px"><div class="chart-title" style="margin-bottom:7px"><span class="dot" style="background:${d.color}"></span>By Band</div><div class="compare-chart-wrap"><canvas id="compareBand${i}"></canvas></div></div><table class="data-table"><thead><tr><th>Band</th><th>QSOs</th><th>%</th></tr></thead><tbody>${bands.map(b=>`<tr><td class="hl">${b}</td><td>${dd.byBand[b]}</td><td class="dm">${((dd.byBand[b]/dd.total)*100).toFixed(0)}%</td></tr>`).join('')}</tbody></table><br><table class="data-table"><thead><tr><th>UTC Hour</th><th>QSOs</th></tr></thead><tbody>${Object.keys(dd.byHour).map(Number).sort((a,b)=>a-b).map(h=>`<tr><td class="hl">${String(h).padStart(2,'0')}:00Z</td><td>${dd.byHour[h]}</td></tr>`).join('')}</tbody></table></div>`;}).join('')}
     </div>`;
-
-  // Rate overlay chart
   const rCtx=document.getElementById('compareRateChart').getContext('2d');
-  charts.push(new Chart(rCtx,{type:'line',data:{
-    labels:sortedBins,
-    datasets:datasets.map(d=>({
-      label:`${d.data.parkRef!=='—'?d.data.parkRef:d.data.name}`,
-      data:sortedBins.map(lbl=>{const b=d.data.bins.find(x=>x.label===lbl);return b?b.count:0;}),
-      borderColor:d.color, backgroundColor:d.color+'22', fill:true, tension:0.3,
-      pointRadius:2, pointHoverRadius:5
-    }))
-  },options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{position:'top',labels:{boxWidth:10,padding:14}}},
-    scales:{x:{grid:{color:'#3d4f47'},ticks:{font:{size:9}}},y:{grid:{color:'#3d4f47'},beginAtZero:true,ticks:{stepSize:1}}}}}));
-
-  datasets.forEach((d,i)=>{
-    const el=document.getElementById(`compareBand${i}`); if(!el)return;
-    const bands=Object.keys(d.data.byBand).sort((a,b)=>d.data.byBand[b]-d.data.byBand[a]);
-    charts.push(new Chart(el.getContext('2d'),{type:'doughnut',data:{
-      labels:bands,datasets:[{data:bands.map(k=>d.data.byBand[k]),
-        backgroundColor:[d.color,d.color+'aa',d.color+'66',d.color+'44'],borderColor:'#2e3834',borderWidth:2}]
-    },options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{boxWidth:8,font:{size:9},padding:5}}}}}));
-  });
+  charts.push(new Chart(rCtx,{type:'line',data:{labels:sortedBins,datasets:datasets.map(d=>({label:`${d.data.parkRef!=='—'?d.data.parkRef:d.data.name}`,data:sortedBins.map(lbl=>{const b=d.data.bins.find(x=>x.label===lbl);return b?b.count:0;}),borderColor:d.color,backgroundColor:d.color+'22',fill:true,tension:0.3,pointRadius:2,pointHoverRadius:5}))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:10,padding:14}}},scales:{x:{grid:{color:'#3d4f47'},ticks:{font:{size:9}}},y:{grid:{color:'#3d4f47'},beginAtZero:true,ticks:{stepSize:1}}}}}));
+  datasets.forEach((d,i)=>{const el=document.getElementById(`compareBand${i}`);if(!el)return;const bands=Object.keys(d.data.byBand).sort((a,b)=>d.data.byBand[b]-d.data.byBand[a]);charts.push(new Chart(el.getContext('2d'),{type:'doughnut',data:{labels:bands,datasets:[{data:bands.map(k=>d.data.byBand[k]),backgroundColor:[d.color,d.color+'aa',d.color+'66',d.color+'44'],borderColor:'#2e3834',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{boxWidth:8,font:{size:9},padding:5}}}}}));});
 }
 
 // ── SHARE CARD ─────────────────────────────────────────────────────────────
-function buildShareCard(data) {
+function buildShareCard(data){
   const bands=Object.keys(data.byBand).sort((a,b)=>data.byBand[b]-data.byBand[a]);
   const modes=Object.keys(data.byMode).sort((a,b)=>data.byMode[b]-data.byMode[a]);
   const hK=Object.keys(data.byHour).map(Number).sort((a,b)=>a-b);
@@ -1099,364 +980,131 @@ function buildShareCard(data) {
   const mxR=Math.max(...Object.values(data.rst));
   const q=data.total>=10;
   document.getElementById('shareCardInner').innerHTML=`
-    <div class="sc-hdr">
-      <div>
-        <div class="sc-logo">TAVA<span>SCOPE</span></div>
-        ${data.parkRef&&data.parkRef!=='—'?`<div class="sc-park-ref">${data.parkRef}</div>`:''}
-        ${data.parkName?`<div class="sc-park-name">${data.parkName}</div>`:''}
-        <div class="sc-park-info">${data.date} · ${data.myCall} · ${data.firstQ} → ${data.lastQ}</div>
-      </div>
-      <div style="text-align:right">
-        <div class="sc-qual ${q?'yes':'no'}">${q?'✓ PARK QUALIFIED':'✗ NOT QUALIFIED'}</div>
-        <div style="font-size:0.6rem;color:#7a9485;margin-top:4px">${data.durStr}</div>
-      </div>
-    </div>
-    <div class="sc-stats">
-      <div class="sc-stat"><div class="sc-stat-val">${data.total}</div><div class="sc-stat-lbl">Total QSOs</div></div>
-      <div class="sc-stat"><div class="sc-stat-val">${data.rate}</div><div class="sc-stat-lbl">QSOs / Hour</div></div>
-      <div class="sc-stat"><div class="sc-stat-val">${bands.length}</div><div class="sc-stat-lbl">Bands</div></div>
-      <div class="sc-stat"><div class="sc-stat-val">${modes[0]||'—'}</div><div class="sc-stat-lbl">Primary Mode</div></div>
-      <div class="sc-stat"><div class="sc-stat-val">${Object.keys(data.grids).length}</div><div class="sc-stat-lbl">Unique Grids</div></div>
-      <div class="sc-stat"><div class="sc-stat-val">${Object.keys(data.byArea).length}</div><div class="sc-stat-lbl">Call Areas</div></div>
-    </div>
-    <div class="sc-mid">
-      <div class="sc-sect"><div class="sc-sect-ttl">QSOs by Band</div>${bands.map(b=>`<div class="sc-row"><span class="sc-row-k">${b}</span><span class="sc-row-v">${data.byBand[b]}</span></div>`).join('')}</div>
-      <div class="sc-sect"><div class="sc-sect-ttl">RST Sent</div>${rK.slice(0,8).map(k=>`
-        <div style="display:flex;align-items:center;gap:5px;margin-bottom:4px;font-size:0.7rem">
-          <span style="width:32px;color:#7a9485">${k}</span>
-          <div style="flex:1;height:5px;background:#343f3a;border-radius:3px"><div style="height:100%;width:${(data.rst[k]/mxR*100).toFixed(0)}%;background:#5eba7d;border-radius:3px"></div></div>
-          <span style="width:20px;text-align:right;color:#7ddba3">${data.rst[k]}</span>
-        </div>`).join('')}</div>
-      <div class="sc-sect"><div class="sc-sect-ttl">Hour-by-Hour</div>${hK.map(h=>`<div class="sc-row"><span class="sc-row-k">${String(h).padStart(2,'0')}:00Z</span><span class="sc-row-v">${data.byHour[h]} QSOs</span></div>`).join('')}</div>
-    </div>
+    <div class="sc-hdr"><div><div class="sc-logo">TAVA<span>SCOPE</span></div>${data.parkRef&&data.parkRef!=='—'?`<div class="sc-park-ref">${data.parkRef}</div>`:''}${data.parkName?`<div class="sc-park-name">${data.parkName}</div>`:''}<div class="sc-park-info">${data.date} · ${data.myCall} · ${data.firstQ} → ${data.lastQ}</div></div><div style="text-align:right"><div class="sc-qual ${q?'yes':'no'}">${q?'✓ PARK QUALIFIED':'✗ NOT QUALIFIED'}</div><div style="font-size:0.6rem;color:#7a9485;margin-top:4px">${data.durStr}</div></div></div>
+    <div class="sc-stats"><div class="sc-stat"><div class="sc-stat-val">${data.total}</div><div class="sc-stat-lbl">Total QSOs</div></div><div class="sc-stat"><div class="sc-stat-val">${data.rate}</div><div class="sc-stat-lbl">QSOs / Hour</div></div><div class="sc-stat"><div class="sc-stat-val">${bands.length}</div><div class="sc-stat-lbl">Bands</div></div><div class="sc-stat"><div class="sc-stat-val">${modes[0]||'—'}</div><div class="sc-stat-lbl">Primary Mode</div></div><div class="sc-stat"><div class="sc-stat-val">${Object.keys(data.grids).length}</div><div class="sc-stat-lbl">Unique Grids</div></div><div class="sc-stat"><div class="sc-stat-val">${Object.keys(data.byArea).length}</div><div class="sc-stat-lbl">Call Areas</div></div></div>
+    <div class="sc-mid"><div class="sc-sect"><div class="sc-sect-ttl">QSOs by Band</div>${bands.map(b=>`<div class="sc-row"><span class="sc-row-k">${b}</span><span class="sc-row-v">${data.byBand[b]}</span></div>`).join('')}</div><div class="sc-sect"><div class="sc-sect-ttl">RST Sent</div>${rK.slice(0,8).map(k=>`<div style="display:flex;align-items:center;gap:5px;margin-bottom:4px;font-size:0.7rem"><span style="width:32px;color:#7a9485">${k}</span><div style="flex:1;height:5px;background:#343f3a;border-radius:3px"><div style="height:100%;width:${(data.rst[k]/mxR*100).toFixed(0)}%;background:#5eba7d;border-radius:3px"></div></div><span style="width:20px;text-align:right;color:#7ddba3">${data.rst[k]}</span></div>`).join('')}</div><div class="sc-sect"><div class="sc-sect-ttl">Hour-by-Hour</div>${hK.map(h=>`<div class="sc-row"><span class="sc-row-k">${String(h).padStart(2,'0')}:00Z</span><span class="sc-row-v">${data.byHour[h]} QSOs</span></div>`).join('')}</div></div>
     <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-bottom:13px;">
-      <div style="background:#2a322e;border:1px solid #3d4f47;border-radius:8px;padding:11px;">
-        <div style="font-size:0.52rem;color:#7a9485;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:5px;">Furthest QSO</div>
-        <div style="font-size:${data.furthest.noGrid?'0.75rem':'1.1rem'};font-weight:800;color:#f0f5f2;font-family:'Outfit',sans-serif;line-height:1.1;margin-bottom:4px;">${data.furthest.noGrid?'No Grid Data':data.furthest.call}</div>
-        <div style="font-size:0.6rem;color:#7a9485;line-height:1.5;">${data.furthest.noGrid?'Add MY_GRIDSQUARE to ADIF':(data.furthest.km>0?`<span style="color:#7ddba3">${data.furthest.km.toLocaleString()} km</span> · ${data.furthest.mi.toLocaleString()} mi${data.furthest.band?' · '+data.furthest.band:''}${data.furthest.mode?' · '+data.furthest.mode:''}${data.furthest.grid?'<br>Grid: '+data.furthest.grid:''}` : 'No contact grids')}</div>
-      </div>
-      <div style="background:#2a322e;border:1px solid #3d4f47;border-radius:8px;padding:11px;">
-        <div style="font-size:0.52rem;color:#7a9485;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:5px;">Best 1-Hour Period</div>
-        <div style="font-size:1.3rem;font-weight:800;color:#f0f5f2;font-family:'Outfit',sans-serif;line-height:1;margin-bottom:4px;">${data.best60.count} QSOs</div>
-        <div style="font-size:0.62rem;color:#7a9485;">Starting around <span style="color:#7ddba3">${data.best60.startTime}</span></div>
-      </div>
-      <div style="background:#2a322e;border:1px solid #3d4f47;border-radius:8px;padding:11px;">
-        <div style="font-size:0.52rem;color:#7a9485;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:5px;">Hottest 15 Minutes</div>
-        <div style="font-size:1.3rem;font-weight:800;color:#f0f5f2;font-family:'Outfit',sans-serif;line-height:1;margin-bottom:4px;">${data.best15.count} QSOs</div>
-        <div style="font-size:0.62rem;color:#7a9485;"><span style="color:#7ddba3">${data.best15.rateEq} Q/hr</span> equivalent · around ${data.best15.startTime}</div>
-      </div>
-      <div style="background:#2a322e;border:1px solid #3d4f47;border-radius:8px;padding:11px;">
-        <div style="font-size:0.52rem;color:#7a9485;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:5px;">Most Productive Band</div>
-        <div style="font-size:1.3rem;font-weight:800;color:#f0f5f2;font-family:'Outfit',sans-serif;line-height:1;margin-bottom:4px;">${data.topBand.name}</div>
-        <div style="font-size:0.62rem;color:#7a9485;"><span style="color:#7ddba3">${data.topBand.count}</span> QSOs on this band</div>
-      </div>
-      <div style="background:#2a322e;border:1px solid #3d4f47;border-radius:8px;padding:11px;">
-        <div style="font-size:0.52rem;color:#7a9485;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:5px;">Most Active Mode</div>
-        <div style="font-size:1.3rem;font-weight:800;color:#f0f5f2;font-family:'Outfit',sans-serif;line-height:1;margin-bottom:4px;">${data.topMode.name}</div>
-        <div style="font-size:0.62rem;color:#7a9485;"><span style="color:#7ddba3">${data.topMode.count}</span> QSOs in this mode</div>
-      </div>
+      <div style="background:#2a322e;border:1px solid #3d4f47;border-radius:8px;padding:11px;"><div style="font-size:0.52rem;color:#7a9485;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:5px;">Furthest QSO</div><div style="font-size:${data.furthest.noGrid?'0.75rem':'1.1rem'};font-weight:800;color:#f0f5f2;font-family:'Outfit',sans-serif;line-height:1.1;margin-bottom:4px;">${data.furthest.noGrid?'No Grid Data':data.furthest.call}</div><div style="font-size:0.6rem;color:#7a9485;line-height:1.5;">${data.furthest.noGrid?'Add MY_GRIDSQUARE to ADIF':(data.furthest.km>0?`<span style="color:#7ddba3">${data.furthest.km.toLocaleString()} km</span> · ${data.furthest.mi.toLocaleString()} mi${data.furthest.band?' · '+data.furthest.band:''}${data.furthest.mode?' · '+data.furthest.mode:''}${data.furthest.grid?'<br>Grid: '+data.furthest.grid:''}` : 'No contact grids')}</div></div>
+      <div style="background:#2a322e;border:1px solid #3d4f47;border-radius:8px;padding:11px;"><div style="font-size:0.52rem;color:#7a9485;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:5px;">Best 1-Hour Period</div><div style="font-size:1.3rem;font-weight:800;color:#f0f5f2;font-family:'Outfit',sans-serif;line-height:1;margin-bottom:4px;">${data.best60.count} QSOs</div><div style="font-size:0.62rem;color:#7a9485;">Starting around <span style="color:#7ddba3">${data.best60.startTime}</span></div></div>
+      <div style="background:#2a322e;border:1px solid #3d4f47;border-radius:8px;padding:11px;"><div style="font-size:0.52rem;color:#7a9485;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:5px;">Hottest 15 Minutes</div><div style="font-size:1.3rem;font-weight:800;color:#f0f5f2;font-family:'Outfit',sans-serif;line-height:1;margin-bottom:4px;">${data.best15.count} QSOs</div><div style="font-size:0.62rem;color:#7a9485;"><span style="color:#7ddba3">${data.best15.rateEq} Q/hr</span> equivalent · around ${data.best15.startTime}</div></div>
+      <div style="background:#2a322e;border:1px solid #3d4f47;border-radius:8px;padding:11px;"><div style="font-size:0.52rem;color:#7a9485;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:5px;">Most Productive Band</div><div style="font-size:1.3rem;font-weight:800;color:#f0f5f2;font-family:'Outfit',sans-serif;line-height:1;margin-bottom:4px;">${data.topBand.name}</div><div style="font-size:0.62rem;color:#7a9485;"><span style="color:#7ddba3">${data.topBand.count}</span> QSOs on this band</div></div>
+      <div style="background:#2a322e;border:1px solid #3d4f47;border-radius:8px;padding:11px;"><div style="font-size:0.52rem;color:#7a9485;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:5px;">Most Active Mode</div><div style="font-size:1.3rem;font-weight:800;color:#f0f5f2;font-family:'Outfit',sans-serif;line-height:1;margin-bottom:4px;">${data.topMode.name}</div><div style="font-size:0.62rem;color:#7a9485;"><span style="color:#7ddba3">${data.topMode.count}</span> QSOs in this mode</div></div>
     </div>
-    <div class="sc-foot">
-      <div class="sc-call">${data.myCall}</div>
-      <div class="sc-info">TavaScope · tavaone.com · 73 de W4GGJ</div>
-    </div>`;
+    <div class="sc-foot"><div class="sc-call">${data.myCall}</div><div class="sc-info">TavaScope · tavaone.com · 73 de W4GGJ</div></div>`;
 }
 
-// ── BUILD COMBINED STATS CARD (6 clean blocks, no park info) ──────────────
-function buildCombinedCard(data) {
-  const bands = Object.keys(data.byBand).sort((a,b)=>data.byBand[b]-data.byBand[a]);
-  const modes = Object.keys(data.byMode).sort((a,b)=>data.byMode[b]-data.byMode[a]);
-
-  const cardStyle = [
-    'background:#343f3a',
-    'border:1px solid #3d4f47',
-    'border-radius:12px',
-    'padding:28px 20px',
-    'text-align:center',
-    'border-left:4px solid #4a9e6a',
-    'display:flex',
-    'flex-direction:column',
-    'align-items:center',
-    'justify-content:center',
-    'gap:8px',
-  ].join(';');
-
-  const lblStyle = [
-    'font-size:0.6rem',
-    'color:#7a9485',
-    'text-transform:uppercase',
-    'letter-spacing:0.12em',
-    'font-family:JetBrains Mono,monospace',
-  ].join(';');
-
-  const valStyle = [
-    'font-family:Outfit,sans-serif',
-    'font-size:2.2rem',
-    'font-weight:800',
-    'color:#7ddba3',
-    'line-height:1',
-  ].join(';');
-
-  const subStyle = [
-    'font-size:0.65rem',
-    'color:#7a9485',
-    'font-family:JetBrains Mono,monospace',
-    'line-height:1.5',
-  ].join(';');
-
-  // Furthest QSO display
-  const furthestVal  = data.furthest.noGrid ? '—' : data.furthest.call;
-  const furthestSub  = data.furthest.noGrid
-    ? 'No MY_GRIDSQUARE in ADIF'
-    : (data.furthest.km > 0
-        ? `${data.furthest.km.toLocaleString()} km · ${data.furthest.mi.toLocaleString()} mi${data.furthest.band ? ' · '+data.furthest.band : ''}${data.furthest.mode ? ' · '+data.furthest.mode : ''}`
-        : 'No contact grids in ADIF');
-
-  document.getElementById('shareCardInner').innerHTML = `
+function buildCombinedCard(data){
+  const bands=Object.keys(data.byBand).sort((a,b)=>data.byBand[b]-data.byBand[a]);
+  const modes=Object.keys(data.byMode).sort((a,b)=>data.byMode[b]-data.byMode[a]);
+  const cardStyle='background:#343f3a;border:1px solid #3d4f47;border-radius:12px;padding:28px 20px;text-align:center;border-left:4px solid #4a9e6a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;';
+  const lblStyle='font-size:0.6rem;color:#7a9485;text-transform:uppercase;letter-spacing:0.12em;font-family:JetBrains Mono,monospace;';
+  const valStyle='font-family:Outfit,sans-serif;font-size:2.2rem;font-weight:800;color:#7ddba3;line-height:1;';
+  const subStyle='font-size:0.65rem;color:#7a9485;font-family:JetBrains Mono,monospace;line-height:1.5;';
+  const furthestVal=data.furthest.noGrid?'—':data.furthest.call;
+  const furthestSub=data.furthest.noGrid?'No MY_GRIDSQUARE in ADIF':(data.furthest.km>0?`${data.furthest.km.toLocaleString()} km · ${data.furthest.mi.toLocaleString()} mi${data.furthest.band?' · '+data.furthest.band:''}${data.furthest.mode?' · '+data.furthest.mode:''}`:'No contact grids in ADIF');
+  document.getElementById('shareCardInner').innerHTML=`
     <div style="background:#2e3834;border:2px solid #4a9e6a;border-radius:14px;padding:32px 28px;width:1080px;font-family:JetBrains Mono,monospace;box-sizing:border-box;">
-
-      <div style="text-align:center;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid #3d4f47;">
-        <div style="font-family:Outfit,sans-serif;font-size:1.1rem;font-weight:800;color:#7ddba3;letter-spacing:0.06em;">TAVA<span style="color:#5eba7d">SCOPE</span></div>
-        <div style="font-size:0.7rem;color:#7a9485;margin-top:3px;">W4GGJ · tavaone.com</div>
-      </div>
-
+      <div style="text-align:center;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid #3d4f47;"><div style="font-family:Outfit,sans-serif;font-size:1.1rem;font-weight:800;color:#7ddba3;letter-spacing:0.06em;">TAVA<span style="color:#5eba7d">SCOPE</span></div><div style="font-size:0.7rem;color:#7a9485;margin-top:3px;">W4GGJ · tavaone.com</div></div>
       <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:20px;">
-
-        <div style="${cardStyle}">
-          <div style="${lblStyle}">Total QSOs</div>
-          <div style="${valStyle}">${data.total}</div>
-          <div style="${subStyle}">Contacts logged</div>
-        </div>
-
-        <div style="${cardStyle}">
-          <div style="${lblStyle}">Bands Used</div>
-          <div style="${valStyle}">${bands.length}</div>
-          <div style="${subStyle}">${bands.slice(0,3).join(' · ')}</div>
-        </div>
-
-        <div style="${cardStyle}">
-          <div style="${lblStyle}">Primary Mode</div>
-          <div style="font-family:Outfit,sans-serif;font-size:1.6rem;font-weight:800;color:#7ddba3;line-height:1;">${modes[0]||'—'}</div>
-          <div style="${subStyle}">${data.byMode[modes[0]]||0} contacts</div>
-        </div>
-
-        <div style="${cardStyle}">
-          <div style="${lblStyle}">Unique Grids</div>
-          <div style="${valStyle}">${Object.keys(data.grids).length}</div>
-          <div style="${subStyle}">Grid squares worked</div>
-        </div>
-
-        <div style="${cardStyle}">
-          <div style="${lblStyle}">Furthest QSO</div>
-          <div style="font-family:Outfit,sans-serif;font-size:${furthestVal.length > 6 ? '1.3rem' : '2rem'};font-weight:800;color:#7ddba3;line-height:1;">${furthestVal}</div>
-          <div style="${subStyle}">${furthestSub}</div>
-        </div>
-
-        <div style="${cardStyle}">
-          <div style="${lblStyle}">Top Band</div>
-          <div style="font-family:Outfit,sans-serif;font-size:1.6rem;font-weight:800;color:#7ddba3;line-height:1;">${data.topBand.name}</div>
-          <div style="${subStyle}">${data.topBand.count} QSOs</div>
-        </div>
-
+        <div style="${cardStyle}"><div style="${lblStyle}">Total QSOs</div><div style="${valStyle}">${data.total}</div><div style="${subStyle}">Contacts logged</div></div>
+        <div style="${cardStyle}"><div style="${lblStyle}">Bands Used</div><div style="${valStyle}">${bands.length}</div><div style="${subStyle}">${bands.slice(0,3).join(' · ')}</div></div>
+        <div style="${cardStyle}"><div style="${lblStyle}">Primary Mode</div><div style="font-family:Outfit,sans-serif;font-size:1.6rem;font-weight:800;color:#7ddba3;line-height:1;">${modes[0]||'—'}</div><div style="${subStyle}">${data.byMode[modes[0]]||0} contacts</div></div>
+        <div style="${cardStyle}"><div style="${lblStyle}">Unique Grids</div><div style="${valStyle}">${Object.keys(data.grids).length}</div><div style="${subStyle}">Grid squares worked</div></div>
+        <div style="${cardStyle}"><div style="${lblStyle}">Furthest QSO</div><div style="font-family:Outfit,sans-serif;font-size:${furthestVal.length>6?'1.3rem':'2rem'};font-weight:800;color:#7ddba3;line-height:1;">${furthestVal}</div><div style="${subStyle}">${furthestSub}</div></div>
+        <div style="${cardStyle}"><div style="${lblStyle}">Top Band</div><div style="font-family:Outfit,sans-serif;font-size:1.6rem;font-weight:800;color:#7ddba3;line-height:1;">${data.topBand.name}</div><div style="${subStyle}">${data.topBand.count} QSOs</div></div>
       </div>
-
-      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:1px solid #3d4f47;">
-        <div style="font-family:Outfit,sans-serif;font-size:0.95rem;font-weight:800;color:#5eba7d;">${data.myCall}</div>
-        <div style="font-size:0.62rem;color:#7a9485;">TavaScope · tavaone.com · 73 de W4GGJ</div>
-      </div>
-
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:1px solid #3d4f47;"><div style="font-family:Outfit,sans-serif;font-size:0.95rem;font-weight:800;color:#5eba7d;">${data.myCall}</div><div style="font-size:0.62rem;color:#7a9485;">TavaScope · tavaone.com · 73 de W4GGJ</div></div>
     </div>`;
 }
-
 
 // ── DOWNLOAD ───────────────────────────────────────────────────────────────
-function showModal(){
-  document.getElementById('modalOverlay').classList.add('show');
-}
-function closeModal(){ document.getElementById('modalOverlay').classList.remove('show'); document.getElementById('dlStatus').style.display='none'; }
+function showModal(){document.getElementById('modalOverlay').classList.add('show');}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('show');document.getElementById('dlStatus').style.display='none';}
 
 async function downloadCombinedCard(){
-  if (!currentData) { closeModal(); return; }
-  const st = document.getElementById('dlStatus');
-  st.style.display='block'; st.innerHTML='<span class="spinner"></span> Building stats card...';
-
-  // Stats Only Card — no park info, no park IDs, no label
-  buildCombinedCard(currentData, '');
-  const card = document.getElementById('shareCard');
-  const el   = document.getElementById('shareCardInner');
+  if(!currentData){closeModal();return;}
+  const st=document.getElementById('dlStatus');st.style.display='block';st.innerHTML='<span class="spinner"></span> Building stats card...';
+  buildCombinedCard(currentData,'');
+  const card=document.getElementById('shareCard');const el=document.getElementById('shareCardInner');
   card.style.cssText='position:fixed;top:10px;left:10px;z-index:9998;';
   await new Promise(r=>setTimeout(r,300));
-  try {
-    const cvs = await html2canvas(el, {backgroundColor:'#2e3834',scale:2,useCORS:true,logging:false,width:1080,windowWidth:1080});
-    card.style.cssText='position:fixed;top:-9999px;left:-9999px;';
-    const link = document.createElement('a');
-    const dateStr = currentData.date?.replace(/\//g,'-')||Date.now().toString();
-    link.download = `TavaScope_StatsCard_${dateStr}.jpg`;
-    link.href = cvs.toDataURL('image/jpeg',0.95); link.click();
-    closeModal();
-  } catch(e) { st.innerHTML='Error — please try again.'; }
+  try{const cvs=await html2canvas(el,{backgroundColor:'#2e3834',scale:2,useCORS:true,logging:false,width:1080,windowWidth:1080});card.style.cssText='position:fixed;top:-9999px;left:-9999px;';const link=document.createElement('a');const dateStr=currentData.date?.replace(/\//g,'-')||Date.now().toString();link.download=`TavaScope_StatsCard_${dateStr}.jpg`;link.href=cvs.toDataURL('image/jpeg',0.95);link.click();closeModal();}
+  catch(e){st.innerHTML='Error — please try again.';}
 }
 
 async function downloadCard(){
   if(!currentData){closeModal();return;}
-  const st=document.getElementById('dlStatus');
-  st.style.display='block'; st.innerHTML='<span class="spinner"></span> Building card...';
+  const st=document.getElementById('dlStatus');st.style.display='block';st.innerHTML='<span class="spinner"></span> Building card...';
   buildShareCard(currentData);
-  const card=document.getElementById('shareCard');
-  const el=document.getElementById('shareCardInner');
+  const card=document.getElementById('shareCard');const el=document.getElementById('shareCardInner');
   card.style.cssText='position:fixed;top:10px;left:10px;z-index:9998;';
   await new Promise(r=>setTimeout(r,300));
-  try{
-    const cvs=await html2canvas(el,{backgroundColor:'#2e3834',scale:2,useCORS:true,logging:false,width:1080,windowWidth:1080});
-    card.style.cssText='position:fixed;top:-9999px;left:-9999px;';
-    const link=document.createElement('a');
-    link.download=`TavaScope_${(currentData.parkRef||'activation').replace(/[^A-Z0-9]/gi,'_')}_${currentData.date.replace(/\//g,'-')}.jpg`;
-    link.href=cvs.toDataURL('image/jpeg',0.95); link.click();
-    closeModal();
-  }catch(e){ st.innerHTML='Error — please try again.'; }
+  try{const cvs=await html2canvas(el,{backgroundColor:'#2e3834',scale:2,useCORS:true,logging:false,width:1080,windowWidth:1080});card.style.cssText='position:fixed;top:-9999px;left:-9999px;';const link=document.createElement('a');link.download=`TavaScope_${(currentData.parkRef||'activation').replace(/[^A-Z0-9]/gi,'_')}_${currentData.date.replace(/\//g,'-')}.jpg`;link.href=cvs.toDataURL('image/jpeg',0.95);link.click();closeModal();}
+  catch(e){st.innerHTML='Error — please try again.';}
 }
 
 async function downloadFull(){
-  const st=document.getElementById('dlStatus');
-  st.style.display='block'; st.innerHTML='<span class="spinner"></span> Capturing dashboard...';
-  try{
-    const el=document.getElementById('statsView').style.display!=='none'?document.getElementById('statsView'):document.getElementById('compareView');
-    const cvs=await html2canvas(el,{backgroundColor:'#1c2120',scale:1.4,useCORS:true,logging:false});
-    const link=document.createElement('a');
-    link.download=`TavaScope_Full_${Date.now()}.jpg`;
-    link.href=cvs.toDataURL('image/jpeg',0.92); link.click();
-    closeModal();
-  }catch(e){ st.innerHTML='Error — please try again.'; }
+  const st=document.getElementById('dlStatus');st.style.display='block';st.innerHTML='<span class="spinner"></span> Capturing dashboard...';
+  try{const el=document.getElementById('statsView').style.display!=='none'?document.getElementById('statsView'):document.getElementById('compareView');const cvs=await html2canvas(el,{backgroundColor:'#1c2120',scale:1.4,useCORS:true,logging:false});const link=document.createElement('a');link.download=`TavaScope_Full_${Date.now()}.jpg`;link.href=cvs.toDataURL('image/jpeg',0.92);link.click();closeModal();}
+  catch(e){st.innerHTML='Error — please try again.';}
 }
 
 async function downloadMap(){
-  const st = document.getElementById('dlStatus');
-  const mapEl = document.getElementById('activationMap');
-  if (!mapEl) {
-    st.style.display='block';
-    st.innerHTML='No map available — upload an ADIF file first.';
-    return;
-  }
-  st.style.display='block';
-  st.innerHTML='<span class="spinner"></span> Capturing map...';
-  try {
-    // Scroll map card into view and wait for tiles + markers to settle
-    const mapCard = mapEl.closest('.map-card') || mapEl;
-    mapCard.scrollIntoView({behavior:'instant', block:'start'});
+  const st=document.getElementById('dlStatus');const mapEl=document.getElementById('activationMap');
+  if(!mapEl){st.style.display='block';st.innerHTML='No map available — upload an ADIF file first.';return;}
+  st.style.display='block';st.innerHTML='<span class="spinner"></span> Capturing map...';
+  try{
+    const mapCard=mapEl.closest('.map-card')||mapEl;mapCard.scrollIntoView({behavior:'instant',block:'start'});
     await new Promise(r=>setTimeout(r,800));
-
-    // Capture document.body at the map card's exact screen position
-    // This correctly resolves Leaflet's CSS transform-based marker positioning
-    const rect = mapCard.getBoundingClientRect();
-    const scrollY = window.scrollY || window.pageYOffset;
-    const scrollX = window.scrollX || window.pageXOffset;
-
-    const cvs = await html2canvas(document.body, {
-      x: rect.left + scrollX,
-      y: rect.top  + scrollY,
-      width:  rect.width,
-      height: rect.height,
-      backgroundColor: '#2e3834',
-      scale: 2,
-      useCORS: true,
-      logging: false,
-      allowTaint: true,
-      scrollX: 0,
-      scrollY: 0,
-      windowWidth:  document.documentElement.scrollWidth,
-      windowHeight: document.documentElement.scrollHeight,
-    });
-
-    const link = document.createElement('a');
-    const parkLabel = (currentData && currentData.parkRef && currentData.parkRef !== '—')
-      ? currentData.parkRef.replace(/[^A-Z0-9]/gi,'_') : 'map';
-    const dateStr = (currentData && currentData.date)
-      ? currentData.date.replace(/\//g,'-') : Date.now().toString();
-    link.download = 'TavaScope_Map_' + parkLabel + '_' + dateStr + '.jpg';
-    link.href = cvs.toDataURL('image/jpeg', 0.95);
-    link.click();
-    closeModal();
-  } catch(e) {
-    st.style.display='block';
-    st.innerHTML='Error capturing map — try Full Dashboard instead.';
-    console.error('Map download error:', e);
-  }
+    const rect=mapCard.getBoundingClientRect();const scrollY=window.scrollY||window.pageYOffset;const scrollX=window.scrollX||window.pageXOffset;
+    const cvs=await html2canvas(document.body,{x:rect.left+scrollX,y:rect.top+scrollY,width:rect.width,height:rect.height,backgroundColor:'#2e3834',scale:2,useCORS:true,logging:false,allowTaint:true,scrollX:0,scrollY:0,windowWidth:document.documentElement.scrollWidth,windowHeight:document.documentElement.scrollHeight});
+    const link=document.createElement('a');const parkLabel=(currentData&&currentData.parkRef&&currentData.parkRef!=='—')?currentData.parkRef.replace(/[^A-Z0-9]/gi,'_'):'map';const dateStr=(currentData&&currentData.date)?currentData.date.replace(/\//g,'-'):Date.now().toString();link.download='TavaScope_Map_'+parkLabel+'_'+dateStr+'.jpg';link.href=cvs.toDataURL('image/jpeg',0.95);link.click();closeModal();
+  }catch(e){st.style.display='block';st.innerHTML='Error capturing map — try Full Dashboard instead.';console.error('Map download error:',e);}
 }
 
 // ── FILE HANDLING ──────────────────────────────────────────────────────────
-function handleFiles(files) {
-  if (!files || files.length === 0) return;
-  Array.from(files).forEach(function(f) {
-    var reader = new FileReader();
-    reader.onload = function(ev) {
-      addFile(ev.target.result, f.name);
-    };
-    reader.onerror = function() {
-      alert('Could not read file: ' + f.name);
-    };
+function handleFiles(files){
+  if(!files||files.length===0)return;
+  Array.from(files).forEach(function(f){
+    var reader=new FileReader();
+    reader.onload=function(ev){addFile(ev.target.result,f.name);};
+    reader.onerror=function(){alert('Could not read file: '+f.name);};
     reader.readAsText(f);
   });
 }
-
-var fileInput = document.getElementById('fileInput');
-fileInput.addEventListener('change', function(e) {
-  handleFiles(e.target.files);
-  e.target.value = '';
-});
-
-var dz = document.getElementById('dropZone');
-if (dz) {
-  dz.addEventListener('dragover', function(e) { e.preventDefault(); dz.classList.add('dragover'); });
-  dz.addEventListener('dragleave', function() { dz.classList.remove('dragover'); });
-  dz.addEventListener('drop', function(e) {
-    e.preventDefault();
-    dz.classList.remove('dragover');
-    handleFiles(e.dataTransfer.files);
-  });
-  dz.addEventListener('click', function() { fileInput.click(); });
+var fileInput=document.getElementById('fileInput');
+fileInput.addEventListener('change',function(e){handleFiles(e.target.files);e.target.value='';});
+var dz=document.getElementById('dropZone');
+if(dz){
+  dz.addEventListener('dragover',function(e){e.preventDefault();dz.classList.add('dragover');});
+  dz.addEventListener('dragleave',function(){dz.classList.remove('dragover');});
+  dz.addEventListener('drop',function(e){e.preventDefault();dz.classList.remove('dragover');handleFiles(e.dataTransfer.files);});
+  dz.addEventListener('click',function(){fileInput.click();});
 }
 
 // ── MIGRATE OLD FILES ──────────────────────────────────────────────────────
-// Re-extract parkRef/parkName for any files saved before that feature existed
-async function migrateOldFiles() {
-  const idx = getIndex();
-  let changed = false;
-  for (const f of idx) {
-    const needsMigration = !f.parkRef || f.parkRef === '' || f.parkRef === '—' || !f.hasOwnProperty('parkName');
-    if (!needsMigration) continue;
-    // Try extracting from filename
-    const fileRef = extractParkRef(f.name || '');
-    // Try extracting from ADIF content
-    const adifText = loadFile(f.id);
-    let adifRef = null;
-    if (adifText) {
-      const recs = parseADIF(adifText);
-      if (recs.length) {
-        adifRef = recs[0]?.['POTA_REF']||recs[0]?.['SIG_INFO']||recs[0]?.['MY_SIG_INFO']||null;
-        // Also update date/rate if missing
-        if (!f.date && recs[0]?.['QSO_DATE']) f.date = fmtDate(recs[0]['QSO_DATE']);
-      }
-    }
-    const bestRef = adifRef || fileRef || null;
-    if (bestRef) {
-      f.parkRef = bestRef;
-      // Fetch park name from POTA API
-      const name = await fetchParkName(bestRef);
-      f.parkName = name || '';
-      changed = true;
-    } else if (!f.hasOwnProperty('parkName')) {
-      f.parkName = '';
-      changed = true;
-    }
+async function migrateOldFiles(){
+  const idx=getIndex();let changed=false;
+  for(const f of idx){
+    const needsMigration=!f.parkRef||f.parkRef===''||f.parkRef==='—'||!f.hasOwnProperty('parkName');
+    if(!needsMigration)continue;
+    const fileRef=extractParkRef(f.name||'');
+    const adifText=loadFile(f.id);let adifRef=null;
+    if(adifText){const recs=parseADIF(adifText);if(recs.length){adifRef=recs[0]?.['POTA_REF']||recs[0]?.['SIG_INFO']||recs[0]?.['MY_SIG_INFO']||null;if(!f.date&&recs[0]?.['QSO_DATE'])f.date=fmtDate(recs[0]['QSO_DATE']);}}
+    const bestRef=adifRef||fileRef||null;
+    if(bestRef){f.parkRef=bestRef;const name=await fetchParkName(bestRef);f.parkName=name||'';changed=true;}
+    else if(!f.hasOwnProperty('parkName')){f.parkName='';changed=true;}
   }
-  if (changed) { saveIndex(idx); renderSidebar(); }
+  if(changed){saveIndex(idx);renderSidebar();}
 }
 
 // ── INIT ───────────────────────────────────────────────────────────────────
 renderSidebar();
-document.getElementById('dropZone').style.display = getIndex().length ? 'none' : 'block';
-if (!getIndex().length) document.getElementById('dropZone').style.display='block';
-// Run migration async so it doesn't block startup
+if(getIndex().length){
+  showWelcome();
+}else{
+  showDrop();
+}
 migrateOldFiles();
 </script>
 </body>
