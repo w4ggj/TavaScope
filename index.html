@@ -269,8 +269,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 <div class="main">
   <div class="topbar">
     <div>
-      <div class="topbar-title" id="topbarTitle">TavaScope</div>
-      <div class="topbar-sub" id="topbarSub">POTA Activation Analyzer · W4GGJ · tavaone.com</div>
+      <div class="topbar-title" id="topbarTitle"></div>
+      <div class="topbar-sub" id="topbarSub"></div>
     </div>
     <div class="topbar-btns" id="topbarBtns"></div>
   </div>
@@ -464,8 +464,8 @@ function showWelcome(){
   document.getElementById('welcomePanel').style.display = 'block';
   document.getElementById('statsView').style.display   = 'none';
   document.getElementById('compareView').style.display  = 'none';
-  document.getElementById('topbarTitle').textContent   = 'TavaScope';
-  document.getElementById('topbarSub').textContent     = 'POTA Activation Analyzer · W4GGJ · tavaone.com';
+  document.getElementById('topbarTitle').textContent   = '';
+  document.getElementById('topbarSub').textContent     = 'Select an activation from the sidebar, or upload an ADIF file to get started';
   document.getElementById('topbarBtns').innerHTML      = '';
 }
 function hideWelcome(){ document.getElementById('welcomePanel').style.display='none'; }
@@ -474,6 +474,9 @@ function showDrop(){
   document.getElementById('welcomePanel').style.display = 'none';
   document.getElementById('statsView').style.display   = 'none';
   document.getElementById('compareView').style.display  = 'none';
+  document.getElementById('topbarTitle').textContent   = '';
+  document.getElementById('topbarSub').textContent     = 'Upload an ADIF file to get started — or try the demo activation below';
+  document.getElementById('topbarBtns').innerHTML      = '';
 }
 
 // ── PARK REF EXTRACTION ────────────────────────────────────────────────────
