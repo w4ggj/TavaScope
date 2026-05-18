@@ -277,7 +277,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
   <div class="content">
 
     <!-- Empty state -->
-    <div class="drop-zone" id="dropZone">
+    <div class="drop-zone" id="dropZone" style="display:none">
       <span class="drop-icon">📡</span>
       <div class="drop-title">Drop an ADIF file here or click to browse</div>
       <div class="drop-sub">Files saved in your browser · No upload · No account<br>Filename must be your park ID (eg. us-6700) · QRZ.com · POTA.app · DXKeeper</div>
@@ -465,19 +465,23 @@ function showWelcome(){
   document.getElementById('statsView').style.display   = 'none';
   document.getElementById('compareView').style.display  = 'none';
   document.getElementById('topbarTitle').textContent   = '';
-  document.getElementById('topbarSub').textContent     = 'Select an activation from the sidebar, or upload an ADIF file to get started';
+  const hasFiles = getIndex().length > 0;
+  document.getElementById('topbarSub').textContent     = hasFiles
+    ? 'Select an activation from the sidebar, or upload another ADIF file'
+    : 'Upload an ADIF file to get started — or try the demo activation below';
   document.getElementById('topbarBtns').innerHTML      = '';
+  // Update welcome header text to match context
+  const wh = document.querySelector('.welcome-header-text h2');
+  const wp = document.querySelector('.welcome-header-text p');
+  if(wh) wh.textContent = hasFiles
+    ? 'Select an activation from the sidebar to view your stats'
+    : 'Welcome to TavaScope — your POTA activation analyzer';
+  if(wp) wp.textContent = hasFiles
+    ? 'Or upload another ADIF file using the button in the sidebar'
+    : 'Upload an ADIF file or try the demo activation below to get started';
 }
 function hideWelcome(){ document.getElementById('welcomePanel').style.display='none'; }
-function showDrop(){
-  document.getElementById('dropZone').style.display    = 'block';
-  document.getElementById('welcomePanel').style.display = 'none';
-  document.getElementById('statsView').style.display   = 'none';
-  document.getElementById('compareView').style.display  = 'none';
-  document.getElementById('topbarTitle').textContent   = '';
-  document.getElementById('topbarSub').textContent     = 'Upload an ADIF file to get started — or try the demo activation below';
-  document.getElementById('topbarBtns').innerHTML      = '';
-}
+function showDrop(){ showWelcome(); }
 
 // ── PARK REF EXTRACTION ────────────────────────────────────────────────────
 function extractParkRef(filename){
@@ -1177,12 +1181,13 @@ function handleFiles(files){
 }
 const fileInput=document.getElementById('fileInput');
 fileInput.addEventListener('change',e=>{handleFiles(e.target.files);e.target.value='';});
-const dz=document.getElementById('dropZone');
-if(dz){
-  dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('dragover');});
-  dz.addEventListener('dragleave',()=>dz.classList.remove('dragover'));
-  dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('dragover');handleFiles(e.dataTransfer.files);});
-  dz.addEventListener('click',()=>fileInput.click());
+// Welcome panel is the drag-and-drop target
+const wp=document.getElementById('welcomePanel');
+const mainEl=document.querySelector('.main');
+if(mainEl){
+  mainEl.addEventListener('dragover',e=>{e.preventDefault();if(wp)wp.style.outline='2px dashed var(--green)';});
+  mainEl.addEventListener('dragleave',e=>{if(!e.relatedTarget||!mainEl.contains(e.relatedTarget))if(wp)wp.style.outline='';});
+  mainEl.addEventListener('drop',e=>{e.preventDefault();if(wp)wp.style.outline='';handleFiles(e.dataTransfer.files);});
 }
 
 // ── MIGRATE OLD FILES ──────────────────────────────────────────────────────
