@@ -226,14 +226,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 <body>
 <div class="app">
 
+<!-- ── SIDEBAR ── -->
 <div class="sidebar">
   <div class="sidebar-header">
-    <div style="display:flex;align-items:center;justify-content:space-between;">
-      <div style="display:flex;align-items:center;gap:10px;">
-        <img src="Gemini_Generated_Image_uakyntuakyntuaky.jpg" alt="Tava Scope Logo" style="height:36px;width:auto;vertical-align:middle;border-radius:4px;">
-        <div class="logo">TAVA<span>SCOPE</span></div>
-      </div>
-      <div style="font-size:0.58rem;font-family:var(--mono);color:var(--text-dim);background:var(--bg3);padding:2px 6px;border-radius:4px;border:1px solid var(--border);">v1.8</div>
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;">
+      <div class="logo">TAVA<span>SCOPE</span></div>
+      <div style="font-size:0.58rem;font-family:var(--mono);color:var(--text-dim);margin-top:3px;background:var(--bg3);padding:2px 6px;border-radius:4px;border:1px solid var(--border);">v1.8</div>
     </div>
     <div class="logo-sub">W4GGJ · POTA Analyzer · tavaone.com</div>
   </div>
@@ -274,6 +272,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
   </div>
 </div>
 
+<!-- ── MAIN ── -->
 <div class="main">
   <div class="topbar">
     <div>
@@ -284,6 +283,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
   </div>
   <div class="content">
 
+    <!-- Empty state -->
     <div class="drop-zone" id="dropZone" style="display:none">
       <span class="drop-icon">📡</span>
       <div class="drop-title">Drop an ADIF file here or click to browse</div>
@@ -294,6 +294,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
       </div>
     </div>
 
+    <!-- Files loaded, none selected -->
     <div id="welcomePanel" style="display:none">
       <div class="welcome-panel">
         <div class="welcome-header">
@@ -535,7 +536,7 @@ const DXCC_PREFIXES={
   'F':{lat:47,lon:2},'DL':{lat:51,lon:10},'ON':{lat:50.5,lon:4},'PA':{lat:52,lon:5},
   'OZ':{lat:56,lon:10},'SM':{lat:60,lon:15},'OH':{lat:62,lon:26},'LA':{lat:62,lon:10},
   'TF':{lat:65,lon:-18},'EI':{lat:53,lon:-8},'SP':{lat:52,lon:20},'OK':{lat:50,lon:15},
-  'OM':{lat:48.5,lon:19},'HA':{lat:47,lon:19},'OE':{lat:47.5,lon:14},'OE':{lat:47.5,lon:14},'HB':{lat:47,lon:8},
+  'OM':{lat:48.5,lon:19},'HA':{lat:47,lon:19},'OE':{lat:47.5,lon:14},'HB':{lat:47,lon:8},
   'I':{lat:42,lon:12},'EA':{lat:40,lon:-4},'CT':{lat:39,lon:-8},'SV':{lat:38,lon:23},
   'YO':{lat:45,lon:25},'LZ':{lat:42.5,lon:25},'UA':{lat:60,lon:50},'UR':{lat:49,lon:32},
   'PY':{lat:-10,lon:-53},'LU':{lat:-34,lon:-64},'CE':{lat:-30,lon:-71},'OA':{lat:-9.5,lon:-76},
@@ -765,7 +766,7 @@ function renderSidebar(){
   list.innerHTML=idx.map(f=>`
     <div class="file-item ${inSel?'select-mode':''} ${selected.has(f.id)?'selected':''}" id="fi_${f.id}" onclick="fileClick('${f.id}')">
       ${inSel?`<input type="checkbox" class="file-checkbox" ${selected.has(f.id)?'checked':''} onclick="event.stopPropagation();fileClick('${f.id}')">`:''}
-      ${f.parkRef&&f.parkRef!=='—'?`<div class="file-park-ref">${f.parkRef}</div>`:((f.name?`<div class="file-park-ref" style="color:var(--text-dim)">${f.name.replace(/\.[^.]+$/,'').substring(0,28)}</div>`:''))}
+      ${(f.parkRef&&f.parkRef!=='—')?`<div class="file-park-ref">${f.parkRef}</div>`:((f.name?`<div class="file-park-ref" style="color:var(--text-dim)">${f.name.replace(/\.[^.]+$/,'').substring(0,28)}</div>`:''))}
       <div class="file-park-name">${f.parkName||(f.parkRef&&f.parkRef!=='—'?f.parkRef:'')||f.name?.replace(/\.[^.]+$/,'')||'Unknown Park'}</div>
       <div class="file-meta">${f.date||''} · ${f.durStr||''}</div>
       <div class="file-qsos">${f.totalQSOs} QSOs · ${f.rate}/hr</div>
@@ -937,11 +938,13 @@ function renderStats(data){
       <div class="insight-card"><div class="insight-label">Most Active Mode</div><div class="insight-value">${data.topMode.name}</div><div class="insight-sub"><span class="hl">${data.topMode.count}</span> QSOs in this mode</div></div>
     </div>
 
+    <!-- OVERVIEW RATE CHART -->
     <div class="chart-card" style="margin-bottom:13px">
       <div class="chart-title"><span class="dot"></span>QSO Rate — Full Activation (10-min intervals)</div>
       <div class="chart-wrap"><canvas id="rateChart"></canvas></div>
     </div>
 
+    <!-- RATE DETAIL EXPLORER -->
     <div class="chart-card" style="margin-bottom:13px">
       <div class="chart-title" style="margin-bottom:10px;align-items:flex-start;flex-wrap:wrap;gap:8px;">
         <span class="dot" style="background:var(--accent);margin-top:3px;flex-shrink:0;"></span>
@@ -1037,7 +1040,7 @@ function renderStats(data){
 
 // ── COMBINED ───────────────────────────────────────────────────────────────
 function runCombine(){
-  const ids=[...selected],allRecs=[],names=[],parkRefs([]);
+  const ids=[...selected],allRecs=[],names=[],parkRefs=[];
   ids.forEach(id=>{const text=loadFile(id);if(text)allRecs.push(...parseADIF(text));const meta=getIndex().find(f=>f.id===id);if(meta){names.push(meta.parkName||meta.parkRef||meta.name);parkRefs.push(meta.parkRef||'');}});
   if(!allRecs.length){alert('No records found');return;}
   const data=analyze(allRecs,names.join(' + '),parkRefs.join(' + '),names.join(' + '));
@@ -1137,7 +1140,7 @@ async function downloadCard(){
   const card=document.getElementById('shareCard'),el=document.getElementById('shareCardInner');
   card.style.cssText='position:fixed;top:10px;left:10px;z-index:9998;';
   await new Promise(r=>setTimeout(r,300));
-  try{const cvs=await html2canvas(el,{backgroundColor:#2e3834',scale:2,useCORS:true,logging:false,width:1080,windowWidth:1080});card.style.cssText='position:fixed;top:-9999px;left:-9999px;';const link=document.createElement('a');link.download=`TavaScope_${(currentData.parkRef||'activation').replace(/[^A-Z0-9]/gi,'_')}_${currentData.date.replace(/\//g,'-')}.jpg`;link.href=cvs.toDataURL('image/jpeg',0.95);link.click();closeModal();}
+  try{const cvs=await html2canvas(el,{backgroundColor:'#2e3834',scale:2,useCORS:true,logging:false,width:1080,windowWidth:1080});card.style.cssText='position:fixed;top:-9999px;left:-9999px;';const link=document.createElement('a');link.download=`TavaScope_${(currentData.parkRef||'activation').replace(/[^A-Z0-9]/gi,'_')}_${currentData.date.replace(/\//g,'-')}.jpg`;link.href=cvs.toDataURL('image/jpeg',0.95);link.click();closeModal();}
   catch(e){st.innerHTML='Error — please try again.';}
 }
 
