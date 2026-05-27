@@ -17,7 +17,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .sidebar{width:var(--sidebar);min-width:var(--sidebar);background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;height:100vh;}
 .main{flex:1;overflow-y:auto;display:flex;flex-direction:column;}
 .sidebar-header{padding:16px;border-bottom:1px solid var(--border);}
-.logo{font-family:var(--sans);font-size:1.3rem;font-weight:800;color:var(--accent);letter-spacing:0.04em;line-height:1;}
+.logo{font-family:var(--sans);font-size:1.3rem;font-weight:800;color:var(--text-lt);letter-spacing:0.04em;line-height:1;}
 .logo span{color:var(--green-lt);}
 .logo-sub{font-size:0.62rem;color:var(--text-dim);font-family:var(--mono);margin-top:2px;}
 .sidebar-actions{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:7px;}
@@ -186,7 +186,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 #shareCard{position:fixed;top:-9999px;left:-9999px;}
 .share-card-inner{background:#1e293b;border:2px solid #10b981;border-radius:12px;padding:26px;width:1080px;font-family:'JetBrains Mono',monospace;}
 .sc-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;padding-bottom:13px;border-bottom:1px solid #334155;}
-.sc-logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.15rem;font-weight:800;color:#6ee7b7;}.sc-logo span{color:#34d399;}
+.sc-logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.15rem;font-weight:800;color:#ffffff;}.sc-logo span{color:#34d399;}
 .sc-park-ref{font-size:0.75rem;color:#34d399;font-weight:700;margin-bottom:1px;}
 .sc-park-name{font-size:1.1rem;font-weight:700;color:#f8fafc;margin-bottom:2px;}
 .sc-park-info{font-size:0.72rem;color:#94a3b8;}
@@ -1116,7 +1116,7 @@ function buildCombinedCard(data){
   const fs=data.furthest.noGrid?'No MY_GRIDSQUARE':(data.furthest.km>0?`${data.furthest.km.toLocaleString()} km · ${data.furthest.mi.toLocaleString()} mi`:'No contact grids');
   document.getElementById('shareCardInner').innerHTML=`
     <div style="background:#1e293b;border:2px solid #10b981;border-radius:14px;padding:32px 28px;width:1080px;font-family:JetBrains Mono,monospace;box-sizing:border-box;">
-      <div style="text-align:center;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid #334155;"><div style="font-family:Plus Jakarta Sans,sans-serif;font-size:1.1rem;font-weight:800;color:#6ee7b7;letter-spacing:0.06em;">TAVA<span style="color:#34d399">SCOPE</span></div><div style="font-size:0.7rem;color:#94a3b8;margin-top:3px;">W4GGJ · tavaone.com</div></div>
+      <div style="text-align:center;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid #334155;"><div style="font-family:Plus Jakarta Sans,sans-serif;font-size:1.1rem;font-weight:800;color:#ffffff;letter-spacing:0.06em;">TAVA<span style="color:#34d399">SCOPE</span></div><div style="font-size:0.7rem;color:#94a3b8;margin-top:3px;">W4GGJ · tavaone.com</div></div>
       <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:20px;">
         <div style="${cardStyle}"><div style="${lblStyle}">Total QSOs</div><div style="${valStyle}">${data.total}</div><div style="${subStyle}">Contacts logged</div></div>
         <div style="${cardStyle}"><div style="${lblStyle}">Bands Used</div><div style="${valStyle}">${bands.length}</div><div style="${subStyle}">${bands.slice(0,3).join(' · ')}</div></div>
