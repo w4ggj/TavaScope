@@ -1225,10 +1225,11 @@ migrateOldFiles();
   const b64 = params.get('adif');
   if(!b64) return;
   try {
-    const adif = decodeURIComponent(escape(atob(b64)));
+    const padded = b64.replace(/-/g, '+').replace(/_/g, '/');
+    const pad = padded.length % 4 === 0 ? '' : '='.repeat(4 - padded.length % 4);
+    const adif = decodeURIComponent(escape(atob(padded + pad)));
     const filename = params.get('ref') ? params.get('ref') + '.adi' : 'activate-export.adi';
     addFile(adif, filename);
-    // Clean URL so refreshing doesn't re-load
     window.history.replaceState({}, '', window.location.pathname);
   } catch(e) {
     console.log('[TavaScope] URL param decode error:', e.message);
