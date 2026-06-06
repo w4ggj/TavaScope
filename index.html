@@ -1218,6 +1218,22 @@ async function migrateOldFiles(){
 renderSidebar();
 if(getIndex().length){showWelcome();}else{showDrop();}
 migrateOldFiles();
+
+// ── URL PARAM READER ───────────────────────────────────────────────────────
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  const b64 = params.get('adif');
+  if(!b64) return;
+  try {
+    const adif = decodeURIComponent(escape(atob(b64)));
+    const filename = params.get('ref') ? params.get('ref') + '.adi' : 'activate-export.adi';
+    addFile(adif, filename);
+    // Clean URL so refreshing doesn't re-load
+    window.history.replaceState({}, '', window.location.pathname);
+  } catch(e) {
+    console.log('[TavaScope] URL param decode error:', e.message);
+  }
+})();
 </script>
 </body>
 </html>
