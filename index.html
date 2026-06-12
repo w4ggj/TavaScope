@@ -1174,6 +1174,32 @@ async function downloadMap(){
     const sc=2;
     const cvs=await html2canvas(mapEl,{backgroundColor:'#1e293b',scale:sc,useCORS:true,logging:false,allowTaint:true,scrollX:-window.scrollX,scrollY:-window.scrollY,windowWidth:document.documentElement.scrollWidth,windowHeight:document.documentElement.scrollHeight});
     if(overlay) overlay.style.visibility='';
+    // Draw lines on canvas — guaranteed regardless of html2canvas SVG rendering
+    if(currentData&&mapObj&&currentData.contacts){
+      const myPos=gridToLatLon(currentData.myGrid)||gridToLatLon(MY_GRID_FALLBACK)||{lat:27.74,lon:-82.63};
+      const myPt=mapObj.latLngToContainerPoint([myPos.lat,myPos.lon]);
+      const ctx=cvs.getContext('2d');
+      if(ctx){
+        ctx.save();
+        ctx.globalAlpha=0.7;
+        ctx.lineWidth=2*sc;
+        ctx.lineCap='round';
+        currentData.contacts.forEach(ct=>{
+          let pos=null;
+          if(ct.grid&&ct.grid.length>=4) pos=gridToLatLon(ct.grid);
+          if(!pos) pos=dxccLatLon(ct.call);
+          if(!pos) return;
+          const ctPt=mapObj.latLngToContainerPoint([pos.lat,pos.lon]);
+          const band=(ct.band||'?').toUpperCase();
+          ctx.strokeStyle=BAND_COLORS[band]||BAND_COLORS['?'];
+          ctx.beginPath();
+          ctx.moveTo(myPt.x*sc,myPt.y*sc);
+          ctx.lineTo(ctPt.x*sc,ctPt.y*sc);
+          ctx.stroke();
+        });
+        ctx.restore();
+      }
+    }
     let imgData=cvs.toDataURL('image/jpeg',0.95);
     if(currentData&&mapObj&&currentData.contacts&&currentData.contacts.length){
       const pts=[];
