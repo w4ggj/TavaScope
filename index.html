@@ -1167,21 +1167,27 @@ async function downloadMap(){
   if(!mapEl){st.style.display='block';st.innerHTML='No map available.';return;}
   st.style.display='block';st.innerHTML='<span class="spinner"></span> Capturing map...';
   const overlay=document.getElementById('modalOverlay');
-  const tilePane=document.querySelector('.leaflet-tile-pane');
   try{
     const mapCard=mapEl.closest('.map-card')||mapEl;
     mapCard.scrollIntoView({behavior:'instant',block:'start'});
     if(overlay) overlay.style.display='none';
-    if(tilePane) tilePane.style.filter='brightness(1) saturate(1)';  // brightness(1) not none — preserves stacking context so Leaflet SVG lines capture in html2canvas
     await new Promise(r=>setTimeout(r,800));
     const rect=mapCard.getBoundingClientRect();
     const mapRect=mapEl.getBoundingClientRect();
     const sY=window.scrollY||0,sX=window.scrollX||0;
     const offX=mapRect.left-rect.left,offY=mapRect.top-rect.top;
     const sc=2;
-    const cvs=await html2canvas(document.body,{x:rect.left+sX,y:rect.top+sY,width:rect.width,height:rect.height,backgroundColor:'#1e293b',scale:sc,useCORS:true,logging:false,allowTaint:true,scrollX:0,scrollY:0,windowWidth:document.documentElement.scrollWidth,windowHeight:document.documentElement.scrollHeight});
+    // Tile pane filter is intentionally NOT cleared — it creates the stacking context
+    // that allows html2canvas to capture the Leaflet SVG overlay (lines)
+    const raw=await html2canvas(document.body,{x:rect.left+sX,y:rect.top+sY,width:rect.width,height:rect.height,backgroundColor:'#1e293b',scale:sc,useCORS:true,logging:false,allowTaint:true,scrollX:0,scrollY:0,windowWidth:document.documentElement.scrollWidth,windowHeight:document.documentElement.scrollHeight});
     if(overlay) overlay.style.display='';
-    if(tilePane) tilePane.style.filter='';
+    // Compensate for CSS filter brightness(0.65) saturate(0.5) applied during capture
+    const cvs=document.createElement('canvas');
+    cvs.width=raw.width;cvs.height=raw.height;
+    const bctx=cvs.getContext('2d');
+    bctx.filter='brightness(1.55) saturate(2)';
+    bctx.drawImage(raw,0,0);
+    bctx.filter='none';
     let imgData=cvs.toDataURL('image/jpeg',0.95);
     if(currentData&&mapObj&&currentData.contacts&&currentData.contacts.length){
       const pts=[];
@@ -1211,7 +1217,6 @@ async function downloadMap(){
     link.href=imgData;link.click();closeModal();
   }catch(e){
     if(overlay) overlay.style.display='';
-    if(tilePane) tilePane.style.filter='';
     st.innerHTML='Error — try Full Dashboard instead.';
   }
 }
