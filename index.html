@@ -1174,6 +1174,9 @@ async function downloadMap(){
     if(overlay) overlay.style.display='none';
     if(tilePane) tilePane.style.filter='none';
     await new Promise(r=>setTimeout(r,800));
+    // Offset of #activationMap within mapCard (map-header sits above the map element)
+    const mapRect=mapEl.getBoundingClientRect(),cardRect=mapCard.getBoundingClientRect();
+    const offX=mapRect.left-cardRect.left,offY=mapRect.top-cardRect.top;
     const cvs=await html2canvas(mapCard,{backgroundColor:'#1e293b',scale:2,useCORS:true,logging:false,allowTaint:true,scrollX:-window.scrollX,scrollY:-window.scrollY,windowWidth:document.documentElement.scrollWidth,windowHeight:document.documentElement.scrollHeight});
     // Draw polylines manually — html2canvas cannot capture Leaflet SVG overlay transforms
     if(currentData&&mapObj&&currentData.contacts){
@@ -1194,8 +1197,8 @@ async function downloadMap(){
         const band=(ct.band||'?').toUpperCase();
         ctx.strokeStyle=BAND_COLORS[band]||BAND_COLORS['?'];
         ctx.beginPath();
-        ctx.moveTo(myPt.x*sc,myPt.y*sc);
-        ctx.lineTo(ctPt.x*sc,ctPt.y*sc);
+        ctx.moveTo((myPt.x+offX)*sc,(myPt.y+offY)*sc);
+        ctx.lineTo((ctPt.x+offX)*sc,(ctPt.y+offY)*sc);
         ctx.stroke();
       });
       ctx.restore();
@@ -1206,12 +1209,12 @@ async function downloadMap(){
     if(currentData&&mapObj&&currentData.contacts&&currentData.contacts.length){
       const pts=[];
       const myPos=gridToLatLon(currentData.myGrid);
-      if(myPos) pts.push(mapObj.latLngToContainerPoint([myPos.lat,myPos.lon]));
+      if(myPos){const p=mapObj.latLngToContainerPoint([myPos.lat,myPos.lon]);pts.push({x:p.x+offX,y:p.y+offY});}
       currentData.contacts.forEach(ct=>{
         let pos=null;
         if(ct.grid&&ct.grid.length>=4) pos=gridToLatLon(ct.grid);
         if(!pos) pos=dxccLatLon(ct.call);
-        if(pos) pts.push(mapObj.latLngToContainerPoint([pos.lat,pos.lon]));
+        if(pos){const p=mapObj.latLngToContainerPoint([pos.lat,pos.lon]);pts.push({x:p.x+offX,y:p.y+offY});}
       });
       if(pts.length>1){
         const pad=60,sc=2;
