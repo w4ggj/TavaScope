@@ -1174,26 +1174,36 @@ async function downloadMap(){
     const sc=2;
     const cvs=await html2canvas(mapEl,{backgroundColor:'#1e293b',scale:sc,useCORS:true,logging:false,allowTaint:true,scrollX:-window.scrollX,scrollY:-window.scrollY,windowWidth:document.documentElement.scrollWidth,windowHeight:document.documentElement.scrollHeight});
     if(overlay) overlay.style.visibility='';
-    // DEBUG: draw thick red diagonal — if this appears, canvas drawing works
-    const ctx=cvs.getContext('2d');
-    if(ctx){
-      ctx.save();
-      ctx.strokeStyle='#ff0000';
-      ctx.lineWidth=20;
-      ctx.globalAlpha=1.0;
-      ctx.beginPath();
-      ctx.moveTo(0,0);
-      ctx.lineTo(cvs.width,cvs.height);
-      ctx.stroke();
-      ctx.restore();
+    let imgData=cvs.toDataURL('image/jpeg',0.95);
+    if(currentData&&mapObj&&currentData.contacts&&currentData.contacts.length){
+      const pts=[];
+      const myPos=gridToLatLon(currentData.myGrid)||gridToLatLon(MY_GRID_FALLBACK)||{lat:27.74,lon:-82.63};
+      pts.push(mapObj.latLngToContainerPoint([myPos.lat,myPos.lon]));
+      currentData.contacts.forEach(ct=>{
+        let pos=null;
+        if(ct.grid&&ct.grid.length>=4) pos=gridToLatLon(ct.grid);
+        if(!pos) pos=dxccLatLon(ct.call);
+        if(pos) pts.push(mapObj.latLngToContainerPoint([pos.lat,pos.lon]));
+      });
+      if(pts.length>1){
+        const pad=60;
+        const xs=pts.map(p=>p.x),ys=pts.map(p=>p.y);
+        const x0=Math.max(0,Math.min(...xs)-pad),y0=Math.max(0,Math.min(...ys)-pad);
+        const x1=Math.min(mapEl.offsetWidth,Math.max(...xs)+pad),y1=Math.min(mapEl.offsetHeight,Math.max(...ys)+pad);
+        if(x1>x0&&y1>y0){
+          const crop=document.createElement('canvas');
+          crop.width=(x1-x0)*sc;crop.height=(y1-y0)*sc;
+          crop.getContext('2d').drawImage(cvs,x0*sc,y0*sc,(x1-x0)*sc,(y1-y0)*sc,0,0,crop.width,crop.height);
+          imgData=crop.toDataURL('image/jpeg',0.95);
+        }
+      }
     }
     const link=document.createElement('a');
-    link.download='debug_map.jpg';
-    link.href=cvs.toDataURL('image/jpeg',0.95);
-    link.click();closeModal();
+    link.download='TavaScope_Map_'+(currentData?.parkRef||'map').replace(/[^A-Z0-9]/gi,'_')+'_'+(currentData?.date||Date.now()).toString().replace(/\//g,'-')+'.jpg';
+    link.href=imgData;link.click();closeModal();
   }catch(e){
     if(overlay) overlay.style.visibility='';
-    st.innerHTML='Error: '+e.message;
+    st.innerHTML='Error — try Full Dashboard instead.';
   }
 }
 
