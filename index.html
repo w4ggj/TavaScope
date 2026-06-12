@@ -1172,7 +1172,7 @@ async function downloadMap(){
     const mapCard=mapEl.closest('.map-card')||mapEl;
     mapCard.scrollIntoView({behavior:'instant',block:'start'});
     if(overlay) overlay.style.display='none';
-    if(tilePane) tilePane.style.filter='none';
+    if(tilePane) tilePane.style.filter='brightness(1) saturate(1)';  // brightness(1) not none — preserves stacking context so Leaflet SVG lines capture in html2canvas
     await new Promise(r=>setTimeout(r,800));
     const rect=mapCard.getBoundingClientRect();
     const mapRect=mapEl.getBoundingClientRect();
