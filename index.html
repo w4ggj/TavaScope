@@ -1166,15 +1166,25 @@ async function downloadMap(){
   const st=document.getElementById('dlStatus'),mapEl=document.getElementById('activationMap');
   if(!mapEl){st.style.display='block';st.innerHTML='No map available.';return;}
   st.style.display='block';st.innerHTML='<span class="spinner"></span> Capturing map...';
+  const overlay=document.getElementById('modalOverlay');
+  const tilePane=document.querySelector('.leaflet-tile-pane');
   try{
     const mapCard=mapEl.closest('.map-card')||mapEl;mapCard.scrollIntoView({behavior:'instant',block:'start'});
+    if(overlay) overlay.style.display='none';
+    if(tilePane) tilePane.style.filter='none';
     await new Promise(r=>setTimeout(r,800));
     const rect=mapCard.getBoundingClientRect(),scrollY=window.scrollY||0,scrollX=window.scrollX||0;
     const cvs=await html2canvas(document.body,{x:rect.left+scrollX,y:rect.top+scrollY,width:rect.width,height:rect.height,backgroundColor:'#1e293b',scale:2,useCORS:true,logging:false,allowTaint:true,scrollX:0,scrollY:0,windowWidth:document.documentElement.scrollWidth,windowHeight:document.documentElement.scrollHeight});
+    if(overlay) overlay.style.display='';
+    if(tilePane) tilePane.style.filter='';
     const link=document.createElement('a');
     link.download='TavaScope_Map_'+(currentData?.parkRef||'map').replace(/[^A-Z0-9]/gi,'_')+'_'+(currentData?.date||Date.now()).toString().replace(/\//g,'-')+'.jpg';
     link.href=cvs.toDataURL('image/jpeg',0.95);link.click();closeModal();
-  }catch(e){st.innerHTML='Error — try Full Dashboard instead.';}
+  }catch(e){
+    if(overlay) overlay.style.display='';
+    if(tilePane) tilePane.style.filter='';
+    st.innerHTML='Error — try Full Dashboard instead.';
+  }
 }
 
 // ── FILE HANDLING ──────────────────────────────────────────────────────────
