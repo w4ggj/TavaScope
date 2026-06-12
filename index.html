@@ -1169,55 +1169,35 @@ async function downloadMap(){
   const overlay=document.getElementById('modalOverlay');
   const tilePane=document.querySelector('.leaflet-tile-pane');
   try{
-    mapEl.scrollIntoView({behavior:'instant',block:'start'});
+    const mapCard=mapEl.closest('.map-card')||mapEl;
+    mapCard.scrollIntoView({behavior:'instant',block:'start'});
     if(overlay) overlay.style.display='none';
     if(tilePane) tilePane.style.filter='none';
     await new Promise(r=>setTimeout(r,800));
+    const rect=mapCard.getBoundingClientRect();
+    const mapRect=mapEl.getBoundingClientRect();
+    const sY=window.scrollY||0,sX=window.scrollX||0;
+    const offX=mapRect.left-rect.left,offY=mapRect.top-rect.top;
     const sc=2;
-    // Capture the map element directly — avoids coordinate offset from card header
-    const cvs=await html2canvas(mapEl,{backgroundColor:'#1e293b',scale:sc,useCORS:true,logging:false,allowTaint:true,scrollX:-window.scrollX,scrollY:-window.scrollY,windowWidth:document.documentElement.scrollWidth,windowHeight:document.documentElement.scrollHeight});
-    // Draw polylines manually — html2canvas cannot render Leaflet SVG overlay transforms
-    if(currentData&&mapObj&&currentData.contacts){
-      const myPos=gridToLatLon(currentData.myGrid)||gridToLatLon(MY_GRID_FALLBACK)||{lat:27.74,lon:-82.63};
-      const ctx=cvs.getContext('2d');
-      const myPt=mapObj.latLngToContainerPoint([myPos.lat,myPos.lon]);
-      ctx.save();
-      ctx.globalAlpha=0.7;
-      ctx.lineWidth=1.5*sc;
-      ctx.lineCap='round';
-      currentData.contacts.forEach(ct=>{
-        let pos=null;
-        if(ct.grid&&ct.grid.length>=4) pos=gridToLatLon(ct.grid);
-        if(!pos) pos=dxccLatLon(ct.call);
-        if(!pos) return;
-        const ctPt=mapObj.latLngToContainerPoint([pos.lat,pos.lon]);
-        const band=(ct.band||'?').toUpperCase();
-        ctx.strokeStyle=BAND_COLORS[band]||BAND_COLORS['?'];
-        ctx.beginPath();
-        ctx.moveTo(myPt.x*sc,myPt.y*sc);
-        ctx.lineTo(ctPt.x*sc,ctPt.y*sc);
-        ctx.stroke();
-      });
-      ctx.restore();
-    }
+    const cvs=await html2canvas(document.body,{x:rect.left+sX,y:rect.top+sY,width:rect.width,height:rect.height,backgroundColor:'#1e293b',scale:sc,useCORS:true,logging:false,allowTaint:true,scrollX:0,scrollY:0,windowWidth:document.documentElement.scrollWidth,windowHeight:document.documentElement.scrollHeight});
     if(overlay) overlay.style.display='';
     if(tilePane) tilePane.style.filter='';
     let imgData=cvs.toDataURL('image/jpeg',0.95);
     if(currentData&&mapObj&&currentData.contacts&&currentData.contacts.length){
       const pts=[];
       const myPos=gridToLatLon(currentData.myGrid);
-      if(myPos) pts.push(mapObj.latLngToContainerPoint([myPos.lat,myPos.lon]));
+      if(myPos){const p=mapObj.latLngToContainerPoint([myPos.lat,myPos.lon]);pts.push({x:p.x+offX,y:p.y+offY});}
       currentData.contacts.forEach(ct=>{
         let pos=null;
         if(ct.grid&&ct.grid.length>=4) pos=gridToLatLon(ct.grid);
         if(!pos) pos=dxccLatLon(ct.call);
-        if(pos) pts.push(mapObj.latLngToContainerPoint([pos.lat,pos.lon]));
+        if(pos){const p=mapObj.latLngToContainerPoint([pos.lat,pos.lon]);pts.push({x:p.x+offX,y:p.y+offY});}
       });
       if(pts.length>1){
         const pad=60;
         const xs=pts.map(p=>p.x),ys=pts.map(p=>p.y);
         const x0=Math.max(0,Math.min(...xs)-pad),y0=Math.max(0,Math.min(...ys)-pad);
-        const x1=Math.min(mapEl.offsetWidth,Math.max(...xs)+pad),y1=Math.min(mapEl.offsetHeight,Math.max(...ys)+pad);
+        const x1=Math.min(rect.width,Math.max(...xs)+pad),y1=Math.min(rect.height,Math.max(...ys)+pad);
         if(x1>x0&&y1>y0){
           const crop=document.createElement('canvas');
           crop.width=(x1-x0)*sc;crop.height=(y1-y0)*sc;
