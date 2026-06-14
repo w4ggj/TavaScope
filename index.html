@@ -222,10 +222,43 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .leaflet-popup-content-wrapper{background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:8px;font-family:var(--mono);font-size:0.72rem;}
 .leaflet-popup-tip{background:var(--card);}
 .leaflet-popup-content{margin:10px 14px;line-height:1.6;}
+
+/* ── MOBILE ── */
+.hamburger{display:none;background:none;border:none;color:var(--text-dim);cursor:pointer;padding:4px 6px;border-radius:5px;flex-shrink:0;line-height:0;}
+.hamburger:hover{color:var(--text);background:var(--bg3);}
+.hamburger svg{width:22px;height:22px;display:block;}
+.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:999;}
+@media(max-width:768px){
+  .hamburger{display:flex;align-items:center;}
+  .sidebar{position:fixed;left:0;top:0;height:100%;transform:translateX(-100%);transition:transform .28s cubic-bezier(.4,0,.2,1);z-index:1000;width:var(--sidebar);max-width:88vw;}
+  .sidebar.open{transform:translateX(0);}
+  .sidebar-backdrop.show{display:block;}
+  .main{width:100%;}
+  .topbar{padding:10px 14px;gap:8px;}
+  .content{padding:14px;}
+  #activationMap{height:260px;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .drop-zone{padding:36px 24px;margin:24px auto;}
+  .topbar-title{font-size:0.85rem;}
+  .topbar-btns{gap:5px;flex-wrap:nowrap;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none;max-width:calc(100vw - 160px);}
+  .topbar-btns::-webkit-scrollbar{display:none;}
+  .btn{padding:7px 10px;font-size:0.68rem;white-space:nowrap;}
+  .modal{max-width:95vw;}
+  .info-bar{gap:10px;}
+  .chart-wrap{height:170px;}
+  .welcome-cols{grid-template-columns:1fr;}
+  .insights-grid{grid-template-columns:1fr 1fr;}
+  .tables-grid{grid-template-columns:1fr;}
+  .charts-grid{grid-template-columns:1fr;}
+  .map-stats{gap:10px;}
+  .compare-stats{grid-template-columns:1fr 1fr;}
+  .detail-controls-row{gap:4px;}
+}
 </style>
 </head>
 <body>
 <div class="app">
+<div class="sidebar-backdrop" onclick="toggleSidebar()"></div>
 
 <!-- ── SIDEBAR ── -->
 <div class="sidebar">
@@ -276,6 +309,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 <!-- ── MAIN ── -->
 <div class="main">
   <div class="topbar">
+  <button class="hamburger" onclick="toggleSidebar()" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
     <div>
       <div class="topbar-title" id="topbarTitle"></div>
       <div class="topbar-sub" id="topbarSub"></div>
@@ -788,6 +822,7 @@ function fileClick(id){
     renderStats(currentData);
     document.querySelectorAll('.file-item').forEach(el=>el.classList.remove('active-view'));
     document.getElementById('fi_'+id)?.classList.add('active-view');
+    closeSidebarMobile();
   }else{
     if(mode==='compare'&&selected.size>=6&&!selected.has(id))return;
     if(selected.has(id))selected.delete(id);else selected.add(id);
@@ -1294,6 +1329,17 @@ migrateOldFiles();
     console.log('[TavaScope] URL param decode error:', e.message);
   }
 })();
+
+function toggleSidebar(){
+  const sb=document.querySelector('.sidebar'),bd=document.querySelector('.sidebar-backdrop');
+  if(sb){sb.classList.toggle('open');bd&&bd.classList.toggle('show');}
+}
+function closeSidebarMobile(){
+  if(window.innerWidth<=768){
+    const sb=document.querySelector('.sidebar'),bd=document.querySelector('.sidebar-backdrop');
+    if(sb){sb.classList.remove('open');bd&&bd.classList.remove('show');}
+  }
+}
 </script>
 </body>
 </html>
