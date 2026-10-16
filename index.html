@@ -1316,6 +1316,26 @@ migrateOldFiles();
 // ── URL PARAM READER ───────────────────────────────────────────────────────
 (function(){
   const params = new URLSearchParams(window.location.search);
+  const adifUrl = params.get('adif_url');
+  if(adifUrl){
+    const ref = params.get('ref');
+    let filename = ref ? ref + '.adi' : 'activate-export.adi';
+    window.history.replaceState({}, '', window.location.pathname);
+    (async()=>{
+      const st=document.getElementById('uploadStatus');
+      if(st){st.style.display='block';st.style.color='var(--accent)';st.textContent='Fetching log...';}
+      try{
+        const res=await fetch(adifUrl);
+        if(!res.ok) throw new Error('server returned '+res.status+(res.statusText?' '+res.statusText:''));
+        const text=await res.text();
+        await addFile(text,filename);
+      }catch(e){
+        console.log('[TavaScope] adif_url fetch error:', e.message);
+        showUploadError('Could not load log from URL ('+e.message+'). The host may be unreachable or blocking cross-origin (CORS) requests.');
+      }
+    })();
+    return;
+  }
   const b64 = params.get('adif');
   if(!b64) return;
   try {
