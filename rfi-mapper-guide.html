@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>RFI Mapper Tester Guide</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: single readable column, checklist-style sections, one accent for actions */
+:root{--bg:#f6f7f9;--card:#fff;--fg:#17202e;--mute:#5a687d;--line:#d9dfe8;--acc:#0b63c8;--acc-bg:#e6f0fc;--warn:#8a5a00;--warn-bg:#fff3d6;--ok:#17803d;--code:#eef1f5;
+--body:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e141f;--card:#151d2c;--fg:#e6ecf6;--mute:#93a3bb;--line:#26324a;--acc:#6db1ff;--acc-bg:#16294a;--warn:#ffd37a;--warn-bg:#33270d;--ok:#4bd37b;--code:#1b2538;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e141f;--card:#151d2c;--fg:#e6ecf6;--mute:#93a3bb;--line:#26324a;--acc:#6db1ff;--acc-bg:#16294a;--warn:#ffd37a;--warn-bg:#33270d;--ok:#4bd37b;--code:#1b2538;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;padding-block:32px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1{font-size:clamp(1.7rem,5vw,2.3rem);line-height:1.15;margin:0;text-wrap:balance}
+.sub{color:var(--mute);margin:6px 0 0}
+h2{font-size:1.15rem;margin:0 0 10px}
+section{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;min-width:0}
+p{margin:0 0 10px}p:last-child{margin-bottom:0}
+ul,ol{margin:0;padding-left:1.25rem;display:flex;flex-direction:column;gap:6px}
+code,.mono{font-family:var(--mono);font-size:.86em;background:var(--code);padding:1px 6px;border-radius:4px}
+a{color:var(--acc)}
+.cta{display:inline-block;background:var(--acc);color:var(--bg);font-weight:700;text-decoration:none;padding:10px 16px;border-radius:8px;margin-top:12px}
+.note{background:var(--warn-bg);color:var(--warn);border-radius:8px;padding:10px 14px;font-size:.93rem}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.92rem;min-width:520px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--mute);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.dots{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:8px;font-size:.9rem}
+.dots span{display:inline-flex;align-items:center;gap:6px}
+.dots i{width:12px;height:12px;border-radius:50%;border:1px solid #000;display:inline-block}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+</style>
+
+</head>
+<body>
+<main>
+<header>
+  <h1>RFI Mapper Tester Guide</h1>
+  <p class="sub">A browser-based version of the wide-area power-line noise mapper described in QST, December 2026. Drive your streets with a radio and a GPS and get a color-coded noise map.</p>
+  <a class="cta" href="rfi-mapper.html">Open RFI Mapper</a>
+</header>
+
+<div class="note"><strong>Looking for testers.</strong> The radio and GPS links have only been checked against simulated data and reply parsers so far, not against real hardware in a car. Tell me what works and what doesn't (last section).</div>
+
+<section>
+  <h2>What you need</h2>
+  <ul>
+    <li><strong>Laptop with Chrome or Edge</strong> (Windows, Mac or Linux) and two free USB ports. Web Serial is required, so Firefox, Safari and phone browsers can't talk to the radio.</li>
+    <li><strong>HF radio with CAT/CI-V control</strong> and a data cable to the laptop. Supported: Icom IC-706MkIIG (CI-V address 58), other Icom CI-V radios, Yaesu FT-991A class radios, Kenwood TS-590 / TS-480 class radios. The IC-706MkIIG is the one tested by the author.</li>
+    <li><strong>Mobile HF antenna</strong> on the vehicle for a high band such as 10 m.</li>
+    <li><strong>USB GPS receiver that outputs NMEA</strong>, for example a GlobalSat BU-353S4 (4800 baud). A USB extension cable lets you put it on the roof. Use a quality shielded USB cable, since unshielded ones generate their own RFI.</li>
+    <li><strong>A quiet vehicle.</strong> Check your own vehicle noise first. S5 or lower with the engine running is good. Ferrites on the USB cables near the laptop help.</li>
+    <li><strong>Optional:</strong> a Google account for Google My Maps, and a passenger to run the laptop.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Radio setup</h2>
+  <ol>
+    <li>Set the radio to an unused frequency on a high band, around 28.650 MHz.</li>
+    <li>Mode <strong>AM</strong>, AGC <strong>fast</strong>, noise blanker <strong>off</strong>.</li>
+    <li>Set the radio's CI-V or CAT baud rate to match the app's Baud dropdown. IC-706MkIIG default in the app is 19200; set it on the radio under SET → CI-V Baud.</li>
+    <li>Close any other program using the radio's serial port (logger, WSJT-X, etc.). Only one program can hold it.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Running a survey</h2>
+  <ol>
+    <li>Open the page, choose your radio, check Baud and CI-V address, click <strong>Connect radio</strong>, and pick the radio's serial port. A live S-meter value should appear. If it says "No reply", the baud rate or address is wrong.</li>
+    <li>Under GPS choose <strong>USB GPS (NMEA)</strong>, set 4800 baud, click <strong>Connect GPS</strong>, and pick the GPS port. A first fix can take up to a minute. A laptop's built-in browser location is not accurate enough and shouldn't be used for real runs.</li>
+    <li>Plan a route that covers every public road within the area you care about: about half a mile for wire antennas, up to a mile for beams. Pick a quiet time such as a weekend morning, and avoid thunderstorms because lightning gives false readings.</li>
+    <li>Raise the speaker volume, click <strong>Start logging</strong>, and drive 20 to 30 mph. A sample is saved each second. The voice announces the level whenever it is above S9 and every 10 seconds as a heartbeat. You should hear "S 0" or similar when it starts.</li>
+    <li>When finished click <strong>Stop logging</strong>, then <strong>Save CSV</strong>.</li>
+  </ol>
+  <p class="note" style="margin-top:12px"><strong>Safety.</strong> Don't look at the screen while driving. Put the laptop and radio where you aren't tempted, or have a passenger run it.</p>
+</section>
+
+<section>
+  <h2>Reading the map</h2>
+  <p>Each dot is one sample, colored by the strongest S-meter reading since the previous GPS fix. Click a dot for details. Click a legend row to highlight only that level. Above S9 each S unit is 6 dB, so S11 is 12 dB over S9.</p>
+  <div class="dots">
+    <span><i style="background:#2ecc71"></i>S9 or lower</span>
+    <span><i style="background:#ffe14d"></i>to S10</span>
+    <span><i style="background:#ff9f1c"></i>to S11</span>
+    <span><i style="background:#e63946"></i>to S12</span>
+    <span><i style="background:#fff"></i>to S12.5</span>
+    <span><i style="background:#000"></i>to S13</span>
+    <span><i style="background:#ffd700"></i>★ above S13</span>
+  </div>
+  <p style="margin-top:10px">Green areas rule out noise, so you only need to investigate the hot spots. Anything above about S10 close to your own house deserves a closer look.</p>
+</section>
+
+<section>
+  <h2>After the run</h2>
+  <ul>
+    <li><strong>Share it:</strong> import the CSV into Google My Maps (Import, then pick Latitude and Longitude). The columns are <span class="mono">Sample, Time, Latitude, Longitude, Elevation, Sats, S-Meter, Speed_mph</span>.</li>
+    <li><strong>Confirm the pole:</strong> go to the hot spot with a directional VHF Yagi, an attenuator and a handheld, and compare what you hear with your home station.</li>
+    <li><strong>Talk to the power company</strong> with screenshots of an overview map and a close-up of the suspect pole. Never touch power-pole hardware.</li>
+    <li><strong>Re-drive the route after repairs</strong> to confirm the noise is gone.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Try it without hardware</h2>
+  <p>Choose <strong>Simulator</strong> for both the radio and the GPS, click both Connect buttons, then Start logging. A simulated car circles a block with one noisy pole. You can also use <strong>Open CSV…</strong> to view any file with latitude, longitude and S-meter columns.</p>
+</section>
+
+<section>
+  <h2>Known limits</h2>
+  <div class="wrap">
+  <table>
+    <tr><th>Item</th><th>Status</th></tr>
+    <tr><td>IC-706MkIIG, other Icom, Yaesu, Kenwood S-meter read</td><td>Parsers checked against sample replies only. Real-radio reports needed.</td></tr>
+    <tr><td>S-meter calibration</td><td>S9 is assumed at raw value 120 (Icom, Yaesu) or 15 (Kenwood). Adjust the "Raw at S9" box if your meter disagrees with a known signal.</td></tr>
+    <tr><td>GPS</td><td>NMEA over USB serial at 4800 to 115200 baud. The app doesn't change the GPS baud rate itself.</td></tr>
+    <tr><td>Phones and tablets</td><td>Map and CSV viewing work. USB radio and GPS access do not (no Web Serial).</td></tr>
+    <tr><td>Fixed-station long recording</td><td>Not built yet.</td></tr>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>What to report back</h2>
+  <ul>
+    <li>Radio model, cable or interface, baud rate, and whether the S-meter value appeared and tracked a signal.</li>
+    <li>GPS model, baud, and how long to first fix.</li>
+    <li>Anything that errored, plus a sample of your CSV if the map looked wrong.</li>
+    <li>Whether the colors lined up with noise you could hear.</li>
+  </ul>
+  <p style="margin-top:12px;color:var(--mute);font-size:.9rem">This is an independent browser implementation inspired by the RFI Mapper article by Jeff Stuparits, W4DD (QST, December 2026). It isn't affiliated with the author or ARRL. Software and user guide for the original Windows program are at github.com/w4dd.</p>
+</section>
+</main>
+</body>
+</html>
