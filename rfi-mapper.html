@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RFI Mapper</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+:root{--bg:#0b1220;--card:#121c31;--border:#243352;--text:#e6ecf7;--mute:#8da0c2;--acc:#4ea1ff;--ok:#2ecc71;--bad:#ff5c5c;--mono:ui-monospace,Menlo,Consolas,monospace}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font:14px/1.4 system-ui,sans-serif}
+#app{display:grid;grid-template-columns:340px 1fr;height:100%}
+#side{overflow:auto;padding:12px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:10px}
+#map{height:100%;background:#0d1526}
+h1{font-size:1.1rem;margin:0}
+h1 small{color:var(--mute);font-weight:400}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px}
+.card h2{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:0 0 8px}
+label{display:block;font-size:.75rem;color:var(--mute);margin:6px 0 2px}
+select,input[type=text],input[type=number]{width:100%;background:#0b1426;color:var(--text);border:1px solid var(--border);border-radius:6px;padding:6px}
+.row{display:flex;gap:6px}.row>*{flex:1}
+button{background:#1b2a4a;color:var(--text);border:1px solid var(--border);border-radius:6px;padding:8px 10px;font-weight:600;cursor:pointer}
+button:hover{border-color:var(--acc)}
+button.go{background:var(--ok);color:#06210f;border-color:var(--ok)}
+button.stop{background:var(--bad);color:#2a0606;border-color:var(--bad)}
+button:disabled{opacity:.4;cursor:not-allowed}
+.st{font-size:.72rem;margin-top:4px;color:var(--mute)}.st.ok{color:var(--ok)}.st.err{color:var(--bad)}
+#live{display:grid;grid-template-columns:1fr 1fr;gap:6px;text-align:center}
+#live div{background:#0b1426;border-radius:6px;padding:6px}
+#live b{display:block;font:700 1.35rem var(--mono)}
+#live span{font-size:.65rem;color:var(--mute);text-transform:uppercase}
+#sbig{grid-column:1/3}#sbig b{font-size:2.2rem}
+#legend div{display:flex;align-items:center;gap:8px;padding:3px 4px;border-radius:4px;cursor:pointer;font-size:.8rem}
+#legend div:hover,#legend div.on{background:#1b2a4a}
+.dot{width:12px;height:12px;border-radius:50%;border:1px solid #000;display:inline-block}
+.warn{font-size:.72rem;color:#ffd166}
+.chk{display:flex;align-items:center;gap:6px;font-size:.8rem;margin-top:6px;color:var(--text)}
+.star{color:#ffd700;font-size:18px;text-shadow:0 0 3px #000;line-height:18px}
+.leaflet-popup-content-wrapper{background:var(--card);color:var(--text);font:12px var(--mono)}
+.leaflet-popup-tip{background:var(--card)}
+@media(max-width:800px){#app{grid-template-columns:1fr;grid-template-rows:auto 55vh}#side{border-right:0;border-bottom:1px solid var(--border);max-height:50vh}}
+</style>
+</head>
+<body>
+<div id="app">
+<div id="side">
+  <h1>RFI Mapper <small>wide-area power-line noise logger</small></h1>
+  <div class="warn">Safety: don't watch the screen while driving. Let the voice talker report. Better: have a passenger run it.</div>
+
+  <div class="card">
+    <h2>1 · Radio (S-meter)</h2>
+    <label>Radio</label>
+    <select id="rtype">
+      <option value="civ706" selected>Icom IC-706MkIIG (CI-V 0x58)</option>
+      <option value="civ">Icom CI-V (other, set address)</option>
+      <option value="yaesu">Yaesu FT-991A / FT-891 / FT-710 (CAT)</option>
+      <option value="kenwood">Kenwood TS-590 / 480 / 690 (CAT)</option>
+      <option value="sim">Simulator (no radio)</option>
+    </select>
+    <div class="row">
+      <div><label>Baud</label><select id="rbaud"></select></div>
+      <div><label>CI-V addr (hex)</label><input id="raddr" type="text" value="58"></div>
+      <div><label>Raw at S9</label><input id="rs9" type="number" value="120"></div>
+    </div>
+    <button id="rbtn" style="margin-top:8px;width:100%">Connect radio</button>
+    <div id="rst" class="st">Not connected</div>
+  </div>
+
+  <div class="card">
+    <h2>2 · GPS</h2>
+    <label>Source</label>
+    <select id="gtype">
+      <option value="serial" selected>USB GPS (NMEA, e.g. BU-353S4)</option>
+      <option value="geo">Browser / phone location</option>
+      <option value="sim">Simulator (no GPS)</option>
+    </select>
+    <label>Baud (NMEA)</label>
+    <select id="gbaud"><option>4800</option><option>9600</option><option>38400</option><option>115200</option></select>
+    <button id="gbtn" style="margin-top:8px;width:100%">Connect GPS</button>
+    <div id="gst" class="st">Not connected</div>
+  </div>
+
+  <div class="card">
+    <h2>3 · Run</h2>
+    <div class="row">
+      <button id="runbtn" class="go" disabled>Start logging</button>
+      <button id="csvbtn" disabled>Save CSV</button>
+    </div>
+    <label class="chk"><input id="talk" type="checkbox" checked> Voice talker (announce &gt; S9, heartbeat / 10 s)</label>
+    <label class="chk"><input id="follow" type="checkbox" checked> Map follows position</label>
+    <div class="row" style="margin-top:8px">
+      <button id="impbtn">Open CSV…</button>
+      <button id="restbtn">Restore last run</button>
+      <button id="clrbtn">Clear</button>
+    </div>
+    <input id="impfile" type="file" accept=".csv" hidden>
+  </div>
+
+  <div id="live" class="card">
+    <div id="sbig"><b id="vs">—</b><span>S-meter (peak)</span></div>
+    <div><b id="vspd">—</b><span>mph</span></div>
+    <div><b id="vsat">—</b><span>sats</span></div>
+    <div><b id="vn">0</b><span>samples</span></div>
+    <div><b id="vmax">—</b><span>max</span></div>
+  </div>
+
+  <div class="card"><h2>Legend (click to highlight)</h2><div id="legend"></div></div>
+</div>
+<div id="map"></div>
+</div>
+
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const toast = (el, msg, cls) => { el.textContent = msg; el.className = 'st ' + (cls || ''); };
+
+/* ---------- S-unit convention (matches the QST article) ----------
+   S9 = 9; every +6 dB over S9 = +1 S unit (S9+12 dB = 11). */
+const sText = s => s == null ? '—' : s <= 9 ? 'S' + s.toFixed(1).replace(/\.0$/, '') : 'S9+' + Math.round((s - 9) * 6);
+
+const BINS = [
+  { max: 9,        color: '#2ecc71', label: 'S9 or lower' },
+  { max: 10,       color: '#ffe14d', label: '> S9 – 10' },
+  { max: 11,       color: '#ff9f1c', label: '> 10 – 11' },
+  { max: 12,       color: '#e63946', label: '> 11 – 12' },
+  { max: 12.5,     color: '#ffffff', label: '> 12 – 12.5' },
+  { max: 13,       color: '#000000', label: '> 12.5 – 13' },
+  { max: Infinity, color: '#ffd700', label: '> 13 (★ review: close to station)', star: true }
+];
+const binOf = s => BINS.findIndex(b => s <= b.max);
+
+/* ---------- Radio drivers ---------- */
+const RADIOS = {
+  civ706:  { bauds: [19200, 9600, 4800, 1200], defBaud: 19200, addr: '58', s9: 120, full: 241 },
+  civ:     { bauds: [115200, 57600, 38400, 19200, 9600, 4800, 1200], defBaud: 19200, addr: '94', s9: 120, full: 241 },
+  yaesu:   { bauds: [38400, 19200, 9600, 4800], defBaud: 38400, s9: 120, full: 255 },
+  kenwood: { bauds: [115200, 57600, 38400, 19200, 9600, 4800], defBaud: 9600, s9: 15, full: 30 },
+  sim:     { bauds: [0], defBaud: 0, s9: 120, full: 241 }
+};
+function fillRadioUi() {
+  const r = RADIOS[$('rtype').value];
+  $('rbaud').innerHTML = r.bauds.map(b => `<option ${b === r.defBaud ? 'selected' : ''}>${b}</option>`).join('');
+  if (r.addr) $('raddr').value = r.addr;
+  $('raddr').disabled = !r.addr;
+  $('rs9').value = r.s9;
+}
+$('rtype').onchange = fillRadioUi; fillRadioUi();
+
+function rawToS(raw, r, s9) {
+  if (raw <= s9) return raw / s9 * 9;
+  return 9 + (raw - s9) / (r.full - s9) * 10;   // S9 → S9+60 dB spans 10 S units
+}
+
+/* ---------- Serial link ---------- */
+class Link {
+  async open(baud) {
+    this.port = await navigator.serial.requestPort();
+    await this.port.open({ baudRate: baud });
+    // DTR/RTS are PTT on many rigs — keep both down (same rule as the logger)
+    try { await this.port.setSignals({ dataTerminalReady: false, requestToSend: false }); } catch (e) {}
+    this.writer = this.port.writable.getWriter();
+    this.reader = this.port.readable.getReader();
+    this.alive = true;
+    (async () => {
+      try {
+        while (this.alive) {
+          const { value, done } = await this.reader.read();
+          if (done) break;
+          if (value && this.onData) this.onData(value);
+        }
+      } catch (e) { /* unplugged */ }
+      if (this.alive && this.onClose) this.onClose();
+    })();
+  }
+  write(b) { return this.writer.write(b); }
+  async close() {
+    this.alive = false;
+    try { await this.reader.cancel(); this.reader.releaseLock(); } catch (e) {}
+    try { this.writer.releaseLock(); } catch (e) {}
+    try { await this.port.close(); } catch (e) {}
+  }
+}
+
+/* ---------- Radio ---------- */
+const radio = { link: null, type: null, buf: [], s: null, peak: null, lastRx: 0, addr: 0x58, s9: 120, timer: null, connected: false };
+
+function radioPoll() {
+  if (!radio.connected || radio.type === 'sim') return;
+  if (radio.type === 'civ706' || radio.type === 'civ')
+    radio.link.write(new Uint8Array([0xFE, 0xFE, radio.addr, 0xE0, 0x15, 0x02, 0xFD])).catch(() => {});
+  else
+    radio.link.write(new TextEncoder().encode('SM0;')).catch(() => {});
+}
+function radioGotRaw(raw) {
+  radio.lastRx = performance.now();
+  const s = rawToS(raw, RADIOS[radio.type], radio.s9);
+  radio.s = s;
+  if (radio.peak == null || s > radio.peak) radio.peak = s;
+  $('vs').textContent = sText(s);
+  setTimeout(radioPoll, 40);
+}
+function radioParse(bytes) {
+  const t = radio.type;
+  if (t === 'civ706' || t === 'civ') {
+    radio.buf.push(...bytes);
+    let st;
+    while ((st = radio.buf.indexOf(0xFE)) !== -1) {
+      if (radio.buf[st + 1] !== 0xFE) { radio.buf.splice(0, st + 1); continue; }
+      const en = radio.buf.indexOf(0xFD, st + 2);
+      if (en === -1) { if (st > 0) radio.buf.splice(0, st); break; }
+      const f = radio.buf.slice(st, en + 1); radio.buf.splice(0, en + 1);
+      // reply: FE FE E0 <rig> 15 02 d1 d2 FD  (our own echoed command has to=rig, so it is skipped)
+      if (f.length === 9 && f[2] === 0xE0 && f[3] === radio.addr && f[4] === 0x15 && f[5] === 0x02) {
+        const bcd = x => (x >> 4) * 10 + (x & 15);
+        radioGotRaw(bcd(f[6]) * 100 + bcd(f[7]));
+      }
+    }
+    if (radio.buf.length > 256) radio.buf = [];
+  } else {
+    let s = (radio._txt || '') + new TextDecoder().decode(bytes), i;
+    while ((i = s.indexOf(';')) !== -1) {
+      const m = s.slice(0, i); s = s.slice(i + 1);
+      const d = /^SM(\d+)$/.exec(m);
+      if (d) radioGotRaw(parseInt(d[1].slice(t === 'yaesu' ? -3 : -4), 10));  // SM0nnn (Yaesu) / SM0nnnn (Kenwood)
+    }
+    radio._txt = s.length > 128 ? '' : s;
+  }
+}
+async function radioConnect() {
+  const t = $('rtype').value;
+  radio.type = t; radio.s9 = parseFloat($('rs9').value) || RADIOS[t].s9;
+  radio.addr = parseInt($('raddr').value, 16) || 0x58; radio.buf = []; radio._txt = '';
+  if (t === 'sim') { radio.connected = true; toast($('rst'), 'Simulator active', 'ok'); }
+  else {
+    if (!('serial' in navigator)) { toast($('rst'), 'Web Serial needs Chrome or Edge on desktop', 'err'); return; }
+    try {
+      radio.link = new Link(); await radio.link.open(parseInt($('rbaud').value, 10));
+    } catch (e) { toast($('rst'), 'Open failed: ' + e.message, 'err'); return; }
+    radio.link.onData = radioParse;
+    radio.link.onClose = () => radioDisconnect('Radio unplugged');
+    radio.connected = true; radio.lastRx = 0;
+    toast($('rst'), 'Connected — waiting for S-meter reply…', 'ok');
+    radioPoll();
+    radio.timer = setInterval(() => {
+      if (performance.now() - radio.lastRx > 500) radioPoll();                      // watchdog
+      if (radio.lastRx === 0 && !radio._warned && performance.now() - radio._t0 > 4000) {
+        radio._warned = true; toast($('rst'), 'No reply: check baud / CI-V address / CI-V transceive off', 'err');
+      }
+    }, 500);
+    radio._t0 = performance.now(); radio._warned = false;
+  }
+  $('rbtn').textContent = 'Disconnect radio'; updateRunBtn();
+}
+async function radioDisconnect(msg) {
+  clearInterval(radio.timer); radio.connected = false;
+  if (radio.link) { await radio.link.close(); radio.link = null; }
+  $('rbtn').textContent = 'Connect radio'; toast($('rst'), msg || 'Not connected', msg ? 'err' : '');
+  if (running) stopRun(); updateRunBtn();
+}
+$('rbtn').onclick = () => radio.connected ? radioDisconnect() : radioConnect();
+
+/* ---------- GPS ---------- */
+const gps = { link: null, type: null, connected: false, fix: null, speed: null, sats: null, _txt: '', watch: null, simTimer: null };
+const nmeaCoord = (v, hemi) => { const d = Math.floor(v / 100), m = v - d * 100, x = d + m / 60; return (hemi === 'S' || hemi === 'W') ? -x : x; };
+function nmeaLine(l) {
+  if (l[0] !== '$') return;
+  const a = l.split('*')[0].split(',');
+  const id = a[0].slice(3);
+  if (id === 'RMC' && a[2] === 'A' && a[7] !== '') gps.speed = parseFloat(a[7]) * 1.15078;   // knots → mph
+  else if (id === 'GGA' && parseInt(a[6], 10) > 0 && a[2] && a[4]) {
+    gps.sats = parseInt(a[7], 10);
+    gpsFix({ lat: nmeaCoord(parseFloat(a[2]), a[3]), lon: nmeaCoord(parseFloat(a[4]), a[5]), alt: parseFloat(a[9]) * 3.28084 || 0 });
+  }
+}
+function gpsFix(f) {
+  gps.fix = f; $('vsat').textContent = gps.sats != null ? gps.sats : '—';
+  $('vspd').textContent = gps.speed != null ? gps.speed.toFixed(0) : '—';
+  toast($('gst'), `Fix ${f.lat.toFixed(5)}, ${f.lon.toFixed(5)}`, 'ok');
+  if (running) logSample(f);
+  else if (!map._firstFix) { map.setView([f.lat, f.lon], 17); map._firstFix = true; }
+}
+async function gpsConnect() {
+  const t = $('gtype').value; gps.type = t;
+  if (t === 'serial') {
+    if (!('serial' in navigator)) { toast($('gst'), 'Web Serial needs Chrome or Edge on desktop', 'err'); return; }
+    try { gps.link = new Link(); await gps.link.open(parseInt($('gbaud').value, 10)); }
+    catch (e) { toast($('gst'), 'Open failed: ' + e.message, 'err'); return; }
+    gps.link.onData = b => {
+      gps._txt += new TextDecoder().decode(b);
+      let i; while ((i = gps._txt.indexOf('\n')) !== -1) { nmeaLine(gps._txt.slice(0, i).trim()); gps._txt = gps._txt.slice(i + 1); }
+      if (gps._txt.length > 512) gps._txt = '';
+    };
+    gps.link.onClose = () => gpsDisconnect('GPS unplugged');
+    toast($('gst'), 'Connected — waiting for fix (up to 60 s)…', 'ok');
+  } else if (t === 'geo') {
+    if (!navigator.geolocation) { toast($('gst'), 'No geolocation in this browser', 'err'); return; }
+    gps.watch = navigator.geolocation.watchPosition(p => {
+      gps.speed = p.coords.speed != null ? p.coords.speed * 2.23694 : null; gps.sats = null;
+      gpsFix({ lat: p.coords.latitude, lon: p.coords.longitude, alt: (p.coords.altitude || 0) * 3.28084 });
+    }, e => toast($('gst'), 'Location error: ' + e.message, 'err'), { enableHighAccuracy: true, maximumAge: 0 });
+    toast($('gst'), 'Waiting for location…', 'ok');
+  } else { simStart(); toast($('gst'), 'Simulator active', 'ok'); }
+  gps.connected = true; $('gbtn').textContent = 'Disconnect GPS'; updateRunBtn();
+}
+async function gpsDisconnect(msg) {
+  gps.connected = false;
+  if (gps.link) { await gps.link.close(); gps.link = null; }
+  if (gps.watch != null) { navigator.geolocation.clearWatch(gps.watch); gps.watch = null; }
+  clearInterval(gps.simTimer);
+  $('gbtn').textContent = 'Connect GPS'; toast($('gst'), msg || 'Not connected', msg ? 'err' : '');
+  if (running) stopRun(); updateRunBtn();
+}
+$('gbtn').onclick = () => gps.connected ? gpsDisconnect() : gpsConnect();
+
+/* ---------- Simulator: a 25 mph loop with a noisy pole ---------- */
+function simStart() {
+  const lat0 = 34.2603, lon0 = -84.0042, mLat = 111320, mLon = 111320 * Math.cos(lat0 * Math.PI / 180);
+  const route = [[0, 0], [600, 0], [600, 500], [0, 500], [0, 0]];        // metres, a rectangle
+  const pole = [600, 250], v = 11.2; let d = 0, n = 0;
+  const len = route.slice(1).reduce((a, p, i) => a + Math.hypot(p[0] - route[i][0], p[1] - route[i][1]), 0);
+  gps.simTimer = setInterval(() => {
+    d = (d + v) % len;
+    let k = d, i = 0;
+    for (; i < route.length - 1; i++) { const sl = Math.hypot(route[i + 1][0] - route[i][0], route[i + 1][1] - route[i][1]); if (k <= sl) break; k -= sl; }
+    const [x0, y0] = route[i], [x1, y1] = route[i + 1], f = k / Math.hypot(x1 - x0, y1 - y0);
+    const x = x0 + (x1 - x0) * f, y = y0 + (y1 - y0) * f;
+    const dist = Math.hypot(x - pole[0], y - pole[1]);
+    const s = Math.max(0, 6.5 + 7.5 / (1 + (dist / 45) ** 2) + (Math.random() - .5) * 1.2);
+    radio.s = s; radio.peak = Math.max(radio.peak ?? 0, s); radio.lastRx = performance.now();
+    $('vs').textContent = sText(s);
+    gps.speed = 25; gps.sats = 9 + (n++ % 3);
+    gpsFix({ lat: lat0 + y / mLat, lon: lon0 + x / mLon, alt: 1342 });
+  }, 1000);
+}
+
+/* ---------- Map ---------- */
+const map = L.map('map', { zoomControl: true }).setView([34.26, -84.0], 15);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+  maxZoom: 19, attribution: 'Imagery © Esri'
+}).addTo(map);
+const track = [], layer = L.layerGroup().addTo(map);
+let hi = null;
+
+function drawSample(s, i) {
+  const b = binOf(s.s ?? 0), bin = BINS[b];
+  const pop = `#${s.n} ${s.time}<br>${s.lat.toFixed(6)}, ${s.lon.toFixed(6)}<br>S-meter: ${sText(s.s)} (${s.s == null ? '—' : s.s.toFixed(1)})<br>Elev ${Math.round(s.alt)} ft · ${s.sats ?? '—'} sats · ${s.spd != null ? s.spd.toFixed(0) : '—'} mph`;
+  const m = bin.star
+    ? L.marker([s.lat, s.lon], { icon: L.divIcon({ className: '', html: '<div class="star">★</div>', iconSize: [18, 18], iconAnchor: [9, 9] }) })
+    : L.circleMarker([s.lat, s.lon], { radius: 6, color: '#000', weight: 1, fillColor: bin.color, fillOpacity: .95 });
+  m.bin = b; m.bindPopup(pop); m.addTo(layer); s._m = m;
+  applyHi(m);
+}
+function applyHi(m) {
+  const dim = hi != null && m.bin !== hi;
+  if (m.setStyle) m.setStyle({ fillOpacity: dim ? .12 : .95, opacity: dim ? .15 : 1 });
+  else m.setOpacity(dim ? .15 : 1);
+}
+const legend = $('legend');
+BINS.forEach((b, i) => {
+  const d = document.createElement('div');
+  d.innerHTML = `<span class="dot" style="background:${b.color}"></span>${b.label} <span style="margin-left:auto;color:var(--mute)" id="lc${i}">0</span>`;
+  d.onclick = () => { hi = hi === i ? null : i; [...legend.children].forEach((c, j) => c.classList.toggle('on', j === hi)); layer.eachLayer(applyHi); };
+  legend.appendChild(d);
+});
+function paintLegend() {
+  const c = BINS.map(() => 0); samples.forEach(s => c[binOf(s.s ?? 0)]++);
+  c.forEach((v, i) => $('lc' + i).textContent = v);
+}
+
+/* ---------- Logging ---------- */
+let samples = [], running = false, lastBeat = 0;
+const pad = n => String(n).padStart(2, '0');
+function logSample(f) {
+  const now = new Date(), s = radio.peak;     // peak S-meter seen since previous fix
+  radio.peak = null;
+  const smp = {
+    n: samples.length + 1, time: `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`,
+    lat: f.lat, lon: f.lon, alt: f.alt, sats: gps.sats, s: s ?? null, spd: gps.speed
+  };
+  samples.push(smp); drawSample(smp);
+  $('vn').textContent = samples.length;
+  const mx = Math.max(...samples.map(x => x.s ?? 0)); $('vmax').textContent = sText(mx);
+  if ($('follow').checked) map.panTo([f.lat, f.lon], { animate: true });
+  if (samples.length % 10 === 0) { paintLegend(); backup(); }
+  talk(smp.s);
+}
+function talk(s) {
+  if (!$('talk').checked || !window.speechSynthesis || s == null) return;
+  const t = performance.now(), loud = s > 9;
+  if (!loud && t - lastBeat < 10000) return;
+  if (speechSynthesis.speaking) return;
+  lastBeat = t;
+  const u = new SpeechSynthesisUtterance(loud ? `S 9 plus ${Math.round((s - 9) * 6)}` : `S ${Math.round(s)}`);
+  u.rate = 1.15; speechSynthesis.speak(u);
+}
+function updateRunBtn() { $('runbtn').disabled = !(radio.connected && gps.connected); $('csvbtn').disabled = !samples.length; }
+let wake = null;
+async function startRun() {
+  running = true; $('runbtn').textContent = 'Stop logging'; $('runbtn').className = 'stop';
+  try { wake = await navigator.wakeLock.request('screen'); } catch (e) {}
+  lastBeat = 0; if ($('talk').checked && window.speechSynthesis) speechSynthesis.speak(new SpeechSynthesisUtterance('S 0'));
+}
+function stopRun() {
+  running = false; $('runbtn').textContent = 'Start logging'; $('runbtn').className = 'go';
+  try { wake && wake.release(); } catch (e) {} paintLegend(); backup(); updateRunBtn();
+}
+$('runbtn').onclick = () => running ? stopRun() : startRun();
+
+/* ---------- CSV (same columns as the article's RFIM file: Google My Maps imports it directly) ---------- */
+function toCsv() {
+  const h = 'Sample,Time,Latitude,Longitude,Elevation,Sats,S-Meter,Speed_mph';
+  return h + '\n' + samples.map(s => [s.n, s.time, s.lat.toFixed(7), s.lon.toFixed(7), Math.round(s.alt), s.sats ?? '', s.s == null ? '' : s.s.toFixed(1), s.spd != null ? s.spd.toFixed(1) : ''].join(',')).join('\n') + '\n';
+}
+$('csvbtn').onclick = () => {
+  const d = new Date(), name = `RFIM_${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}.csv`;
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([toCsv()], { type: 'text/csv' })); a.download = name; a.click();
+};
+function backup() { try { localStorage.setItem('rfim_backup', toCsv()); } catch (e) {} updateRunBtn(); }
+function loadCsv(text) {
+  const rows = text.trim().split(/\r?\n/).map(r => r.split(',').map(c => c.trim()));
+  const h = rows.shift().map(x => x.toLowerCase().replace(/[^a-z]/g, ''));
+  const ix = k => h.findIndex(x => x.startsWith(k));
+  const iLat = ix('lat'), iLon = ix('lon'), iS = ix('smeter') >= 0 ? ix('smeter') : ix('s');
+  if (iLat < 0 || iLon < 0) { alert('CSV needs Latitude and Longitude columns'); return; }
+  clearAll();
+  rows.forEach((r, k) => {
+    const lat = parseFloat(r[iLat]), lon = parseFloat(r[iLon]); if (isNaN(lat) || isNaN(lon)) return;
+    const sv = parseFloat(r[iS]);
+    const smp = { n: k + 1, time: r[ix('time')] || '', lat, lon, alt: parseFloat(r[ix('elev')]) || 0, sats: parseInt(r[ix('sats')], 10) || null, s: isNaN(sv) ? null : sv, spd: parseFloat(r[ix('speed')]) };
+    if (isNaN(smp.spd)) smp.spd = null;
+    samples.push(smp); drawSample(smp);
+  });
+  if (samples.length) map.fitBounds(L.latLngBounds(samples.map(s => [s.lat, s.lon])).pad(.1));
+  $('vn').textContent = samples.length; paintLegend(); updateRunBtn();
+}
+function clearAll() { samples = []; layer.clearLayers(); $('vn').textContent = 0; $('vmax').textContent = '—'; paintLegend(); updateRunBtn(); }
+$('impbtn').onclick = () => $('impfile').click();
+$('impfile').onchange = e => { const f = e.target.files[0]; if (f) f.text().then(loadCsv); e.target.value = ''; };
+$('restbtn').onclick = () => { const t = localStorage.getItem('rfim_backup'); t ? loadCsv(t) : alert('No saved run'); };
+$('clrbtn').onclick = () => { if (!samples.length || confirm('Clear all samples? (Save CSV first.)')) clearAll(); };
+</script>
+</body>
+</html>
