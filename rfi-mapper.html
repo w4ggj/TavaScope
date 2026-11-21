@@ -80,6 +80,7 @@ button:disabled{opacity:.4;cursor:not-allowed}
     <select id="gbaud"><option>4800</option><option>9600</option><option>38400</option><option>115200</option></select>
     <button id="gbtn" style="margin-top:8px;width:100%">Connect GPS</button>
     <div id="gst" class="st">Not connected</div>
+    <div id="graw" class="st" style="font-family:var(--mono);word-break:break-all"></div>
   </div>
 
   <div class="card">
@@ -262,32 +263,47 @@ async function radioDisconnect(msg) {
 $('rbtn').onclick = () => radio.connected ? radioDisconnect() : radioConnect();
 
 /* ---------- GPS ---------- */
-const gps = { link: null, type: null, connected: false, fix: null, speed: null, sats: null, _txt: '', watch: null, simTimer: null };
+const gps = { link: null, type: null, connected: false, fix: null, speed: null, sats: null, _txt: '', watch: null, simTimer: null, bytes: 0, lines: 0, inView: null, last: '', lastFixAt: 0, diagAt: 0, t0: 0 };
 const nmeaCoord = (v, hemi) => { const d = Math.floor(v / 100), m = v - d * 100, x = d + m / 60; return (hemi === 'S' || hemi === 'W') ? -x : x; };
 function nmeaLine(l) {
-  if (l[0] !== '$') return;
+  if (l[0] !== '$' || l.indexOf(',') < 0) return;
+  gps.lines++; gps.last = l.slice(0, 80);
   const a = l.split('*')[0].split(',');
   const id = a[0].slice(3);
+  if (id === 'GSV' && a[3]) gps.inView = parseInt(a[3], 10);
   if (id === 'RMC' && a[2] === 'A' && a[7] !== '') gps.speed = parseFloat(a[7]) * 1.15078;   // knots → mph
   else if (id === 'GGA' && parseInt(a[6], 10) > 0 && a[2] && a[4]) {
     gps.sats = parseInt(a[7], 10);
     gpsFix({ lat: nmeaCoord(parseFloat(a[2]), a[3]), lon: nmeaCoord(parseFloat(a[4]), a[5]), alt: parseFloat(a[9]) * 3.28084 || 0 });
   }
 }
+function gpsDiag() {
+  // Explains "waiting for fix": distinguishes wrong baud, silent port, and no satellites yet
+  if (!gps.connected || gps.type !== 'serial' || Date.now() - gps.lastFixAt < 3000) return;
+  let m, c = '';
+  if (!gps.bytes) m = 'Port open but no data yet. Wait a few seconds, then replug the GPS or pick another port.';
+  else if (!gps.lines) { m = 'Data is arriving but it is not NMEA. Wrong baud: disconnect and try 4800, 38400 or 115200.'; c = 'err'; }
+  else { m = `NMEA OK (${gps.lines} sentences). No fix yet, ${gps.inView ?? 0} satellites in view. Put the GPS next to a window or outside; a cold start can take several minutes.`; c = 'ok'; }
+  toast($('gst'), m, c); $('graw').textContent = gps.last;
+}
 function gpsFix(f) {
+  gps.lastFixAt = Date.now(); $('graw').textContent = gps.last;
   gps.fix = f; $('vsat').textContent = gps.sats != null ? gps.sats : '—';
   $('vspd').textContent = gps.speed != null ? gps.speed.toFixed(0) : '—';
   toast($('gst'), `Fix ${f.lat.toFixed(5)}, ${f.lon.toFixed(5)}`, 'ok');
   if (running) logSample(f);
   else if (!map._firstFix) { map.setView([f.lat, f.lon], 17); map._firstFix = true; }
 }
+setInterval(gpsDiag, 2000);
 async function gpsConnect() {
   const t = $('gtype').value; gps.type = t;
   if (t === 'serial') {
     if (!('serial' in navigator)) { toast($('gst'), 'Web Serial needs Chrome or Edge on desktop', 'err'); return; }
     try { gps.link = new Link(); await gps.link.open(parseInt($('gbaud').value, 10)); }
     catch (e) { toast($('gst'), 'Open failed: ' + e.message, 'err'); return; }
+    gps.bytes = gps.lines = 0; gps.inView = null; gps.last = ''; gps.lastFixAt = 0;
     gps.link.onData = b => {
+      gps.bytes += b.length;
       gps._txt += new TextDecoder().decode(b);
       let i; while ((i = gps._txt.indexOf('\n')) !== -1) { nmeaLine(gps._txt.slice(0, i).trim()); gps._txt = gps._txt.slice(i + 1); }
       if (gps._txt.length > 512) gps._txt = '';
